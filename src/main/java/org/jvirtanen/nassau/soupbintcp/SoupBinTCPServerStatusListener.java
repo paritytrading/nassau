@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * The interface for inbound status events on the server side.
  */
-public interface SoupBinTCPServerStatusListener {
+public interface SoupBinTCPServerStatusListener extends SoupBinTCPSessionStatusListener {
 
     /**
      * Receive a Login Request packet.

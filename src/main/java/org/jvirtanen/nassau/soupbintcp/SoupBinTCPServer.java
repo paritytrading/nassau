@@ -89,7 +89,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
                 statusListener.logoutRequest();
             }
 
-        });
+        }, statusListener);
     }
 
     /**
