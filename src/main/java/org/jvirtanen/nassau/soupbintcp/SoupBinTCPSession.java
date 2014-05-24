@@ -24,8 +24,6 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private PacketParser parser;
 
-    private PacketListener listener;
-
     /*
      * These variables are written on data reception and data transmission,
      * respectively, and read on session keep-alive. All three functions can
