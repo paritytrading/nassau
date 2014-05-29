@@ -2,6 +2,7 @@ package org.jvirtanen.nassau.soupbintcp;
 
 import static org.jvirtanen.nassau.soupbintcp.DataTypes.*;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -22,7 +23,7 @@ public class SoupBinTCP {
         public String session;
         public long   sequenceNumber;
 
-        public void get(ByteBuffer buffer) {
+        public void get(ByteBuffer buffer) throws IOException {
             session        = getAlphanumeric(buffer, 10);
             sequenceNumber = getNumeric(buffer, 20);
         }
@@ -57,7 +58,7 @@ public class SoupBinTCP {
         public String requestedSession;
         public long   requestedSequenceNumber;
 
-        public void get(ByteBuffer buffer) {
+        public void get(ByteBuffer buffer) throws IOException {
             username                = getAlphanumeric(buffer,  6);
             password                = getAlphanumeric(buffer, 10);
             requestedSession        = getAlphanumeric(buffer, 10);

@@ -1,5 +1,6 @@
 package org.jvirtanen.nassau.soupbintcp;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
@@ -17,8 +18,14 @@ class DataTypes {
         return new String(bytes, US_ASCII);
     }
 
-    static long getNumeric(ByteBuffer buffer, int length) {
-        return Long.parseLong(getAlphanumeric(buffer, length).trim());
+    static long getNumeric(ByteBuffer buffer, int length) throws IOException {
+        String alphanumeric = getAlphanumeric(buffer, length).trim();
+
+        try {
+            return Long.parseLong(alphanumeric);
+        } catch (NumberFormatException e) {
+            throw new SoupBinTCPException("Malformed numeric: " + alphanumeric);
+        }
     }
 
     static void putAlphanumericPadLeft(ByteBuffer buffer, String value, int length) {

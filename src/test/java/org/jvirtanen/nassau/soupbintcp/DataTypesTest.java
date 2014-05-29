@@ -5,9 +5,14 @@ import static org.jvirtanen.nassau.soupbintcp.DataTypes.*;
 import static org.jvirtanen.nassau.util.Strings.*;
 
 import java.nio.ByteBuffer;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class DataTypesTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void gettingAlphanumeric() {
@@ -17,17 +22,26 @@ public class DataTypesTest {
     }
 
     @Test
-    public void gettingNumeric() {
+    public void gettingNumeric() throws Exception {
         ByteBuffer buffer = wrap("123");
 
         assertEquals(123, getNumeric(buffer, 3));
     }
 
     @Test
-    public void gettingNumericPadLeft() {
+    public void gettingNumericPadLeft() throws Exception {
         ByteBuffer buffer = wrap(" 12");
 
         assertEquals(12, getNumeric(buffer, 3));
+    }
+
+    @Test
+    public void gettingMalformedNumeric() throws Exception {
+        ByteBuffer buffer = wrap("foo");
+
+        exception.expect(SoupBinTCPException.class);
+
+        getNumeric(buffer, 3);
     }
 
     @Test
