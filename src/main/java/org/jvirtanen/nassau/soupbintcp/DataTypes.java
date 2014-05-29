@@ -22,7 +22,11 @@ class DataTypes {
         String alphanumeric = getAlphanumeric(buffer, length).trim();
 
         try {
-            return Long.parseLong(alphanumeric);
+            long value = Long.parseLong(alphanumeric);
+            if (value < 0)
+                throw new SoupBinTCPException("Negative numeric: " + alphanumeric);
+
+            return value;
         } catch (NumberFormatException e) {
             throw new SoupBinTCPException("Malformed numeric: " + alphanumeric);
         }

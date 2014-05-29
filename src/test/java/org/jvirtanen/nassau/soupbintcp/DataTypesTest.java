@@ -45,6 +45,15 @@ public class DataTypesTest {
     }
 
     @Test
+    public void gettingNegativeNumeric() throws Exception {
+        ByteBuffer buffer = wrap(" -2");
+
+        exception.expect(SoupBinTCPException.class);
+
+        getNumeric(buffer, 3);
+    }
+
+    @Test
     public void puttingAlphanumericPadLeft() {
         ByteBuffer buffer = ByteBuffer.allocate(3);
 
