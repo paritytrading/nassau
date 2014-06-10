@@ -89,7 +89,7 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
                 unexpectedPacketType(PACKET_TYPE_LOGOUT_REQUEST);
             }
 
-        });
+        }, statusListener);
     }
 
     /**

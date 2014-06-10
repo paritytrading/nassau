@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * The interface for inbound status events on the client side.
  */
-public interface SoupBinTCPClientStatusListener {
+public interface SoupBinTCPClientStatusListener extends SoupBinTCPSessionStatusListener {
 
     /**
      * Receive a Login Accepted packet.

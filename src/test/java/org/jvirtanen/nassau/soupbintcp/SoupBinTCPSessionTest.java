@@ -4,6 +4,7 @@ import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.jvirtanen.nassau.soupbintcp.SoupBinTCPClientStatus.*;
 import static org.jvirtanen.nassau.soupbintcp.SoupBinTCPServerStatus.*;
+import static org.jvirtanen.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
 import static org.jvirtanen.nassau.util.Strings.*;
 
 import java.nio.channels.ServerSocketChannel;
@@ -217,9 +218,9 @@ public class SoupBinTCPSessionTest {
 
         clock.setCurrentTimeMillis(16750);
 
-        exception.expect(SoupBinTCPException.class);
-
         server.keepAlive();
+
+        assertEquals(asList(new HeartbeatTimeout()), serverStatus.collect());
     }
 
     @Test
@@ -237,9 +238,9 @@ public class SoupBinTCPSessionTest {
 
         clock.setCurrentTimeMillis(16750);
 
-        exception.expect(SoupBinTCPException.class);
-
         client.keepAlive();
+
+        assertEquals(asList(new HeartbeatTimeout()), clientStatus.collect());
     }
 
     private String message(int length) {

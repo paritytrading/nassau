@@ -24,6 +24,8 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private PacketParser parser;
 
+    private SoupBinTCPSessionStatusListener statusListener;
+
     /*
      * These variables are written on data reception and data transmission,
      * respectively, and read on session keep-alive. All three functions can
@@ -47,10 +49,13 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private ByteBuffer txHeartbeat;
 
-    protected SoupBinTCPSession(Clock clock, SocketChannel channel, byte heartbeatPacketType, PacketListener listener) {
+    protected SoupBinTCPSession(Clock clock, SocketChannel channel, byte heartbeatPacketType,
+            PacketListener listener, SoupBinTCPSessionStatusListener statusListener) {
         this.clock   = clock;
         this.channel = channel;
         this.parser  = new PacketParser(listener);
+
+        this.statusListener = statusListener;
 
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
@@ -123,7 +128,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         long currentTimeMillis = clock.currentTimeMillis();
 
         if (currentTimeMillis - lastRxMillis > RX_HEARTBEAT_TIMEOUT_MILLIS)
-            throw new SoupBinTCPException("Heartbeat timeout");
+            heartbeatTimeout();
         else if (currentTimeMillis - lastTxMillis > TX_HEARTBEAT_INTERVAL_MILLIS)
             heartbeat();
     }
@@ -179,6 +184,12 @@ public abstract class SoupBinTCPSession implements Closeable {
         }
 
         sentData();
+    }
+
+    private void heartbeatTimeout() throws IOException {
+        statusListener.heartbeatTimeout();
+
+        receivedData();
     }
 
     private void receivedData() {

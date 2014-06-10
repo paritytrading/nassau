@@ -1,5 +1,7 @@
 package org.jvirtanen.nassau.soupbintcp;
 
+import static org.jvirtanen.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jvirtanen.value.Value;
@@ -29,6 +31,11 @@ class SoupBinTCPClientStatus implements SoupBinTCPClientStatusListener {
     @Override
     public void endOfSession() {
         events.add(new EndOfSession());
+    }
+
+    @Override
+    public void heartbeatTimeout() {
+        events.add(new HeartbeatTimeout());
     }
 
     public interface Event {
