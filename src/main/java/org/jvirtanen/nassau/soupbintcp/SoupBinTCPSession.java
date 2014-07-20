@@ -120,7 +120,8 @@ public abstract class SoupBinTCPSession implements Closeable {
      *
      * <p>If the heartbeat interval duration has passed since the last packet
      * was sent, send a Heartbeat packet. If the heartbeat timeout duration
-     * has passed since the last packet was received, throw an exception.</p>
+     * has passed since the last packet was received, invoke the corresponding
+     * method on the status listener.</p>
      *
      * @throws IOException if an I/O error occurs
      */
