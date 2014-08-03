@@ -11,7 +11,7 @@
 
   <groupId>org.jvirtanen.nassau</groupId>
   <artifactId>nassau</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.2.0</version>
 
   <name>Nassau</name>
   <description>NASDAQ transport protocols on the JVM.</description>
@@ -35,7 +35,7 @@
     <connection>scm:git:git@github.com:jvirtanen/nassau.git</connection>
     <developerConnection>scm:git:git@github.com:jvirtanen/nassau.git</developerConnection>
     <url>https://github.com/jvirtanen/nassau</url>
-    <tag>HEAD</tag>
+    <tag>nassau-0.2.0</tag>
   </scm>
 
   <properties>
