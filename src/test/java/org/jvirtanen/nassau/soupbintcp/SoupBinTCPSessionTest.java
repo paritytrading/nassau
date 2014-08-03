@@ -154,7 +154,7 @@ public class SoupBinTCPSessionTest {
 
     @Test
     public void maximumPacketLengthForUnsequencedData() throws Exception {
-        String message = message(65534);
+        String message = repeat('X', 65534);
 
         client.send(wrap(message));
 
@@ -168,7 +168,7 @@ public class SoupBinTCPSessionTest {
     public void maximumPacketLengthExceededForUnsequencedData() throws Exception {
         exception.expect(SoupBinTCPException.class);
 
-        client.send(wrap(message(65535)));
+        client.send(wrap(repeat('X', 65535)));
     }
 
     @Test
@@ -186,7 +186,7 @@ public class SoupBinTCPSessionTest {
 
     @Test
     public void maximumPacketLengthForSequencedData() throws Exception {
-        String message = message(65534);
+        String message = repeat('X', 65534);
 
         server.send(wrap(message));
 
@@ -200,7 +200,7 @@ public class SoupBinTCPSessionTest {
     public void maximumPacketLengthExceededForSequencedData() throws Exception {
         exception.expect(SoupBinTCPException.class);
 
-        server.send(wrap(message(65535)));
+        server.send(wrap(repeat('X', 65535)));
     }
 
     @Test
@@ -241,15 +241,6 @@ public class SoupBinTCPSessionTest {
         client.keepAlive();
 
         assertEquals(asList(new HeartbeatTimeout()), clientStatus.collect());
-    }
-
-    private String message(int length) {
-        StringBuilder builder = new StringBuilder(length);
-
-        for (int i = 0; i < length; i++)
-            builder.append('A');
-
-        return builder.toString();
     }
 
 }
