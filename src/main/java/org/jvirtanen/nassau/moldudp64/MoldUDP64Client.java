@@ -132,12 +132,13 @@ public class MoldUDP64Client implements Closeable {
                 if (rxBuffer.remaining() < messageLength)
                     throw truncatedPacket();
 
-                if (sequenceNumber + i < expectedSequenceNumber)
+                if (sequenceNumber + i < expectedSequenceNumber) {
                     skip(messageLength);
-                else
+                } else {
                     read(messageLength);
 
-                actualMessageCount++;
+                    actualMessageCount++;
+                }
             }
 
             expectedSequenceNumber += actualMessageCount;

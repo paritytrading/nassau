@@ -88,10 +88,16 @@ public class MoldUDP64ClientTest {
         server.nextSequenceNumber = 1;
         server.send(packet);
 
-        while (clientMessages.collect().size() != 3)
+        packet.clear();
+        packet.put(wrap("quux"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        while (clientMessages.collect().size() != 4)
             client.receive();
 
-        assertEquals(asList("foo", "bar", "baz"), clientMessages.collect());
+        assertEquals(asList("foo", "bar", "baz", "quux"), clientMessages.collect());
     }
 
 }
