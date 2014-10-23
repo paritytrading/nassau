@@ -64,8 +64,13 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         this.txLock = new Object();
 
+        /*
+         * The built-in payload transmit buffer is used for Login Accepted,
+         * Login Rejected, End of Session, Login Request and Logout Request
+         * packets.
+         */
         this.txHeader  = ByteBuffer.allocate(3);
-        this.txPayload = ByteBuffer.allocate(MAX_PACKET_LENGTH);
+        this.txPayload = ByteBuffer.allocate(46);
 
         this.txBuffers = new ByteBuffer[2];
 
