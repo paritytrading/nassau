@@ -7,11 +7,17 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import org.jvirtanen.nassau.util.Clock;
+import org.jvirtanen.nassau.util.SystemClock;
 
 /**
  * An implementation of a MoldUDP64 server.
  */
 public class MoldUDP64Server implements Closeable {
+
+    private static final long HEARTBEAT_INTERVAL_MILLIS = 1000;
+
+    private Clock clock;
 
     private DatagramChannel channel;
 
@@ -21,6 +27,8 @@ public class MoldUDP64Server implements Closeable {
 
     protected long nextSequenceNumber;
 
+    private long lastHeartbeatMillis;
+
     /**
      * Create a server. The underlying datagram channel must be connected, but
      * it can be either blocking or non-blocking.
@@ -29,15 +37,30 @@ public class MoldUDP64Server implements Closeable {
      * @param session the session name
      */
     public MoldUDP64Server(DatagramChannel channel, String session) {
-        this(channel, MoldUDP64.session(session));
+        this(SystemClock.INSTANCE, channel, session);
     }
 
-    private MoldUDP64Server(DatagramChannel channel, byte[] session) {
+    /**
+     * Create a server. The underlying datagram channel must be connected, but
+     * it can be either blocking or non-blocking.
+     *
+     * @param clock a clock
+     * @param channel the underlying datagram channel
+     * @param session the session name
+     */
+    public MoldUDP64Server(Clock clock, DatagramChannel channel, String session) {
+        this(clock, channel, MoldUDP64.session(session));
+    }
+
+    private MoldUDP64Server(Clock clock, DatagramChannel channel, byte[] session) {
+        this.clock     = clock;
         this.channel   = channel;
         this.txBuffers = new ByteBuffer[2];
         this.session   = session;
 
         this.nextSequenceNumber = 1;
+
+        this.lastHeartbeatMillis = clock.currentTimeMillis();
 
         txBuffers[0] = ByteBuffer.allocate(HEADER_LENGTH);
     }
@@ -98,6 +121,25 @@ public class MoldUDP64Server implements Closeable {
         txBuffers[0].flip();
 
         while (channel.write(txBuffers[0]) == 0);
+    }
+
+    /**
+     * Keep the session alive.
+     *
+     * <p>If the heartbeat interval duration has passed since the last
+     * downstream packet indicating a Heartbeat was sent, send a downstream
+     * packet indicating a Heartbeat.</p>
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    public void keepAlive() throws IOException {
+        long currentTimeMillis = clock.currentTimeMillis();
+
+        if (currentTimeMillis - lastHeartbeatMillis >= HEARTBEAT_INTERVAL_MILLIS) {
+            sendHeartbeat();
+
+            lastHeartbeatMillis = currentTimeMillis;
+        }
     }
 
     /**

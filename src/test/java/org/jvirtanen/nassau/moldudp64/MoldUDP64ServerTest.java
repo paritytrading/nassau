@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
 import org.jvirtanen.nassau.Messages;
+import org.jvirtanen.nassau.util.FixedClock;
 import org.jvirtanen.nassau.util.Strings;
 
 public class MoldUDP64ServerTest {
@@ -23,6 +24,8 @@ public class MoldUDP64ServerTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    private FixedClock clock;
 
     private DatagramChannel requestChannel;
 
@@ -40,6 +43,8 @@ public class MoldUDP64ServerTest {
         DatagramChannel clientChannel = DatagramChannels.openClientChannel();
         DatagramChannel serverChannel = DatagramChannels.openServerChannel(clientChannel);
 
+        clock = new FixedClock();
+
         requestChannel = DatagramChannels.openRequestChannel();
 
         packet = new MoldUDP64DownstreamPacket();
@@ -49,7 +54,7 @@ public class MoldUDP64ServerTest {
         clientStatus = new MoldUDP64ClientStatus();
 
         client = new MoldUDP64Client(clientChannel, requestChannel.getLocalAddress(), clientMessages, clientStatus);
-        server = new MoldUDP64Server(serverChannel, "nassau");
+        server = new MoldUDP64Server(clock, serverChannel, "nassau");
     }
 
     @After
@@ -120,6 +125,31 @@ public class MoldUDP64ServerTest {
 
         assertEquals(emptyList(), clientMessages.collect());
         assertEquals(asList(new EndOfSession(), new Downstream()), clientStatus.collect());
+    }
+
+    @Test
+    public void keepAlive() throws Exception {
+        clock.setCurrentTimeMillis(500);
+
+        server.keepAlive();
+
+        clock.setCurrentTimeMillis(1000);
+
+        server.keepAlive();
+
+        clock.setCurrentTimeMillis(1500);
+
+        server.keepAlive();
+
+        clock.setCurrentTimeMillis(2000);
+
+        server.keepAlive();
+
+        while (clientStatus.collect().size() != 2)
+            client.receive();
+
+        assertEquals(asList(new Downstream(), new Downstream()), clientStatus.collect());
+
     }
 
     @Test
