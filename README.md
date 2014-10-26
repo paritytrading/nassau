@@ -6,7 +6,7 @@ Nassau implements NASDAQ transport protocols on the JVM.
 Download
 --------
 
-Add a dependency to Nassau:
+Add a Maven dependency to Nassau:
 
     <dependency>
       <groupId>org.jvirtanen.nassau</groupId>
