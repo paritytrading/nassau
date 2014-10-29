@@ -49,8 +49,8 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private ByteBuffer txHeartbeat;
 
-    protected SoupBinTCPSession(Clock clock, SocketChannel channel, byte heartbeatPacketType,
-            PacketListener listener, SoupBinTCPSessionStatusListener statusListener) {
+    protected SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
+            byte heartbeatPacketType, PacketListener listener, SoupBinTCPSessionStatusListener statusListener) {
         this.clock   = clock;
         this.channel = channel;
         this.parser  = new PacketParser(listener);
@@ -60,7 +60,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
 
-        this.rxBuffer  = ByteBuffer.allocate(2 + MAX_PACKET_LENGTH);
+        this.rxBuffer = ByteBuffer.allocate(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
 
         this.txLock = new Object();
 
