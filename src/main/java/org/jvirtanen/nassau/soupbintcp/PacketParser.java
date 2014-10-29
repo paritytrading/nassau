@@ -33,6 +33,8 @@ class PacketParser {
         buffer.order(ByteOrder.BIG_ENDIAN);
 
         int packetLength = getUnsignedShort(buffer);
+        if (packetLength > buffer.capacity() - 2)
+            throw new SoupBinTCPException("Packet length exceeds buffer capacity");
 
         if (buffer.remaining() < packetLength) {
             buffer.reset();

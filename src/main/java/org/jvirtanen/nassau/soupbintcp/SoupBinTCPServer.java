@@ -25,7 +25,21 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     public SoupBinTCPServer(SocketChannel channel, MessageListener listener,
             SoupBinTCPServerStatusListener statusListener) {
-        this(SystemClock.INSTANCE, channel, listener, statusListener);
+        this(channel, MAX_PACKET_LENGTH - 1, listener, statusListener);
+    }
+
+    /**
+     * Create a server. The underlying socket channel can be either blocking
+     * or non-blocking.
+     *
+     * @param channel the underlying socket channel
+     * @param maxPayloadLength the maximum inbound message length
+     * @param listener the inbound message listener
+     * @param statusListener the inbound status event listener
+     */
+    public SoupBinTCPServer(SocketChannel channel, int maxPayloadLength,
+            MessageListener listener, SoupBinTCPServerStatusListener statusListener) {
+        this(SystemClock.INSTANCE, channel, maxPayloadLength, listener, statusListener);
     }
 
     /**
@@ -34,12 +48,13 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      *
      * @param clock a clock
      * @param channel the underlying socket channel
+     * @param maxPayloadLength the maximum inbound message length
      * @param listener the inbound message listener
      * @param statusListener the inbound status event listener
      */
-    public SoupBinTCPServer(Clock clock, SocketChannel channel, final MessageListener listener,
-            final SoupBinTCPServerStatusListener statusListener) {
-        super(clock, channel, PACKET_TYPE_SERVER_HEARTBEAT, new PacketListener() {
+    public SoupBinTCPServer(Clock clock, SocketChannel channel, int maxPayloadLength,
+            final MessageListener listener, final SoupBinTCPServerStatusListener statusListener) {
+        super(clock, channel, maxPayloadLength, PACKET_TYPE_SERVER_HEARTBEAT, new PacketListener() {
 
             @Override
             public void debug(ByteBuffer buffer) throws IOException {
