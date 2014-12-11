@@ -148,6 +148,7 @@ public class MoldUDP64ServerTest {
         while (clientStatus.collect().size() != 2)
             client.receive();
 
+        assertEquals(emptyList(), clientMessages.collect());
         assertEquals(asList(new Downstream(), new Downstream()), clientStatus.collect());
     }
 
