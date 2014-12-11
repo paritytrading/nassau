@@ -149,7 +149,6 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(asList(new Downstream(), new Downstream()), clientStatus.collect());
-
     }
 
     @Test
