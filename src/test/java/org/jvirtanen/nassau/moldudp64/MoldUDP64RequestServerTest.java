@@ -3,6 +3,7 @@ package org.jvirtanen.nassau.moldudp64;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.Assert.*;
+import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState.*;
 import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatus.*;
 import static org.jvirtanen.nassau.util.Strings.*;
 
@@ -90,7 +91,8 @@ public class MoldUDP64RequestServerTest {
             client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new Request(1, 4), new Downstream()), clientStatus.collect());
+        assertEquals(asList(new Transition(BACKFILL), new Request(1, 4),
+                    new Transition(SYNCHRONIZED), new Downstream()), clientStatus.collect());
     }
 
     @Test
@@ -116,8 +118,9 @@ public class MoldUDP64RequestServerTest {
             client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new Downstream(), new Request(2, 3), new Downstream()),
-                clientStatus.collect());
+        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream(),
+                    new Transition(GAP_FILL), new Request(2, 3),
+                    new Transition(SYNCHRONIZED), new Downstream()), clientStatus.collect());
     }
 
 }
