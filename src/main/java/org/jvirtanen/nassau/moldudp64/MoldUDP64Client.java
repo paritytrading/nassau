@@ -1,6 +1,7 @@
 package org.jvirtanen.nassau.moldudp64;
 
 import static org.jvirtanen.nassau.moldudp64.MoldUDP64.*;
+import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.io.Closeable;
@@ -33,6 +34,8 @@ public class MoldUDP64Client implements Closeable {
 
     protected long expectedSequenceNumber;
 
+    private MoldUDP64ClientState state;
+
     /**
      * Create a client. The underlying datagram channel must not be connected,
      * but it can be either blocking or non-blocking.
@@ -58,6 +61,8 @@ public class MoldUDP64Client implements Closeable {
         this.session  = new byte[SESSION_LENGTH];
 
         this.expectedSequenceNumber = 1;
+
+        this.state = UNKNOWN;
     }
 
     /**
@@ -112,9 +117,17 @@ public class MoldUDP64Client implements Closeable {
             int requestedMessageCount = (int)Math.min(sequenceNumber - expectedSequenceNumber + 1,
                     MAX_MESSAGE_COUNT);
 
+            if (state == SYNCHRONIZED)
+                transition(GAP_FILL);
+            else if (state == UNKNOWN)
+                transition(BACKFILL);
+
             request(requestedMessageCount);
             return;
         }
+
+        if (state != SYNCHRONIZED)
+            transition(SYNCHRONIZED);
 
         if (messageCount == MESSAGE_COUNT_END_OF_SESSION) {
             statusListener.endOfSession();
@@ -145,6 +158,12 @@ public class MoldUDP64Client implements Closeable {
         }
 
         statusListener.downstream();
+    }
+
+    private void transition(MoldUDP64ClientState target) throws IOException {
+        state = target;
+
+        statusListener.transition(target);
     }
 
     private void request(int requestedMessageCount) throws IOException {

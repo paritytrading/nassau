@@ -17,6 +17,11 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     @Override
+    public void transition(MoldUDP64ClientState target) {
+        events.add(new Transition(target));
+    }
+
+    @Override
     public void downstream() {
         events.add(new Downstream());
     }
@@ -32,6 +37,14 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     public interface Event {
+    }
+
+    public static class Transition extends Value implements Event {
+        public final MoldUDP64ClientState target;
+
+        public Transition(MoldUDP64ClientState target) {
+            this.target = target;
+        }
     }
 
     public static class Downstream extends Value implements Event {
