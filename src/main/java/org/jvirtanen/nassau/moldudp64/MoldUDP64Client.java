@@ -58,7 +58,7 @@ public class MoldUDP64Client implements Closeable {
         this.rxBuffer = ByteBuffer.allocate(RX_BUFFER_LENGTH);
         this.txBuffer = ByteBuffer.allocate(HEADER_LENGTH);
 
-        this.session  = new byte[SESSION_LENGTH];
+        this.session = new byte[SESSION_LENGTH];
 
         this.expectedSequenceNumber = 1;
 
