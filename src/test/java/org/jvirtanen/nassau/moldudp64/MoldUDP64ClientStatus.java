@@ -17,8 +17,8 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     @Override
-    public void transition(MoldUDP64ClientState target) {
-        events.add(new Transition(target));
+    public void state(MoldUDP64ClientState next) {
+        events.add(new State(next));
     }
 
     @Override
@@ -39,11 +39,11 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     public interface Event {
     }
 
-    public static class Transition extends Value implements Event {
-        public final MoldUDP64ClientState target;
+    public static class State extends Value implements Event {
+        public final MoldUDP64ClientState next;
 
-        public Transition(MoldUDP64ClientState target) {
-            this.target = target;
+        public State(MoldUDP64ClientState next) {
+            this.next = next;
         }
     }
 

@@ -10,10 +10,10 @@ public interface MoldUDP64ClientStatusListener {
     /**
      * Indicates that the client state changed.
      *
-     * @param target the new client state
+     * @param next the new client state
      * @throws IOException if an I/O error occurs
      */
-    void transition(MoldUDP64ClientState target) throws IOException;
+    void state(MoldUDP64ClientState next) throws IOException;
 
     /**
      * Indicates that a downstream packet was processed successfully.

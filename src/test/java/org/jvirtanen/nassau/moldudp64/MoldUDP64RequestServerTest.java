@@ -91,8 +91,8 @@ public class MoldUDP64RequestServerTest {
             client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new Transition(BACKFILL), new Request(1, 4),
-                    new Transition(SYNCHRONIZED), new Downstream()), clientStatus.collect());
+        assertEquals(asList(new State(BACKFILL), new Request(1, 4),
+                    new State(SYNCHRONIZED), new Downstream()), clientStatus.collect());
     }
 
     @Test
@@ -118,9 +118,9 @@ public class MoldUDP64RequestServerTest {
             client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream(),
-                    new Transition(GAP_FILL), new Request(2, 3),
-                    new Transition(SYNCHRONIZED), new Downstream()), clientStatus.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+                    new State(GAP_FILL), new Request(2, 3),
+                    new State(SYNCHRONIZED), new Downstream()), clientStatus.collect());
     }
 
 }

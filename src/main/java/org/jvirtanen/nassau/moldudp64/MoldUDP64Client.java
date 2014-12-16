@@ -118,16 +118,16 @@ public class MoldUDP64Client implements Closeable {
                     MAX_MESSAGE_COUNT);
 
             if (state == SYNCHRONIZED)
-                transition(GAP_FILL);
+                state(GAP_FILL);
             else if (state == UNKNOWN)
-                transition(BACKFILL);
+                state(BACKFILL);
 
             request(requestedMessageCount);
             return;
         }
 
         if (state != SYNCHRONIZED)
-            transition(SYNCHRONIZED);
+            state(SYNCHRONIZED);
 
         if (messageCount == MESSAGE_COUNT_END_OF_SESSION) {
             statusListener.endOfSession();
@@ -160,10 +160,10 @@ public class MoldUDP64Client implements Closeable {
         statusListener.downstream();
     }
 
-    private void transition(MoldUDP64ClientState target) throws IOException {
-        state = target;
+    private void state(MoldUDP64ClientState next) throws IOException {
+        state = next;
 
-        statusListener.transition(target);
+        statusListener.state(next);
     }
 
     private void request(int requestedMessageCount) throws IOException {

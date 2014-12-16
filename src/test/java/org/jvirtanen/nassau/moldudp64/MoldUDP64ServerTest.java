@@ -82,7 +82,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(asList("foo", "bar"), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(), new Downstream()),
                 clientStatus.collect());
     }
 
@@ -104,7 +104,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(asList("foo", "bar", "baz", "quux"), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(), new Downstream()),
                 clientStatus.collect());
     }
 
@@ -116,7 +116,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
                 clientStatus.collect());
     }
 
@@ -128,7 +128,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new EndOfSession(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream()),
                 clientStatus.collect());
     }
 
@@ -154,7 +154,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(), new Downstream()),
                 clientStatus.collect());
     }
 
@@ -170,7 +170,7 @@ public class MoldUDP64ServerTest {
             client.receive();
 
         assertEquals(asList(message), clientMessages.collect());
-        assertEquals(asList(new Transition(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
                 clientStatus.collect());
     }
 
