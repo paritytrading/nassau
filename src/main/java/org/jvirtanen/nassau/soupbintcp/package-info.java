@@ -1,5 +1,5 @@
 /**
- * An implementation of the NASDAQ SoupBinTCP 3.0 protocol.
+ * An implementation of the NASDAQ SoupBinTCP 3.00 protocol.
  *
  * <p>The implementation is based on the Java NIO API and consists of three
  * primary functions:</p>
