@@ -132,21 +132,19 @@ public class MoldUDP64Client implements Closeable {
         if (messageCount == MESSAGE_COUNT_END_OF_SESSION) {
             statusListener.endOfSession();
         } else {
-            int actualMessageCount = 0;
+            long lastSequenceNumber = sequenceNumber + messageCount;
 
-            for (int i = 0; i < messageCount; i++) {
-                int messageLength = readMessageLength();
+            while (sequenceNumber < nextExpectedSequenceNumber) {
+                skip();
 
-                if (sequenceNumber + i < nextExpectedSequenceNumber) {
-                    skip(messageLength);
-                } else {
-                    read(messageLength);
-
-                    actualMessageCount++;
-                }
+                sequenceNumber++;
             }
 
-            nextExpectedSequenceNumber += actualMessageCount;
+            while (nextExpectedSequenceNumber < lastSequenceNumber) {
+                read();
+
+                nextExpectedSequenceNumber++;
+            }
         }
 
         statusListener.downstream();
@@ -170,7 +168,9 @@ public class MoldUDP64Client implements Closeable {
         statusListener.request(nextExpectedSequenceNumber, requestedMessageCount);
     }
 
-    private void read(int messageLength) throws IOException {
+    private void read() throws IOException {
+        int messageLength = readMessageLength();
+
         int limit = rxBuffer.limit();
 
         rxBuffer.limit(rxBuffer.position() + messageLength);
@@ -181,7 +181,9 @@ public class MoldUDP64Client implements Closeable {
         rxBuffer.limit(limit);
     }
 
-    private void skip(int messageLength) {
+    private void skip() throws IOException {
+        int messageLength = readMessageLength();
+
         rxBuffer.position(rxBuffer.position() + messageLength);
     }
 
