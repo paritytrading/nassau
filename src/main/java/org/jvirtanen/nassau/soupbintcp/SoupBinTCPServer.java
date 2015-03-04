@@ -15,6 +15,12 @@ import org.jvirtanen.nassau.util.SystemClock;
  */
 public class SoupBinTCPServer extends SoupBinTCPSession {
 
+    /*
+     * The RX buffer length on the server side must be equal to or greater than
+     * the length of the payload in an Order Request packet.
+     */
+    private static final int MIN_MAX_PAYLOAD_LENGTH = 46;
+
     /**
      * Create a server. The underlying socket channel can be either blocking
      * or non-blocking.
@@ -54,7 +60,8 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     public SoupBinTCPServer(Clock clock, SocketChannel channel, int maxPayloadLength,
             final MessageListener listener, final SoupBinTCPServerStatusListener statusListener) {
-        super(clock, channel, maxPayloadLength, PACKET_TYPE_SERVER_HEARTBEAT, new PacketListener() {
+        super(clock, channel, Math.max(MIN_MAX_PAYLOAD_LENGTH, maxPayloadLength),
+                PACKET_TYPE_SERVER_HEARTBEAT, new PacketListener() {
 
             @Override
             public void debug(ByteBuffer buffer) throws IOException {
