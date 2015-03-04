@@ -32,7 +32,7 @@ public class MoldUDP64Client implements Closeable {
 
     private byte[] session;
 
-    private long expectedSequenceNumber;
+    private long nextExpectedSequenceNumber;
 
     private MoldUDP64ClientState state;
 
@@ -60,7 +60,7 @@ public class MoldUDP64Client implements Closeable {
 
         this.session = new byte[SESSION_LENGTH];
 
-        this.expectedSequenceNumber = 1;
+        this.nextExpectedSequenceNumber = 1;
 
         this.state = UNKNOWN;
     }
@@ -113,8 +113,8 @@ public class MoldUDP64Client implements Closeable {
         long sequenceNumber = rxBuffer.getLong();
         int  messageCount   = getUnsignedShort(rxBuffer);
 
-        if (sequenceNumber > expectedSequenceNumber) {
-            int requestedMessageCount = (int)Math.min(sequenceNumber - expectedSequenceNumber + 1,
+        if (sequenceNumber > nextExpectedSequenceNumber) {
+            int requestedMessageCount = (int)Math.min(sequenceNumber - nextExpectedSequenceNumber + 1,
                     MAX_MESSAGE_COUNT);
 
             if (state == SYNCHRONIZED)
@@ -145,7 +145,7 @@ public class MoldUDP64Client implements Closeable {
                 if (rxBuffer.remaining() < messageLength)
                     throw truncatedPacket();
 
-                if (sequenceNumber + i < expectedSequenceNumber) {
+                if (sequenceNumber + i < nextExpectedSequenceNumber) {
                     skip(messageLength);
                 } else {
                     read(messageLength);
@@ -154,7 +154,7 @@ public class MoldUDP64Client implements Closeable {
                 }
             }
 
-            expectedSequenceNumber += actualMessageCount;
+            nextExpectedSequenceNumber += actualMessageCount;
         }
 
         statusListener.downstream();
@@ -169,13 +169,13 @@ public class MoldUDP64Client implements Closeable {
     private void request(int requestedMessageCount) throws IOException {
         txBuffer.clear();
         txBuffer.put(session);
-        txBuffer.putLong(expectedSequenceNumber);
+        txBuffer.putLong(nextExpectedSequenceNumber);
         putUnsignedShort(txBuffer, requestedMessageCount);
         txBuffer.flip();
 
         while (channel.send(txBuffer, requestAddress) == 0);
 
-        statusListener.request(expectedSequenceNumber, requestedMessageCount);
+        statusListener.request(nextExpectedSequenceNumber, requestedMessageCount);
     }
 
     private void read(int messageLength) throws IOException {
