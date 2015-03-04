@@ -135,15 +135,7 @@ public class MoldUDP64Client implements Closeable {
             int actualMessageCount = 0;
 
             for (int i = 0; i < messageCount; i++) {
-                if (rxBuffer.remaining() < 2)
-                    throw truncatedPacket();
-
-                rxBuffer.order(ByteOrder.BIG_ENDIAN);
-
-                int messageLength = getUnsignedShort(rxBuffer);
-
-                if (rxBuffer.remaining() < messageLength)
-                    throw truncatedPacket();
+                int messageLength = readMessageLength();
 
                 if (sequenceNumber + i < nextExpectedSequenceNumber) {
                     skip(messageLength);
@@ -191,6 +183,20 @@ public class MoldUDP64Client implements Closeable {
 
     private void skip(int messageLength) {
         rxBuffer.position(rxBuffer.position() + messageLength);
+    }
+
+    private int readMessageLength() throws IOException {
+        if (rxBuffer.remaining() < 2)
+            throw truncatedPacket();
+
+        rxBuffer.order(ByteOrder.BIG_ENDIAN);
+
+        int messageLength = getUnsignedShort(rxBuffer);
+
+        if (rxBuffer.remaining() < messageLength)
+            throw truncatedPacket();
+
+        return messageLength;
     }
 
     /**
