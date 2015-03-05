@@ -32,7 +32,9 @@ public class MoldUDP64Client implements Closeable {
 
     private byte[] session;
 
-    private long expectedSequenceNumber;
+    private long nextExpectedSequenceNumber;
+
+    private long highestReceivedSequenceNumber;
 
     private MoldUDP64ClientState state;
 
@@ -60,7 +62,9 @@ public class MoldUDP64Client implements Closeable {
 
         this.session = new byte[SESSION_LENGTH];
 
-        this.expectedSequenceNumber = 1;
+        this.nextExpectedSequenceNumber = 1;
+
+        this.highestReceivedSequenceNumber = 0;
 
         this.state = UNKNOWN;
     }
@@ -110,11 +114,14 @@ public class MoldUDP64Client implements Closeable {
 
         rxBuffer.get(session);
 
-        long sequenceNumber = rxBuffer.getLong();
-        int  messageCount   = getUnsignedShort(rxBuffer);
+        long sequenceNumber     = rxBuffer.getLong();
+        int  messageCount       = getUnsignedShort(rxBuffer);
+        long lastSequenceNumber = sequenceNumber + messageCount;
 
-        if (sequenceNumber > expectedSequenceNumber) {
-            int requestedMessageCount = (int)Math.min(sequenceNumber - expectedSequenceNumber + 1,
+        highestReceivedSequenceNumber = Math.max(highestReceivedSequenceNumber, lastSequenceNumber);
+
+        if (sequenceNumber > nextExpectedSequenceNumber) {
+            int requestedMessageCount = (int)Math.min(sequenceNumber - nextExpectedSequenceNumber + 1,
                     MAX_MESSAGE_COUNT);
 
             if (state == SYNCHRONIZED)
@@ -126,35 +133,23 @@ public class MoldUDP64Client implements Closeable {
             return;
         }
 
-        if (state != SYNCHRONIZED)
+        if (state != SYNCHRONIZED && highestReceivedSequenceNumber == lastSequenceNumber)
             state(SYNCHRONIZED);
 
         if (messageCount == MESSAGE_COUNT_END_OF_SESSION) {
             statusListener.endOfSession();
         } else {
-            int actualMessageCount = 0;
+            while (sequenceNumber < nextExpectedSequenceNumber) {
+                skip();
 
-            for (int i = 0; i < messageCount; i++) {
-                if (rxBuffer.remaining() < 2)
-                    throw truncatedPacket();
-
-                rxBuffer.order(ByteOrder.BIG_ENDIAN);
-
-                int messageLength = getUnsignedShort(rxBuffer);
-
-                if (rxBuffer.remaining() < messageLength)
-                    throw truncatedPacket();
-
-                if (sequenceNumber + i < expectedSequenceNumber) {
-                    skip(messageLength);
-                } else {
-                    read(messageLength);
-
-                    actualMessageCount++;
-                }
+                sequenceNumber++;
             }
 
-            expectedSequenceNumber += actualMessageCount;
+            while (nextExpectedSequenceNumber < lastSequenceNumber) {
+                read();
+
+                nextExpectedSequenceNumber++;
+            }
         }
 
         statusListener.downstream();
@@ -169,16 +164,18 @@ public class MoldUDP64Client implements Closeable {
     private void request(int requestedMessageCount) throws IOException {
         txBuffer.clear();
         txBuffer.put(session);
-        txBuffer.putLong(expectedSequenceNumber);
+        txBuffer.putLong(nextExpectedSequenceNumber);
         putUnsignedShort(txBuffer, requestedMessageCount);
         txBuffer.flip();
 
         while (channel.send(txBuffer, requestAddress) == 0);
 
-        statusListener.request(expectedSequenceNumber, requestedMessageCount);
+        statusListener.request(nextExpectedSequenceNumber, requestedMessageCount);
     }
 
-    private void read(int messageLength) throws IOException {
+    private void read() throws IOException {
+        int messageLength = readMessageLength();
+
         int limit = rxBuffer.limit();
 
         rxBuffer.limit(rxBuffer.position() + messageLength);
@@ -189,8 +186,24 @@ public class MoldUDP64Client implements Closeable {
         rxBuffer.limit(limit);
     }
 
-    private void skip(int messageLength) {
+    private void skip() throws IOException {
+        int messageLength = readMessageLength();
+
         rxBuffer.position(rxBuffer.position() + messageLength);
+    }
+
+    private int readMessageLength() throws IOException {
+        if (rxBuffer.remaining() < 2)
+            throw truncatedPacket();
+
+        rxBuffer.order(ByteOrder.BIG_ENDIAN);
+
+        int messageLength = getUnsignedShort(rxBuffer);
+
+        if (rxBuffer.remaining() < messageLength)
+            throw truncatedPacket();
+
+        return messageLength;
     }
 
     /**

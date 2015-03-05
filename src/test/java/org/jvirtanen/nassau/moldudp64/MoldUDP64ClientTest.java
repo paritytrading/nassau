@@ -100,7 +100,7 @@ public class MoldUDP64ClientTest {
 
         assertEquals(asList("foo", "bar", "baz", "quux"), clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 3),
-                    new State(SYNCHRONIZED), new Downstream(), new Downstream(),
+                    new Downstream(), new State(SYNCHRONIZED), new Downstream(),
                     new Downstream()), clientStatus.collect());
     }
 
