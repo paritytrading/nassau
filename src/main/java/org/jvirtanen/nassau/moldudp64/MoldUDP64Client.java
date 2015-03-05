@@ -121,7 +121,7 @@ public class MoldUDP64Client implements Closeable {
         highestReceivedSequenceNumber = Math.max(highestReceivedSequenceNumber, lastSequenceNumber);
 
         if (sequenceNumber > nextExpectedSequenceNumber) {
-            int requestedMessageCount = (int)Math.min(sequenceNumber - nextExpectedSequenceNumber + 1,
+            int requestedMessageCount = (int)Math.min(highestReceivedSequenceNumber - nextExpectedSequenceNumber,
                     MAX_MESSAGE_COUNT);
 
             if (state == SYNCHRONIZED)
