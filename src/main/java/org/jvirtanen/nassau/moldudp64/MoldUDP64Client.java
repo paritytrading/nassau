@@ -34,6 +34,8 @@ public class MoldUDP64Client implements Closeable {
 
     private long nextExpectedSequenceNumber;
 
+    private long highestReceivedSequenceNumber;
+
     private MoldUDP64ClientState state;
 
     /**
@@ -61,6 +63,8 @@ public class MoldUDP64Client implements Closeable {
         this.session = new byte[SESSION_LENGTH];
 
         this.nextExpectedSequenceNumber = 1;
+
+        this.highestReceivedSequenceNumber = 0;
 
         this.state = UNKNOWN;
     }
@@ -110,8 +114,11 @@ public class MoldUDP64Client implements Closeable {
 
         rxBuffer.get(session);
 
-        long sequenceNumber = rxBuffer.getLong();
-        int  messageCount   = getUnsignedShort(rxBuffer);
+        long sequenceNumber     = rxBuffer.getLong();
+        int  messageCount       = getUnsignedShort(rxBuffer);
+        long lastSequenceNumber = sequenceNumber + messageCount;
+
+        highestReceivedSequenceNumber = Math.max(highestReceivedSequenceNumber, lastSequenceNumber);
 
         if (sequenceNumber > nextExpectedSequenceNumber) {
             int requestedMessageCount = (int)Math.min(sequenceNumber - nextExpectedSequenceNumber + 1,
@@ -126,14 +133,12 @@ public class MoldUDP64Client implements Closeable {
             return;
         }
 
-        if (state != SYNCHRONIZED)
+        if (state != SYNCHRONIZED && highestReceivedSequenceNumber == lastSequenceNumber)
             state(SYNCHRONIZED);
 
         if (messageCount == MESSAGE_COUNT_END_OF_SESSION) {
             statusListener.endOfSession();
         } else {
-            long lastSequenceNumber = sequenceNumber + messageCount;
-
             while (sequenceNumber < nextExpectedSequenceNumber) {
                 skip();
 
