@@ -67,6 +67,7 @@ public class MoldUDP64ClientTest {
 
         packet.clear();
         packet.put(wrap("baz"));
+        packet.put(wrap("quux"));
 
         server.nextSequenceNumber = 3;
         server.send(packet);
@@ -85,21 +86,22 @@ public class MoldUDP64ClientTest {
         packet.put(wrap("foo"));
         packet.put(wrap("bar"));
         packet.put(wrap("baz"));
+        packet.put(wrap("quux"));
 
         server.nextSequenceNumber = 1;
         server.send(packet);
 
         packet.clear();
-        packet.put(wrap("quux"));
+        packet.put(wrap("xyzzy"));
 
-        server.nextSequenceNumber = 4;
+        server.nextSequenceNumber = 5;
         server.send(packet);
 
-        while (clientMessages.collect().size() != 4)
+        while (clientMessages.collect().size() != 5)
             client.receive();
 
-        assertEquals(asList("foo", "bar", "baz", "quux"), clientMessages.collect());
-        assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 3),
+        assertEquals(asList("foo", "bar", "baz", "quux", "xyzzy"), clientMessages.collect());
+        assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 4),
                     new Downstream(), new State(SYNCHRONIZED), new Downstream(),
                     new Downstream()), clientStatus.collect());
     }
