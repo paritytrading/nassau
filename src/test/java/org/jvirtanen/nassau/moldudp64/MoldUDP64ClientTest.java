@@ -106,4 +106,31 @@ public class MoldUDP64ClientTest {
                     new Downstream()), clientStatus.collect());
     }
 
+    @Test
+    public void gapFillAfterEndOfSession() throws Exception {
+        server.nextSequenceNumber = 1;
+        server.sendEndOfSession();
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 2;
+        server.send(packet);
+
+        packet.clear();
+        packet.put(wrap("foo"));
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 1;
+        server.send(packet);
+
+        while (clientMessages.collect().size() != 2)
+            client.receive();
+
+        assertEquals(asList("foo", "bar"), clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream(),
+                new State(GAP_FILL), new Request(1, 2), new State(SYNCHRONIZED),
+                new Downstream()), clientStatus.collect());
+    }
+
 }
