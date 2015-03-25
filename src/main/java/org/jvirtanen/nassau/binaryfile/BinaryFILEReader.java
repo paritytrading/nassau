@@ -2,6 +2,7 @@ package org.jvirtanen.nassau.binaryfile;
 
 import static org.jvirtanen.nio.ByteBuffers.*;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import org.jvirtanen.nassau.MessageListener;
 /**
  * An implementation of a BinaryFILE reader.
  */
-public class BinaryFILEReader {
+public class BinaryFILEReader implements Closeable {
 
     private ReadableByteChannel channel;
 
