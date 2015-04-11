@@ -28,7 +28,7 @@ public class MoldUDP64ServerTest {
 
     private FixedClock clock;
 
-    private DatagramChannel requestChannel;
+    private DatagramChannel serverRequestChannel;
 
     private MoldUDP64DownstreamPacket packet;
 
@@ -46,7 +46,7 @@ public class MoldUDP64ServerTest {
 
         clock = new FixedClock();
 
-        requestChannel = DatagramChannels.openRequestChannel();
+        serverRequestChannel = DatagramChannels.openServerRequestChannel();
 
         packet = new MoldUDP64DownstreamPacket();
 
@@ -54,7 +54,9 @@ public class MoldUDP64ServerTest {
 
         clientStatus = new MoldUDP64ClientStatus();
 
-        client = new MoldUDP64Client(clientChannel, requestChannel.getLocalAddress(), clientMessages, clientStatus);
+        client = new MoldUDP64Client(clientChannel, serverRequestChannel.getLocalAddress(),
+                clientMessages, clientStatus);
+
         server = new MoldUDP64Server(clock, serverChannel, "nassau");
     }
 
@@ -63,7 +65,7 @@ public class MoldUDP64ServerTest {
         server.close();
         client.close();
 
-        requestChannel.close();
+        serverRequestChannel.close();
     }
 
     @Test

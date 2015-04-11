@@ -43,9 +43,10 @@ public class MoldUDP64RequestServerTest {
 
     @Before
     public void setUp() throws Exception {
-        DatagramChannel clientChannel  = DatagramChannels.openClientChannel();
-        DatagramChannel serverChannel  = DatagramChannels.openServerChannel(clientChannel);
-        DatagramChannel requestChannel = DatagramChannels.openRequestChannel();
+        DatagramChannel clientChannel = DatagramChannels.openClientChannel();
+        DatagramChannel serverChannel = DatagramChannels.openServerChannel(clientChannel);
+
+        DatagramChannel serverRequestChannel = DatagramChannels.openServerRequestChannel();
 
         packet = new MoldUDP64DownstreamPacket();
 
@@ -53,10 +54,12 @@ public class MoldUDP64RequestServerTest {
 
         clientStatus = new MoldUDP64ClientStatus();
 
-        client = new MoldUDP64Client(clientChannel, requestChannel.getLocalAddress(), clientMessages, clientStatus);
+        client = new MoldUDP64Client(clientChannel, serverRequestChannel.getLocalAddress(),
+                clientMessages, clientStatus);
+
         server = new MoldUDP64Server(serverChannel, "nassau");
 
-        requestServer = new MoldUDP64RequestServer(requestChannel);
+        requestServer = new MoldUDP64RequestServer(serverRequestChannel);
 
         store = new MoldUDP64DefaultMessageStore();
 

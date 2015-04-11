@@ -26,7 +26,7 @@ class DatagramChannels {
         return channel;
     }
 
-    static DatagramChannel openRequestChannel() throws IOException {
+    static DatagramChannel openServerRequestChannel() throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
         channel.bind(null);
         channel.configureBlocking(false);
