@@ -16,6 +16,21 @@ Add a Maven dependency to Nassau:
     </dependency>
 
 
+Features
+--------
+
+Nassau implements the following protocols:
+
+  - **NASDAQ SoupBinTCP 3.00**: a reliable transport protocol for applications
+    requiring delivery of delimited, sequenced messages between two endpoints.
+
+  - **NASDAQ MoldUDP64 1.00**: a reliable transport protocol for applications
+    requiring delivery of delimited, sequenced messages from one sender to
+    many receivers.
+
+  - **NASDAQ BinaryFILE 1.00**: a file format for storing delimited messages.
+
+
 License
 -------
 
