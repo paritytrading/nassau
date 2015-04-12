@@ -28,8 +28,6 @@ public class MoldUDP64ServerTest {
 
     private FixedClock clock;
 
-    private DatagramChannel serverRequestChannel;
-
     private MoldUDP64DownstreamPacket packet;
 
     private Messages<String> clientMessages;
@@ -39,14 +37,16 @@ public class MoldUDP64ServerTest {
     private MoldUDP64Client client;
     private MoldUDP64Server server;
 
+    private MoldUDP64RequestServer requestServer;
+
     @Before
     public void setUp() throws Exception {
         DatagramChannel clientChannel = DatagramChannels.openClientChannel();
         DatagramChannel serverChannel = DatagramChannels.openServerChannel(clientChannel);
 
-        clock = new FixedClock();
+        DatagramChannel serverRequestChannel = DatagramChannels.openServerRequestChannel();
 
-        serverRequestChannel = DatagramChannels.openServerRequestChannel();
+        clock = new FixedClock();
 
         packet = new MoldUDP64DownstreamPacket();
 
@@ -58,14 +58,16 @@ public class MoldUDP64ServerTest {
                 clientMessages, clientStatus);
 
         server = new MoldUDP64Server(clock, serverChannel, "nassau");
+
+        requestServer = new MoldUDP64RequestServer(serverRequestChannel);
     }
 
     @After
     public void tearDown() throws Exception {
+        requestServer.close();
+
         server.close();
         client.close();
-
-        serverRequestChannel.close();
     }
 
     @Test
@@ -75,13 +77,14 @@ public class MoldUDP64ServerTest {
 
         server.send(packet);
 
+        client.receive();
+
         packet.clear();
         packet.put(wrap("bar"));
 
         server.send(packet);
 
-        while (clientMessages.collect().size() != 2)
-            client.receive();
+        client.receive();
 
         assertEquals(asList("foo", "bar"), clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream(), new Downstream()),
@@ -96,14 +99,15 @@ public class MoldUDP64ServerTest {
 
         server.send(packet);
 
+        client.receive();
+
         packet.clear();
         packet.put(wrap("baz"));
         packet.put(wrap("quux"));
 
         server.send(packet);
 
-        while (clientMessages.collect().size() != 4)
-            client.receive();
+        client.receive();
 
         assertEquals(asList("foo", "bar", "baz", "quux"), clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream(), new Downstream()),
@@ -114,8 +118,7 @@ public class MoldUDP64ServerTest {
     public void heartbeat() throws Exception {
         server.sendHeartbeat();
 
-        while (clientStatus.collect().size() != 2)
-            client.receive();
+        client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
@@ -126,8 +129,7 @@ public class MoldUDP64ServerTest {
     public void endOfSession() throws Exception {
         server.sendEndOfSession();
 
-        while (clientStatus.collect().size() != 3)
-            client.receive();
+        client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream()),
@@ -168,8 +170,7 @@ public class MoldUDP64ServerTest {
 
         server.send(packet);
 
-        while (clientMessages.collect().size() != 1)
-            client.receive();
+        client.receive();
 
         assertEquals(asList(message), clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
