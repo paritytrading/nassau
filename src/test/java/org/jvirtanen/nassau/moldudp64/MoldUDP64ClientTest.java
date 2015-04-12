@@ -7,6 +7,7 @@ import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatus.*;
 import static org.jvirtanen.nassau.util.Strings.*;
 
 import java.nio.channels.DatagramChannel;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -31,6 +32,8 @@ public class MoldUDP64ClientTest {
 
     private MoldUDP64RequestServer requestServer;
 
+    private MoldUDP64DefaultMessageStore store;
+
     @Before
     public void setUp() throws Exception {
         DatagramChannel clientChannel = DatagramChannels.openClientChannel();
@@ -50,6 +53,8 @@ public class MoldUDP64ClientTest {
         server = new MoldUDP64Server(serverChannel, "nassau");
 
         requestServer = new MoldUDP64RequestServer(serverRequestChannel);
+
+        store = new MoldUDP64DefaultMessageStore();
     }
 
     @After
@@ -62,11 +67,18 @@ public class MoldUDP64ClientTest {
 
     @Test
     public void concurrentGapFill() throws Exception {
+        List<String> messages = asList("foo", "bar", "baz", "quux", "xyzzy");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
         packet.clear();
         packet.put(wrap("bar"));
 
         server.nextSequenceNumber = 2;
         server.send(packet);
+
+        client.receive();
 
         packet.clear();
         packet.put(wrap("baz"));
@@ -75,24 +87,13 @@ public class MoldUDP64ClientTest {
         server.nextSequenceNumber = 3;
         server.send(packet);
 
-        while (clientStatus.collect().size() != 3)
-            client.receive();
+        client.receive();
 
-        packet.clear();
-        packet.put(wrap("foo"));
-        packet.put(wrap("bar"));
+        requestServer.serve(store);
+        requestServer.serve(store);
 
-        server.nextSequenceNumber = 1;
-        server.send(packet);
-
-        packet.clear();
-        packet.put(wrap("foo"));
-        packet.put(wrap("bar"));
-        packet.put(wrap("baz"));
-        packet.put(wrap("quux"));
-
-        server.nextSequenceNumber = 1;
-        server.send(packet);
+        client.receive();
+        client.receive();
 
         packet.clear();
         packet.put(wrap("xyzzy"));
@@ -100,10 +101,9 @@ public class MoldUDP64ClientTest {
         server.nextSequenceNumber = 5;
         server.send(packet);
 
-        while (clientMessages.collect().size() != 5)
-            client.receive();
+        client.receive();
 
-        assertEquals(asList("foo", "bar", "baz", "quux", "xyzzy"), clientMessages.collect());
+        assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 4),
                     new Downstream(), new State(SYNCHRONIZED), new Downstream(),
                     new Downstream()), clientStatus.collect());
@@ -111,8 +111,15 @@ public class MoldUDP64ClientTest {
 
     @Test
     public void gapFillAfterEndOfSession() throws Exception {
+        List<String> messages = asList("foo", "bar");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
         server.nextSequenceNumber = 1;
         server.sendEndOfSession();
+
+        client.receive();
 
         packet.clear();
         packet.put(wrap("bar"));
@@ -120,17 +127,13 @@ public class MoldUDP64ClientTest {
         server.nextSequenceNumber = 2;
         server.send(packet);
 
-        packet.clear();
-        packet.put(wrap("foo"));
-        packet.put(wrap("bar"));
+        client.receive();
 
-        server.nextSequenceNumber = 1;
-        server.send(packet);
+        requestServer.serve(store);
 
-        while (clientMessages.collect().size() != 2)
-            client.receive();
+        client.receive();
 
-        assertEquals(asList("foo", "bar"), clientMessages.collect());
+        assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream(),
                 new State(GAP_FILL), new Request(1, 2), new State(SYNCHRONIZED),
                 new Downstream()), clientStatus.collect());
