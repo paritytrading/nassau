@@ -1,6 +1,7 @@
 package org.jvirtanen.nassau.moldudp64;
 
 import static org.jvirtanen.nassau.moldudp64.MoldUDP64.*;
+import static org.jvirtanen.nassau.moldudp64.MoldUDP64Client.*;
 import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
@@ -24,8 +25,6 @@ import org.jvirtanen.nassau.MessageListener;
  * at a time.</p>
  */
 public class SingleChannelMoldUDP64Client implements Closeable {
-
-    private static final int RX_BUFFER_LENGTH = 65535;
 
     private DatagramChannel channel;
 
@@ -162,13 +161,13 @@ public class SingleChannelMoldUDP64Client implements Closeable {
             statusListener.endOfSession();
         } else {
             while (sequenceNumber < nextExpectedSequenceNumber) {
-                skip();
+                skip(rxBuffer);
 
                 sequenceNumber++;
             }
 
             while (nextExpectedSequenceNumber < nextSequenceNumber) {
-                read();
+                read(rxBuffer, listener);
 
                 nextExpectedSequenceNumber++;
             }
@@ -195,39 +194,6 @@ public class SingleChannelMoldUDP64Client implements Closeable {
         statusListener.request(nextExpectedSequenceNumber, requestedMessageCount);
     }
 
-    private void read() throws IOException {
-        int messageLength = readMessageLength();
-
-        int limit = rxBuffer.limit();
-
-        rxBuffer.limit(rxBuffer.position() + messageLength);
-
-        listener.message(rxBuffer);
-
-        rxBuffer.position(rxBuffer.limit());
-        rxBuffer.limit(limit);
-    }
-
-    private void skip() throws IOException {
-        int messageLength = readMessageLength();
-
-        rxBuffer.position(rxBuffer.position() + messageLength);
-    }
-
-    private int readMessageLength() throws IOException {
-        if (rxBuffer.remaining() < 2)
-            throw truncatedPacket();
-
-        rxBuffer.order(ByteOrder.BIG_ENDIAN);
-
-        int messageLength = getUnsignedShort(rxBuffer);
-
-        if (rxBuffer.remaining() < messageLength)
-            throw truncatedPacket();
-
-        return messageLength;
-    }
-
     /**
      * Close the underlying datagram channel.
      *
@@ -236,10 +202,6 @@ public class SingleChannelMoldUDP64Client implements Closeable {
     @Override
     public void close() throws IOException {
         channel.close();
-    }
-
-    private MoldUDP64Exception truncatedPacket() {
-        return new MoldUDP64Exception("Truncated packet");
     }
 
 }
