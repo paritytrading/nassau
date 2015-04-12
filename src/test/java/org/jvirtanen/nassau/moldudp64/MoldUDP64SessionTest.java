@@ -8,6 +8,7 @@ import static org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatus.*;
 import static org.jvirtanen.nassau.util.Strings.*;
 
 import java.nio.channels.DatagramChannel;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,13 +19,13 @@ import org.jvirtanen.nassau.Messages;
 import org.jvirtanen.nassau.util.FixedClock;
 import org.jvirtanen.nassau.util.Strings;
 
-public class MoldUDP64ServerTest {
-
-    @Rule
-    public Timeout timeout = new Timeout(1000);
+public class MoldUDP64SessionTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    @Rule
+    public Timeout timeout = new Timeout(1000);
 
     private FixedClock clock;
 
@@ -38,6 +39,8 @@ public class MoldUDP64ServerTest {
     private MoldUDP64Server server;
 
     private MoldUDP64RequestServer requestServer;
+
+    private MoldUDP64DefaultMessageStore store;
 
     @Before
     public void setUp() throws Exception {
@@ -60,6 +63,8 @@ public class MoldUDP64ServerTest {
         server = new MoldUDP64Server(clock, serverChannel, "nassau");
 
         requestServer = new MoldUDP64RequestServer(serverRequestChannel);
+
+        store = new MoldUDP64DefaultMessageStore();
     }
 
     @After
@@ -182,6 +187,136 @@ public class MoldUDP64ServerTest {
         exception.expect(MoldUDP64Exception.class);
 
         packet.put(wrap(repeat('X', 1399)));
+    }
+
+    @Test
+    public void backfill() throws Exception {
+        List<String> messages = asList("foo", "bar", "baz", "quux");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
+        packet.put(wrap("quux"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        client.receive();
+
+        requestServer.serve(store);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(BACKFILL), new Request(1, 4),
+                    new State(SYNCHRONIZED), new Downstream()), clientStatus.collect());
+    }
+
+    @Test
+    public void gapFill() throws Exception {
+        List<String> messages = asList("foo", "bar", "baz", "quux");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
+        packet.clear();
+        packet.put(wrap("foo"));
+
+        server.nextSequenceNumber = 1;
+        server.send(packet);
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("quux"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        client.receive();
+
+        requestServer.serve(store);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+                    new State(GAP_FILL), new Request(2, 3),
+                    new State(SYNCHRONIZED), new Downstream()), clientStatus.collect());
+    }
+
+    @Test
+    public void concurrentGapFill() throws Exception {
+        List<String> messages = asList("foo", "bar", "baz", "quux", "xyzzy");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 2;
+        server.send(packet);
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("baz"));
+        packet.put(wrap("quux"));
+
+        server.nextSequenceNumber = 3;
+        server.send(packet);
+
+        client.receive();
+
+        requestServer.serve(store);
+        requestServer.serve(store);
+
+        client.receive();
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("xyzzy"));
+
+        server.nextSequenceNumber = 5;
+        server.send(packet);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 4),
+                    new Downstream(), new State(SYNCHRONIZED), new Downstream(),
+                    new Downstream()), clientStatus.collect());
+    }
+
+    @Test
+    public void gapFillAfterEndOfSession() throws Exception {
+        List<String> messages = asList("foo", "bar");
+
+        for (String message : messages)
+            store.put(wrap(message));
+
+        server.nextSequenceNumber = 1;
+        server.sendEndOfSession();
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 2;
+        server.send(packet);
+
+        client.receive();
+
+        requestServer.serve(store);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream(),
+                new State(GAP_FILL), new Request(1, 2), new State(SYNCHRONIZED),
+                new Downstream()), clientStatus.collect());
     }
 
 }
