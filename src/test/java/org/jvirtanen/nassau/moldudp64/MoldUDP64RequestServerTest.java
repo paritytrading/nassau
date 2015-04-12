@@ -39,8 +39,6 @@ public class MoldUDP64RequestServerTest {
 
     private MoldUDP64DefaultMessageStore store;
 
-    private BackgroundRequestServer backgroundRequestServer;
-
     @Before
     public void setUp() throws Exception {
         DatagramChannel clientChannel = DatagramChannels.openClientChannel();
@@ -62,16 +60,10 @@ public class MoldUDP64RequestServerTest {
         requestServer = new MoldUDP64RequestServer(serverRequestChannel);
 
         store = new MoldUDP64DefaultMessageStore();
-
-        backgroundRequestServer = new BackgroundRequestServer(requestServer, store);
-
-        backgroundRequestServer.start();
     }
 
     @After
     public void tearDown() throws Exception {
-        backgroundRequestServer.stop();
-
         requestServer.close();
 
         client.close();
@@ -90,8 +82,11 @@ public class MoldUDP64RequestServerTest {
         server.nextSequenceNumber = 4;
         server.send(packet);
 
-        while (clientMessages.collect().size() != 4)
-            client.receive();
+        client.receive();
+
+        requestServer.serve(store);
+
+        client.receive();
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 4),
@@ -111,14 +106,19 @@ public class MoldUDP64RequestServerTest {
         server.nextSequenceNumber = 1;
         server.send(packet);
 
+        client.receive();
+
         packet.clear();
         packet.put(wrap("quux"));
 
         server.nextSequenceNumber = 4;
         server.send(packet);
 
-        while (clientMessages.collect().size() != 4)
-            client.receive();
+        client.receive();
+
+        requestServer.serve(store);
+
+        client.receive();
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
