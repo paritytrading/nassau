@@ -13,9 +13,17 @@ import java.nio.channels.DatagramChannel;
 import org.jvirtanen.nassau.MessageListener;
 
 /**
- * An implementation of a MoldUDP64 client.
+ * A single-channel implementation of a MoldUDP64 client. This implementation
+ * uses the same channel for receiving downstream packets and sending request
+ * packets.
+ *
+ * <p>Using one channel is simpler and more efficient than using two channels.
+ * However, it results in the source UDP port in request packets being equal
+ * to the UDP port of the IP multicast. Therefore only one instance of this
+ * implementation can be listening to a particular session on a particular host
+ * at a time.</p>
  */
-public class MoldUDP64Client implements Closeable {
+public class SingleChannelMoldUDP64Client implements Closeable {
 
     private static final int RX_BUFFER_LENGTH = 65535;
 
@@ -55,7 +63,7 @@ public class MoldUDP64Client implements Closeable {
      * @param listener the inbound message listener
      * @param statusListener the inbound status event listener
      */
-    public MoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
+    public SingleChannelMoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
             MessageListener listener, MoldUDP64ClientStatusListener statusListener) {
         this.channel = channel;
 
