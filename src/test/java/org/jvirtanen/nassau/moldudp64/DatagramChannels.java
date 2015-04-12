@@ -12,6 +12,7 @@ class DatagramChannels {
 
     static DatagramChannel openClientChannel() throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
+
         channel.bind(null);
         channel.setOption(StandardSocketOptions.IP_MULTICAST_IF, loopbackInterface());
         channel.join(multicastGroup(), loopbackInterface());
@@ -21,6 +22,7 @@ class DatagramChannels {
 
     static DatagramChannel openServerChannel(DatagramChannel clientChannel) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
+
         channel.connect(new InetSocketAddress(multicastGroup(), getLocalPort(clientChannel)));
 
         return channel;
@@ -28,6 +30,7 @@ class DatagramChannels {
 
     static DatagramChannel openServerRequestChannel() throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
+
         channel.bind(null);
 
         return channel;
