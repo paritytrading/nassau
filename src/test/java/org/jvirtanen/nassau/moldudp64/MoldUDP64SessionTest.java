@@ -28,7 +28,8 @@ public class MoldUDP64SessionTest {
     @Parameters
     public static List<Object[]> parameters() {
         return asList(new Object[][] {
-            { new MoldUDP64TestClientFactory.SingleChannel() }
+            { new MoldUDP64TestClientFactory.SingleChannel() },
+            { new MoldUDP64TestClientFactory.MultiChannel()  },
         });
     }
 

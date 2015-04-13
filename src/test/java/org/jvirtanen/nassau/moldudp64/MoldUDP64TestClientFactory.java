@@ -42,4 +42,38 @@ abstract class MoldUDP64TestClientFactory {
 
     }
 
+    public static class MultiChannel extends MoldUDP64TestClientFactory {
+
+        @Override
+        public MoldUDP64TestClient create(DatagramChannel clientChannel,
+                DatagramChannel serverRequestChannel, MessageListener listener,
+                MoldUDP64ClientStatusListener statusListener) throws IOException {
+            DatagramChannel clientRequestChannel = DatagramChannels.openClientRequestChannel(
+                    serverRequestChannel);
+
+            final MultiChannelMoldUDP64Client client = new MultiChannelMoldUDP64Client(
+                    clientChannel, clientRequestChannel, listener, statusListener);
+
+            return new MoldUDP64TestClient() {
+
+                @Override
+                public void receive() throws IOException {
+                    client.receive();
+                }
+
+                @Override
+                public void receiveResponse() throws IOException {
+                    client.receiveResponse();
+                }
+
+                @Override
+                public void close() throws IOException {
+                    client.close();
+                }
+
+            };
+        }
+
+    }
+
 }

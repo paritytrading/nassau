@@ -36,6 +36,14 @@ class DatagramChannels {
         return channel;
     }
 
+    static DatagramChannel openClientRequestChannel(DatagramChannel serverRequestChannel) throws IOException {
+        DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
+
+        channel.connect(serverRequestChannel.getLocalAddress());
+
+        return channel;
+    }
+
     private static InetAddress multicastGroup() throws IOException {
         return InetAddress.getByName("224.0.0.1");
     }
