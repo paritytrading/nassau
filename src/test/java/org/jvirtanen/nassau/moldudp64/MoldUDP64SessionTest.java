@@ -15,17 +15,31 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized;
 import org.jvirtanen.nassau.Messages;
 import org.jvirtanen.nassau.util.FixedClock;
 import org.jvirtanen.nassau.util.Strings;
 
+@RunWith(Parameterized.class)
 public class MoldUDP64SessionTest {
+
+    @Parameters
+    public static List<Object[]> parameters() {
+        return asList(new Object[][] {
+            { new MoldUDP64TestClientFactory.SingleChannel() },
+            { new MoldUDP64TestClientFactory.MultiChannel()  },
+        });
+    }
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Rule
     public Timeout timeout = new Timeout(1000);
+
+    private MoldUDP64TestClientFactory clientFactory;
 
     private FixedClock clock;
 
@@ -35,12 +49,17 @@ public class MoldUDP64SessionTest {
 
     private MoldUDP64ClientStatus clientStatus;
 
-    private MoldUDP64Client client;
+    private MoldUDP64TestClient client;
+
     private MoldUDP64Server server;
 
     private MoldUDP64RequestServer requestServer;
 
     private MoldUDP64DefaultMessageStore store;
+
+    public MoldUDP64SessionTest(MoldUDP64TestClientFactory clientFactory) {
+        this.clientFactory = clientFactory;
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -57,8 +76,8 @@ public class MoldUDP64SessionTest {
 
         clientStatus = new MoldUDP64ClientStatus();
 
-        client = new MoldUDP64Client(clientChannel, serverRequestChannel.getLocalAddress(),
-                clientMessages, clientStatus);
+        client = clientFactory.create(clientChannel, serverRequestChannel, clientMessages,
+                clientStatus);
 
         server = new MoldUDP64Server(clock, serverChannel, "nassau");
 
@@ -205,7 +224,7 @@ public class MoldUDP64SessionTest {
 
         requestServer.serve(store);
 
-        client.receive();
+        client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 4),
@@ -237,7 +256,7 @@ public class MoldUDP64SessionTest {
 
         requestServer.serve(store);
 
-        client.receive();
+        client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
@@ -272,8 +291,8 @@ public class MoldUDP64SessionTest {
         requestServer.serve(store);
         requestServer.serve(store);
 
-        client.receive();
-        client.receive();
+        client.receiveResponse();
+        client.receiveResponse();
 
         packet.clear();
         packet.put(wrap("xyzzy"));
@@ -311,7 +330,7 @@ public class MoldUDP64SessionTest {
 
         requestServer.serve(store);
 
-        client.receive();
+        client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream(),
