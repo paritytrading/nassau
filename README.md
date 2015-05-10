@@ -30,10 +30,6 @@ Nassau implements the following protocols:
 
   - **NASDAQ BinaryFILE 1.00**: a file format for storing delimited messages.
 
-
-Usage
------
-
 Besides the library, Nassau contains the following applications:
 
   - [**SoupBinTCP Performance Test**](nassau-soupbintcp-perf-test) is a simple
