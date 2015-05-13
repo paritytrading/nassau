@@ -8,12 +8,12 @@ public class ProtocolException extends IOException {
         super(message);
     }
 
-    public ProtocolException(String message, Throwable reason) {
-        super(message, reason);
+    public ProtocolException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public ProtocolException(Throwable reason) {
-        super(reason);
+    public ProtocolException(Throwable cause) {
+        super(cause);
     }
 
 }
