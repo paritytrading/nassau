@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * <code>MessageListener</code> is the interface for inbound messages.
+ * The interface for inbound messages.
  */
 public interface MessageListener {
 
