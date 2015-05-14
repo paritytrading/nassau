@@ -47,6 +47,7 @@
   <modules>
     <module>nassau</module>
     <module>nassau-soupbintcp-perf-test</module>
+    <module>nassau-binaryfile-perf-test</module>
   </modules>
 
   <dependencyManagement>

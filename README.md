@@ -35,6 +35,9 @@ Besides the library, Nassau contains the following applications:
   - [**SoupBinTCP Performance Test**](nassau-soupbintcp-perf-test) is a simple
     latency benchmark for the SoupBinTCP implementation.
 
+  - [**BinaryFILE Performance Test**](nassau-binaryfile-perf-test) is a simple
+    throughput benchmark for the BinaryFILE implementation.
+
 
 License
 -------
