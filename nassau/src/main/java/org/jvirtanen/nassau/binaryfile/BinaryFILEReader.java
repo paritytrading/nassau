@@ -63,7 +63,7 @@ public class BinaryFILEReader implements Closeable {
         FileInputStream stream = new FileInputStream(file);
 
         if (file.getName().endsWith(".gz"))
-            return new BinaryFILEReader(new GZIPInputStream(stream), listener);
+            return new BinaryFILEReader(new GZIPInputStream(stream, 65536), listener);
         else
             return new BinaryFILEReader(stream.getChannel(), listener);
     }
