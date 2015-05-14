@@ -14,39 +14,15 @@ import org.junit.Test;
 
 public class MoldUDP64DefaultMessageStoreTest {
 
-    private static final int LENGTH = 2 * MIN_BLOCK_SIZE / 3;
-
     private MoldUDP64DefaultMessageStore store;
 
     private ByteBuffer buffer;
 
     @Before
     public void setUp() {
-        store = new MoldUDP64DefaultMessageStore(MIN_BLOCK_SIZE);
+        store = new MoldUDP64DefaultMessageStore();
 
-        buffer = ByteBuffer.allocate(2 * MIN_BLOCK_SIZE);
-    }
-
-    @Test
-    public void blockAllocation() throws Exception {
-        List<String> messages = asList(repeat('A', LENGTH), repeat('B', LENGTH), repeat('C', LENGTH));
-
-        for (String message : messages)
-            store.put(wrap(message));
-
-        int messageCount = store.get(buffer, 1, messages.size());
-        assertEquals(messageCount, 2);
-
-        buffer.flip();
-
-        for (int i = 0; i < 2; i++) {
-            String message = messages.get(i);
-
-            assertEquals(message.length(), getUnsignedShort(buffer));
-            assertEquals(message, get(buffer, message.length()));
-        }
-
-        assertFalse(buffer.hasRemaining());
+        buffer = ByteBuffer.allocate(1024);
     }
 
     @Test

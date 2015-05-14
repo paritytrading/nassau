@@ -13,40 +13,14 @@ import org.jvirtanen.nassau.MessageListener;
  */
 public class MoldUDP64DefaultMessageStore implements MoldUDP64MessageStore {
 
-    /**
-     * The minimum block size is 4 KiB.
-     */
-    public static final int MIN_BLOCK_SIZE = 4 * 1024;
-
-    /**
-     * The default block size is 64 MiB.
-     */
-    public static final int DEFAULT_BLOCK_SIZE = 64 * 1024 * 1024;
-
-    private int blockSize;
-
-    private Block block;
-
-    private List<Message> messages;
+    private List<byte[]> messages;
 
     private MessageListener listener;
 
     /**
-     * Create a message store using the default block size.
+     * Create a message store.
      */
     public MoldUDP64DefaultMessageStore() {
-        this(DEFAULT_BLOCK_SIZE);
-    }
-
-    /**
-     * Create a message store using a custom block size.
-     *
-     * @param blockSize the block size
-     */
-    public MoldUDP64DefaultMessageStore(int blockSize) {
-        this.blockSize = Math.max(blockSize, MIN_BLOCK_SIZE);
-
-        this.block    = new Block(this.blockSize);
         this.messages = new ArrayList<>();
         this.listener = new MessageListener() {
 
@@ -66,14 +40,11 @@ public class MoldUDP64DefaultMessageStore implements MoldUDP64MessageStore {
     public void put(ByteBuffer buffer) {
         int length = buffer.remaining();
 
-        if (block.remaining() < length)
-            block = new Block(blockSize);
+        byte[] message = new byte[length];
 
-        int offset = block.position();
+        buffer.get(message);
 
-        block.put(buffer);
-
-        messages.add(new Message(block, offset, length));
+        messages.add(message);
     }
 
     /**
@@ -100,60 +71,18 @@ public class MoldUDP64DefaultMessageStore implements MoldUDP64MessageStore {
             if (i > messages.size())
                 break;
 
-            Message message = messages.get(i - 1);
+            byte[] message = messages.get(i - 1);
 
             if (buffer.remaining() < 2 + message.length)
                 break;
 
             putUnsignedShort(buffer, message.length);
-            message.block.get(buffer, message.offset, message.length);
+            buffer.put(message);
 
             messageCount++;
         }
 
         return messageCount;
-    }
-
-    private static class Message {
-        Block block;
-        int   offset;
-        int   length;
-
-        Message(Block block, int offset, int length) {
-            this.block  = block;
-            this.offset = offset;
-            this.length = length;
-        }
-    }
-
-    private static class Block {
-        byte[] bytes;
-        int    position;
-
-        Block(int blockSize) {
-            this.bytes    = new byte[blockSize];
-            this.position = 0;
-        }
-
-        void put(ByteBuffer buffer) {
-            int length = buffer.remaining();
-
-            buffer.get(bytes, position, length);
-
-            position += length;
-        }
-
-        void get(ByteBuffer buffer, int offset, int length) {
-            buffer.put(bytes, offset, length);
-        }
-
-        int position() {
-            return position;
-        }
-
-        int remaining() {
-            return bytes.length - position;
-        }
     }
 
 }
