@@ -4,18 +4,6 @@ Nassau
 Nassau implements NASDAQ transport protocols on the JVM.
 
 
-Download
---------
-
-Add a Maven dependency to Nassau:
-
-    <dependency>
-      <groupId>org.jvirtanen.nassau</groupId>
-      <artifactId>nassau</artifactId>
-      <version><!-- latest version --></version>
-    </dependency>
-
-
 Features
 --------
 
@@ -37,6 +25,18 @@ Besides the library, Nassau contains the following applications:
 
   - [**BinaryFILE Performance Test**](nassau-binaryfile-perf-test) is a simple
     throughput benchmark for the BinaryFILE implementation.
+
+
+Download
+--------
+
+Add a Maven dependency to Nassau:
+
+    <dependency>
+      <groupId>org.jvirtanen.nassau</groupId>
+      <artifactId>nassau</artifactId>
+      <version><!-- latest version --></version>
+    </dependency>
 
 
 License
