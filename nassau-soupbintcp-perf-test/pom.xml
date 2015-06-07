@@ -9,7 +9,6 @@
     <version>0.4.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.jvirtanen.nassau</groupId>
   <artifactId>nassau-soupbintcp-perf-test</artifactId>
 
   <name>Nassau SoupBinTCP Performance Test</name>
