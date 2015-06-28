@@ -1,5 +1,6 @@
 package org.jvirtanen.nassau.moldudp64;
 
+import static java.nio.charset.StandardCharsets.*;
 import static java.util.Arrays.*;
 
 import java.nio.charset.Charset;
@@ -17,8 +18,6 @@ class MoldUDP64 {
     static final int MAX_PAYLOAD_LENGTH = 1400;
 
     static final int SESSION_LENGTH = 10;
-
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
 
     private static final byte SPACE = ' ';
 

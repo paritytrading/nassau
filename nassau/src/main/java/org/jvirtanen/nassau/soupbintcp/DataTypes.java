@@ -1,5 +1,7 @@
 package org.jvirtanen.nassau.soupbintcp;
 
+import static java.nio.charset.StandardCharsets.*;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -7,8 +9,6 @@ import java.nio.charset.Charset;
 class DataTypes {
 
     private static final byte SPACE = ' ';
-
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
 
     static String getAlphanumeric(ByteBuffer buffer, int length) {
         byte[] bytes = new byte[length];
