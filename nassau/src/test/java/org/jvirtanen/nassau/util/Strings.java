@@ -1,7 +1,8 @@
 package org.jvirtanen.nassau.util;
 
+import static java.nio.charset.StandardCharsets.*;
+
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import org.jvirtanen.nassau.MessageParser;
 
 public class Strings {
@@ -17,8 +18,6 @@ public class Strings {
         }
 
     };
-
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     public static String get(ByteBuffer buffer, int length) {
         byte[] bytes = new byte[length];
