@@ -23,12 +23,12 @@ public class SoupBinTCP {
         public String session;
         public long   sequenceNumber;
 
-        public void get(ByteBuffer buffer) throws IOException {
+        void get(ByteBuffer buffer) throws IOException {
             session        = getAlphanumeric(buffer, 10);
             sequenceNumber = getNumeric(buffer, 20);
         }
 
-        public void put(ByteBuffer buffer) {
+        void put(ByteBuffer buffer) {
             putAlphanumericPadLeft(buffer, session, 10);
             putNumeric(buffer, sequenceNumber, 20);
         }
@@ -40,11 +40,11 @@ public class SoupBinTCP {
     public static class LoginRejected {
         public byte rejectReasonCode;
 
-        public void get(ByteBuffer buffer) {
+        void get(ByteBuffer buffer) {
             rejectReasonCode = buffer.get();
         }
 
-        public void put(ByteBuffer buffer) {
+        void put(ByteBuffer buffer) {
             buffer.put(rejectReasonCode);
         }
     }
@@ -58,14 +58,14 @@ public class SoupBinTCP {
         public String requestedSession;
         public long   requestedSequenceNumber;
 
-        public void get(ByteBuffer buffer) throws IOException {
+        void get(ByteBuffer buffer) throws IOException {
             username                = getAlphanumeric(buffer,  6);
             password                = getAlphanumeric(buffer, 10);
             requestedSession        = getAlphanumeric(buffer, 10);
             requestedSequenceNumber = getNumeric(buffer, 20);
         }
 
-        public void put(ByteBuffer buffer) {
+        void put(ByteBuffer buffer) {
             putAlphanumericPadRight(buffer, username, 6);
             putAlphanumericPadRight(buffer, password, 10);
             putAlphanumericPadLeft(buffer, requestedSession, 10);
