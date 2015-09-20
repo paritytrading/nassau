@@ -304,8 +304,8 @@ public class MoldUDP64SessionTest {
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 2), new Request(1, 4),
-                    new Downstream(), new State(SYNCHRONIZED), new Downstream(),
-                    new Downstream()), clientStatus.collect());
+                    new Downstream(), new Request(3, 2), new State(SYNCHRONIZED),
+                    new Downstream(), new Downstream()), clientStatus.collect());
     }
 
     @Test
