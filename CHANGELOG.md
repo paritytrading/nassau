@@ -2,6 +2,17 @@ Release Notes
 =============
 
 
+0.5.0 (2015-09-27)
+------------------
+
+- Improve MoldUDP64 gap fill performance
+- Improve MoldUDP64 default message store performance
+- Improve BinaryFILE performance
+- Add BinaryFILE performance test
+- Improve API documentation
+- Add SoupBinTCP performance test
+
+
 0.4.0 (2015-04-13)
 ------------------
 
