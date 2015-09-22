@@ -205,6 +205,13 @@ public class MultiChannelMoldUDP64Client implements Closeable {
             }
 
             statusListener.downstream();
+
+            if (nextEstimatedSequenceNumber > nextSequenceNumber) {
+                int requestedMessageCount = (int)Math.min(nextEstimatedSequenceNumber - nextExpectedSequenceNumber,
+                        MAX_MESSAGE_COUNT);
+
+                request(requestedMessageCount);
+            }
         }
     }
 

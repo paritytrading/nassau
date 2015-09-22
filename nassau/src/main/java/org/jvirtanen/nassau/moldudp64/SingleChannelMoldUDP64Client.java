@@ -174,6 +174,13 @@ public class SingleChannelMoldUDP64Client implements Closeable {
         }
 
         statusListener.downstream();
+
+        if (nextEstimatedSequenceNumber > nextSequenceNumber) {
+            int requestedMessageCount = (int)Math.min(nextEstimatedSequenceNumber - nextExpectedSequenceNumber,
+                    MAX_MESSAGE_COUNT);
+
+            request(requestedMessageCount);
+        }
     }
 
     private void state(MoldUDP64ClientState next) throws IOException {
