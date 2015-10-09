@@ -17,7 +17,7 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
 
     /*
      * The RX buffer length on the client side must be equal to or greater than
-     * the length of the payload in an Order Accepted packet.
+     * the length of the payload in a Login Accepted packet.
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 30;
 

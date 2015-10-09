@@ -17,7 +17,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
 
     /*
      * The RX buffer length on the server side must be equal to or greater than
-     * the length of the payload in an Order Request packet.
+     * the length of the payload in a Login Request packet.
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 46;
 
