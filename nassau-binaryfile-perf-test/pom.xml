@@ -15,7 +15,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.jvirtanen.nassau</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>nassau</artifactId>
       <version>${project.version}</version>
     </dependency>
