@@ -23,6 +23,23 @@ public class SoupBinTCP {
         public String session;
         public long   sequenceNumber;
 
+        /**
+         * Construct an instance.
+         */
+        public LoginAccepted() {
+        }
+
+        /**
+         * Construct an instance.
+         *
+         * @param session the session
+         * @param sequenceNumber the sequence number
+         */
+        public LoginAccepted(String session, long sequenceNumber) {
+            this.session        = session;
+            this.sequenceNumber = sequenceNumber;
+        }
+
         void get(ByteBuffer buffer) throws IOException {
             session        = getAlphanumeric(buffer, 10);
             sequenceNumber = getNumeric(buffer, 20);
@@ -39,6 +56,21 @@ public class SoupBinTCP {
      */
     public static class LoginRejected {
         public byte rejectReasonCode;
+
+        /**
+         * Construct an instance.
+         */
+        public LoginRejected() {
+        }
+
+        /**
+         * Construct an instance.
+         *
+         * @param rejectReasonCode the reject reason code
+         */
+        public LoginRejected(byte rejectReasonCode) {
+            this.rejectReasonCode = rejectReasonCode;
+        }
 
         void get(ByteBuffer buffer) {
             rejectReasonCode = buffer.get();
@@ -57,6 +89,28 @@ public class SoupBinTCP {
         public String password;
         public String requestedSession;
         public long   requestedSequenceNumber;
+
+        /**
+         * Construct an instance.
+         */
+        public LoginRequest() {
+        }
+
+        /**
+         * Construct an instance.
+         *
+         * @param username the username
+         * @param password the password
+         * @param requestedSession the requested session
+         * @param requestedSequenceNumber the requested sequence number
+         */
+        public LoginRequest(String username, String password, String requestedSession,
+                long requestedSequenceNumber) {
+            this.username                = username;
+            this.password                = password;
+            this.requestedSession        = requestedSession;
+            this.requestedSequenceNumber = requestedSequenceNumber;
+        }
 
         void get(ByteBuffer buffer) throws IOException {
             username                = getAlphanumeric(buffer,  6);
