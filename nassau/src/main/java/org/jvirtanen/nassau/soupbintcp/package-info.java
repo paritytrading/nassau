@@ -11,8 +11,9 @@
  *   ({@link org.jvirtanen.nassau.soupbintcp.SoupBinTCPSession#keepAlive})</li>
  * </ul>
  *
- * <p>All three primary functions can run on different threads. Alternately,
- * two or all three of them can run on the same thread.</p>
+ * <p>Data reception can run on one thread and data transmission and session
+ * keep-alive on another without locking. Data transmission and session
+ * keep-alive can run on different threads but require locking.</p>
  *
  * <p>The underlying socket channels can be either blocking or non-blocking.
  * In both cases, data transmission always blocks.</p>
