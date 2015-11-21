@@ -27,20 +27,20 @@ public abstract class SoupBinTCPSession implements Closeable {
     private SoupBinTCPSessionStatusListener statusListener;
 
     /*
-     * These variables are written on data reception and data transmission,
-     * respectively, and read on session keep-alive. All three functions can
-     * run on different threads.
+     * This variable is written on data reception and read on session
+     * keep-alive. These two functions can run on different threads
+     * without locking.
      */
     private volatile long lastRxMillis;
-    private volatile long lastTxMillis;
-
-    private ByteBuffer rxBuffer;
 
     /*
-     * Both data transmission and session keep-alive write to the socket. These
-     * functions can run on different threads.
+     * This variable is written on data transmission and read on session
+     * keep-alive. These two functions can run on different threads but
+     * require locking.
      */
-    private Object txLock;
+    private long lastTxMillis;
+
+    private ByteBuffer rxBuffer;
 
     private   ByteBuffer txHeader;
     protected ByteBuffer txPayload;
@@ -61,8 +61,6 @@ public abstract class SoupBinTCPSession implements Closeable {
         this.lastTxMillis = clock.currentTimeMillis();
 
         this.rxBuffer = ByteBuffer.allocate(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
-
-        this.txLock = new Object();
 
         /*
          * The built-in payload transmit buffer is used for Login Accepted,
@@ -171,11 +169,9 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         int remaining = txHeader.remaining() + payload.remaining();
 
-        synchronized (txLock) {
-            do {
-                remaining -= channel.write(txBuffers);
-            } while (remaining > 0);
-        }
+        do {
+            remaining -= channel.write(txBuffers);
+        } while (remaining > 0);
 
         sentData();
     }
@@ -183,11 +179,9 @@ public abstract class SoupBinTCPSession implements Closeable {
     private void heartbeat() throws IOException {
         txHeartbeat.flip();
 
-        synchronized (txLock) {
-            do {
-                channel.write(txHeartbeat);
-            } while (txHeartbeat.remaining() > 0);
-        }
+        do {
+            channel.write(txHeartbeat);
+        } while (txHeartbeat.remaining() > 0);
 
         sentData();
     }
