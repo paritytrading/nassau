@@ -24,6 +24,9 @@ See the [Wiki][] for links to the protocol specifications.
 
 Besides the library, Nassau contains the following applications:
 
+  - [**SoupBinTCP Gateway**](nassau-soupbintcp-gateway) bridges the MoldUDP64
+    protocol to the SoupBinTCP protocol.
+
   - [**SoupBinTCP Performance Test**](nassau-soupbintcp-perf-test) is a simple
     latency benchmark for the SoupBinTCP implementation.
 

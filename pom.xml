@@ -46,12 +46,18 @@
 
   <modules>
     <module>nassau</module>
+    <module>nassau-soupbintcp-gateway</module>
     <module>nassau-soupbintcp-perf-test</module>
     <module>nassau-binaryfile-perf-test</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.typesafe</groupId>
+        <artifactId>config</artifactId>
+        <version>1.3.0</version>
+      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -61,6 +67,11 @@
         <groupId>org.hdrhistogram</groupId>
         <artifactId>HdrHistogram</artifactId>
         <version>2.1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.config</groupId>
+        <artifactId>config-extras</artifactId>
+        <version>0.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.nio</groupId>
@@ -132,7 +143,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>*.perf</excludePackageNames>
+          <excludePackageNames>org.jvirtanen.nassau.soupbintcp.gateway:*.perf</excludePackageNames>
         </configuration>
       </plugin>
       <plugin>
