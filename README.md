@@ -3,6 +3,8 @@ Nassau
 
 Nassau implements NASDAQ transport protocols on the JVM.
 
+Nassau requires Java Runtime Environment (JRE) 7 or newer.
+
 
 Features
 --------
