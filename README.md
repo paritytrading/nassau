@@ -3,9 +3,9 @@ Nassau
 
 Nassau implements NASDAQ transport protocols on the JVM.
 
-You can use Nassau to connect to NASDAQ and other network endpoints that use
-NASDAQ transport protocols. You can also use it to provide your own services
-using these protocols.
+You can use Nassau to connect to NASDAQ, SIX Swiss Exchange, and other network
+endpoints that use NASDAQ transport protocols. You can also use it to provide
+your own services using these protocols.
 
 Nassau requires Java Runtime Environment (JRE) 7 or newer.
 
