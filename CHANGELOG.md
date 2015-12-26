@@ -2,6 +2,14 @@ Release Notes
 =============
 
 
+0.7.0 (2015-12-26)
+------------------
+
+- Improve SoupBinTCP API
+- Improve SoupBinTCP performance
+- Introduce SoupBinTCP gateway
+
+
 0.6.0 (2015-10-06)
 ------------------
 
