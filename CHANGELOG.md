@@ -7,7 +7,7 @@ Release Notes
 
 - Improve SoupBinTCP API
 - Improve SoupBinTCP performance
-- Introduce SoupBinTCP gateway
+- Add SoupBinTCP gateway
 
 
 0.6.0 (2015-10-06)
