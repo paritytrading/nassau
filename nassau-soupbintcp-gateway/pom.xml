@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.jvirtanen.nassau</groupId>
     <artifactId>nassau-parent</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
+    <version>0.7.0</version>
   </parent>
 
   <artifactId>nassau-soupbintcp-gateway</artifactId>
