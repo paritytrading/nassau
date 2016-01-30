@@ -1,5 +1,7 @@
 package org.jvirtanen.nassau.binaryfile.perf;
 
+import static org.jvirtanen.util.Applications.*;
+
 import java.io.File;
 import java.io.IOException;
 import org.jvirtanen.nassau.binaryfile.BinaryFILEReader;
@@ -10,7 +12,7 @@ class PerfTest {
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage();
+            usage("nassau-binaryfile-perf-test <input-file>");
 
         String inputFilename = args[0];
 
@@ -45,11 +47,6 @@ class PerfTest {
         System.out.printf("        Time: %13.2f s\n", seconds);
         System.out.printf("  Throughput: %13.2f messages/s\n", messages / seconds);
         System.out.printf("\n");
-    }
-
-    private static void usage() {
-        System.err.println("Usage: nassau-binaryfile-perf-test <input-file>");
-        System.exit(2);
     }
 
 }
