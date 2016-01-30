@@ -51,7 +51,7 @@ class Gateway {
     }
 
     private static void usage() {
-        System.err.println("Usage: soupbintcp-gateway <configuration-file>");
+        System.err.println("Usage: nassau-soupbintcp-gateway <configuration-file>");
         System.exit(2);
     }
 
