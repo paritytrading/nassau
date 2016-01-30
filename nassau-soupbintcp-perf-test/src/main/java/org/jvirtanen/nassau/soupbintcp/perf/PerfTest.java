@@ -1,25 +1,24 @@
 package org.jvirtanen.nassau.soupbintcp.perf;
 
+import static org.jvirtanen.util.Applications.*;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 
 class PerfTest {
 
+    private static final String USAGE = "nassau-soupbintcp-perf-test <packets>";
+
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage();
+            usage(USAGE);
 
         try {
             main(Integer.parseInt(args[0]));
         } catch (NumberFormatException e) {
-            usage();
+            usage(USAGE);
         }
-    }
-
-    private static void usage() {
-        System.err.println("Usage: nassau-soupbintcp-perf-test <packets>");
-        System.exit(2);
     }
 
     private static void main(int packets) throws IOException {
