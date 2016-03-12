@@ -1,7 +1,6 @@
 package org.jvirtanen.nassau.soupbintcp;
 
 import static org.jvirtanen.nassau.soupbintcp.Packets.*;
-import static org.jvirtanen.nassau.soupbintcp.SoupBinTCP.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.io.IOException;
@@ -10,17 +9,9 @@ import java.nio.ByteOrder;
 
 class PacketParser {
 
-    private LoginAccepted loginAccepted;
-    private LoginRejected loginRejected;
-    private LoginRequest  loginRequest;
-
     private SoupBinTCPSession session;
 
     PacketParser(SoupBinTCPSession session) {
-        this.loginAccepted = new LoginAccepted();
-        this.loginRejected = new LoginRejected();
-        this.loginRequest  = new LoginRequest();
-
         this.session = session;
     }
 
@@ -61,10 +52,10 @@ class PacketParser {
             session.debug(buffer);
             break;
         case PACKET_TYPE_LOGIN_ACCEPTED:
-            loginAccepted(buffer);
+            session.loginAccepted(buffer);
             break;
         case PACKET_TYPE_LOGIN_REJECTED:
-            loginRejected(buffer);
+            session.loginRejected(buffer);
             break;
         case PACKET_TYPE_SEQUENCED_DATA:
             session.sequencedData(buffer);
@@ -76,7 +67,7 @@ class PacketParser {
             session.endOfSession();
             break;
         case PACKET_TYPE_LOGIN_REQUEST:
-            loginRequest(buffer);
+            session.loginRequest(buffer);
             break;
         case PACKET_TYPE_UNSEQUENCED_DATA:
             session.unsequencedData(buffer);
@@ -90,21 +81,6 @@ class PacketParser {
         default:
             throw new SoupBinTCPException("Unknown packet type: " + (char)packetType);
         }
-    }
-
-    private void loginAccepted(ByteBuffer buffer) throws IOException {
-        loginAccepted.get(buffer);
-        session.loginAccepted(loginAccepted);
-    }
-
-    private void loginRejected(ByteBuffer buffer) throws IOException {
-        loginRejected.get(buffer);
-        session.loginRejected(loginRejected);
-    }
-
-    private void loginRequest(ByteBuffer buffer) throws IOException {
-        loginRequest.get(buffer);
-        session.loginRequest(loginRequest);
     }
 
 }

@@ -1,7 +1,6 @@
 package org.jvirtanen.nassau.soupbintcp;
 
 import static org.jvirtanen.nassau.soupbintcp.Packets.*;
-import static org.jvirtanen.nassau.soupbintcp.SoupBinTCP.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.io.Closeable;
@@ -148,9 +147,9 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     protected abstract void debug(ByteBuffer buffer) throws IOException;
 
-    protected abstract void loginAccepted(LoginAccepted payload) throws IOException;
+    protected abstract void loginAccepted(ByteBuffer buffer) throws IOException;
 
-    protected abstract void loginRejected(LoginRejected payload) throws IOException;
+    protected abstract void loginRejected(ByteBuffer buffer) throws IOException;
 
     protected abstract void sequencedData(ByteBuffer buffer) throws IOException;
 
@@ -158,7 +157,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     protected abstract void endOfSession() throws IOException;
 
-    protected abstract void loginRequest(LoginRequest payload) throws IOException;
+    protected abstract void loginRequest(ByteBuffer buffer) throws IOException;
 
     protected abstract void unsequencedData(ByteBuffer buffer) throws IOException;
 

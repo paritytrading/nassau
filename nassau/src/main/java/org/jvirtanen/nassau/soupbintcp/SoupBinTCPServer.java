@@ -21,6 +21,8 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 46;
 
+    private LoginRequest loginRequest;
+
     private MessageListener listener;
 
     private SoupBinTCPServerStatusListener statusListener;
@@ -66,6 +68,8 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
             final MessageListener listener, final SoupBinTCPServerStatusListener statusListener) {
         super(clock, channel, Math.max(MIN_MAX_PAYLOAD_LENGTH, maxPayloadLength),
                 PACKET_TYPE_SERVER_HEARTBEAT);
+
+        this.loginRequest = new LoginRequest();
 
         this.listener = listener;
 
@@ -129,12 +133,12 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
     }
 
     @Override
-    protected void loginAccepted(LoginAccepted payload) throws IOException {
+    protected void loginAccepted(ByteBuffer buffer) throws IOException {
         unexpectedPacketType(PACKET_TYPE_LOGIN_ACCEPTED);
     }
 
     @Override
-    protected void loginRejected(LoginRejected payload) throws IOException {
+    protected void loginRejected(ByteBuffer buffer) throws IOException {
         unexpectedPacketType(PACKET_TYPE_LOGIN_REJECTED);
     }
 
@@ -154,8 +158,9 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
     }
 
     @Override
-    protected void loginRequest(LoginRequest payload) throws IOException {
-        statusListener.loginRequest(payload);
+    protected void loginRequest(ByteBuffer buffer) throws IOException {
+        loginRequest.get(buffer);
+        statusListener.loginRequest(loginRequest);
     }
 
     @Override
