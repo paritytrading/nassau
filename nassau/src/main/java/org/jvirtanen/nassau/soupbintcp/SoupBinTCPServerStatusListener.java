@@ -7,7 +7,14 @@ import java.io.IOException;
 /**
  * The interface for inbound status events on the server side.
  */
-public interface SoupBinTCPServerStatusListener extends SoupBinTCPSessionStatusListener {
+public interface SoupBinTCPServerStatusListener {
+
+    /**
+     * Receive an indication of a heartbeat timeout.
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    void heartbeatTimeout() throws IOException;
 
     /**
      * Receive a Login Request packet.

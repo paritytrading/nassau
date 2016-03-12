@@ -21,6 +21,8 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 46;
 
+    private SoupBinTCPServerStatusListener statusListener;
+
     /**
      * Create a server. The underlying socket channel can be either blocking
      * or non-blocking.
@@ -111,7 +113,9 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
                 statusListener.logoutRequest();
             }
 
-        }, statusListener);
+        });
+
+        this.statusListener = statusListener;
     }
 
     /**
@@ -159,6 +163,11 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     public void send(ByteBuffer buffer) throws IOException {
         send(PACKET_TYPE_SEQUENCED_DATA, buffer);
+    }
+
+    @Override
+    protected void heartbeatTimeout() throws IOException {
+        statusListener.heartbeatTimeout();
     }
 
 }

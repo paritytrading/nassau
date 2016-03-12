@@ -21,6 +21,8 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 30;
 
+    private SoupBinTCPClientStatusListener statusListener;
+
     /**
      * Create a client. The underlying socket channel can be either blocking
      * or non-blocking.
@@ -111,7 +113,9 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
                 unexpectedPacketType(PACKET_TYPE_LOGOUT_REQUEST);
             }
 
-        }, statusListener);
+        });
+
+        this.statusListener = statusListener;
     }
 
     /**
@@ -145,6 +149,11 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
      */
     public void send(ByteBuffer buffer) throws IOException {
         send(PACKET_TYPE_UNSEQUENCED_DATA, buffer);
+    }
+
+    @Override
+    protected void heartbeatTimeout() throws IOException {
+        statusListener.heartbeatTimeout();
     }
 
 }
