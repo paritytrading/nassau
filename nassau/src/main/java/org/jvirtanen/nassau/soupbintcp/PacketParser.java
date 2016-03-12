@@ -14,14 +14,14 @@ class PacketParser {
     private LoginRejected loginRejected;
     private LoginRequest  loginRequest;
 
-    private PacketListener listener;
+    private SoupBinTCPSession session;
 
-    PacketParser(PacketListener listener) {
+    PacketParser(SoupBinTCPSession session) {
         this.loginAccepted = new LoginAccepted();
         this.loginRejected = new LoginRejected();
         this.loginRequest  = new LoginRequest();
 
-        this.listener = listener;
+        this.session = session;
     }
 
     boolean parse(ByteBuffer buffer) throws IOException {
@@ -58,7 +58,7 @@ class PacketParser {
     private void parse(byte packetType, ByteBuffer buffer) throws IOException {
         switch (packetType) {
         case PACKET_TYPE_DEBUG:
-            listener.debug(buffer);
+            session.debug(buffer);
             break;
         case PACKET_TYPE_LOGIN_ACCEPTED:
             loginAccepted(buffer);
@@ -67,25 +67,25 @@ class PacketParser {
             loginRejected(buffer);
             break;
         case PACKET_TYPE_SEQUENCED_DATA:
-            listener.sequencedData(buffer);
+            session.sequencedData(buffer);
             break;
         case PACKET_TYPE_SERVER_HEARTBEAT:
-            listener.serverHeartbeat();
+            session.serverHeartbeat();
             break;
         case PACKET_TYPE_END_OF_SESSION:
-            listener.endOfSession();
+            session.endOfSession();
             break;
         case PACKET_TYPE_LOGIN_REQUEST:
             loginRequest(buffer);
             break;
         case PACKET_TYPE_UNSEQUENCED_DATA:
-            listener.unsequencedData(buffer);
+            session.unsequencedData(buffer);
             break;
         case PACKET_TYPE_CLIENT_HEARTBEAT:
-            listener.clientHeartbeat();
+            session.clientHeartbeat();
             break;
         case PACKET_TYPE_LOGOUT_REQUEST:
-            listener.logoutRequest();
+            session.logoutRequest();
             break;
         default:
             throw new SoupBinTCPException("Unknown packet type: " + (char)packetType);
@@ -94,17 +94,17 @@ class PacketParser {
 
     private void loginAccepted(ByteBuffer buffer) throws IOException {
         loginAccepted.get(buffer);
-        listener.loginAccepted(loginAccepted);
+        session.loginAccepted(loginAccepted);
     }
 
     private void loginRejected(ByteBuffer buffer) throws IOException {
         loginRejected.get(buffer);
-        listener.loginRejected(loginRejected);
+        session.loginRejected(loginRejected);
     }
 
     private void loginRequest(ByteBuffer buffer) throws IOException {
         loginRequest.get(buffer);
-        listener.loginRequest(loginRequest);
+        session.loginRequest(loginRequest);
     }
 
 }

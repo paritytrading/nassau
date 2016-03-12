@@ -1,6 +1,7 @@
 package org.jvirtanen.nassau.soupbintcp;
 
 import static org.jvirtanen.nassau.soupbintcp.Packets.*;
+import static org.jvirtanen.nassau.soupbintcp.SoupBinTCP.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.io.Closeable;
@@ -48,10 +49,10 @@ public abstract class SoupBinTCPSession implements Closeable {
     private ByteBuffer txHeartbeat;
 
     protected SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
-            byte heartbeatPacketType, PacketListener listener) {
+            byte heartbeatPacketType) {
         this.clock   = clock;
         this.channel = channel;
-        this.parser  = new PacketParser(listener);
+        this.parser  = new PacketParser(this);
 
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
@@ -144,6 +145,26 @@ public abstract class SoupBinTCPSession implements Closeable {
     }
 
     protected abstract void heartbeatTimeout() throws IOException;
+
+    protected abstract void debug(ByteBuffer buffer) throws IOException;
+
+    protected abstract void loginAccepted(LoginAccepted payload) throws IOException;
+
+    protected abstract void loginRejected(LoginRejected payload) throws IOException;
+
+    protected abstract void sequencedData(ByteBuffer buffer) throws IOException;
+
+    protected abstract void serverHeartbeat() throws IOException;
+
+    protected abstract void endOfSession() throws IOException;
+
+    protected abstract void loginRequest(LoginRequest payload) throws IOException;
+
+    protected abstract void unsequencedData(ByteBuffer buffer) throws IOException;
+
+    protected abstract void clientHeartbeat() throws IOException;
+
+    protected abstract void logoutRequest() throws IOException;
 
     protected void send(byte packetType) throws IOException {
         txPayload.clear();

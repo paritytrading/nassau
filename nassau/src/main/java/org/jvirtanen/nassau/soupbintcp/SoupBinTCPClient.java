@@ -21,6 +21,8 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 30;
 
+    private MessageListener listener;
+
     private SoupBinTCPClientStatusListener statusListener;
 
     /**
@@ -63,57 +65,9 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
     public SoupBinTCPClient(Clock clock, SocketChannel channel, int maxPayloadLength,
             final MessageListener listener, final SoupBinTCPClientStatusListener statusListener) {
         super(clock, channel, Math.max(MIN_MAX_PAYLOAD_LENGTH, maxPayloadLength),
-                PACKET_TYPE_CLIENT_HEARTBEAT, new PacketListener() {
+                PACKET_TYPE_CLIENT_HEARTBEAT);
 
-            @Override
-            public void debug(ByteBuffer buffer) throws IOException {
-            }
-
-            @Override
-            public void loginAccepted(LoginAccepted payload) throws IOException {
-                statusListener.loginAccepted(payload);
-            }
-
-            @Override
-            public void loginRejected(LoginRejected payload) throws IOException {
-                statusListener.loginRejected(payload);
-            }
-
-            @Override
-            public void sequencedData(ByteBuffer buffer) throws IOException {
-                listener.message(buffer);
-            }
-
-            @Override
-            public void serverHeartbeat() {
-            }
-
-            @Override
-            public void endOfSession() throws IOException {
-                statusListener.endOfSession();
-            }
-
-            @Override
-            public void loginRequest(LoginRequest payload) throws IOException {
-                unexpectedPacketType(PACKET_TYPE_LOGIN_REQUEST);
-            }
-
-            @Override
-            public void unsequencedData(ByteBuffer buffer) throws IOException {
-                unexpectedPacketType(PACKET_TYPE_UNSEQUENCED_DATA);
-            }
-
-            @Override
-            public void clientHeartbeat() throws IOException {
-                unexpectedPacketType(PACKET_TYPE_CLIENT_HEARTBEAT);
-            }
-
-            @Override
-            public void logoutRequest() throws IOException {
-                unexpectedPacketType(PACKET_TYPE_LOGOUT_REQUEST);
-            }
-
-        });
+        this.listener = listener;
 
         this.statusListener = statusListener;
     }
@@ -154,6 +108,54 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
     @Override
     protected void heartbeatTimeout() throws IOException {
         statusListener.heartbeatTimeout();
+    }
+
+    @Override
+    protected void debug(ByteBuffer buffer) {
+    }
+
+    @Override
+    protected void loginAccepted(LoginAccepted payload) throws IOException {
+        statusListener.loginAccepted(payload);
+    }
+
+    @Override
+    protected void loginRejected(LoginRejected payload) throws IOException {
+        statusListener.loginRejected(payload);
+    }
+
+    @Override
+    protected void sequencedData(ByteBuffer buffer) throws IOException {
+        listener.message(buffer);
+    }
+
+    @Override
+    protected void serverHeartbeat() {
+    }
+
+    @Override
+    protected void endOfSession() throws IOException {
+        statusListener.endOfSession();
+    }
+
+    @Override
+    protected void loginRequest(LoginRequest payload) throws IOException {
+        unexpectedPacketType(PACKET_TYPE_LOGIN_REQUEST);
+    }
+
+    @Override
+    protected void unsequencedData(ByteBuffer buffer) throws IOException {
+        unexpectedPacketType(PACKET_TYPE_UNSEQUENCED_DATA);
+    }
+
+    @Override
+    protected void clientHeartbeat() throws IOException {
+        unexpectedPacketType(PACKET_TYPE_CLIENT_HEARTBEAT);
+    }
+
+    @Override
+    protected void logoutRequest() throws IOException {
+        unexpectedPacketType(PACKET_TYPE_LOGOUT_REQUEST);
     }
 
 }
