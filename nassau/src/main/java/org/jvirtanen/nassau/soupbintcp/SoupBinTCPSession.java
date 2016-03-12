@@ -132,9 +132,9 @@ public abstract class SoupBinTCPSession implements Closeable {
         long currentTimeMillis = clock.currentTimeMillis();
 
         if (currentTimeMillis - lastRxMillis > RX_HEARTBEAT_TIMEOUT_MILLIS)
-            heartbeatTimeout();
+            handleHeartbeatTimeout();
         else if (currentTimeMillis - lastTxMillis > TX_HEARTBEAT_INTERVAL_MILLIS)
-            heartbeat();
+            sendHeartbeat();
     }
 
     /**
@@ -176,7 +176,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         sentData();
     }
 
-    private void heartbeat() throws IOException {
+    private void sendHeartbeat() throws IOException {
         txHeartbeat.flip();
 
         do {
@@ -186,7 +186,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         sentData();
     }
 
-    private void heartbeatTimeout() throws IOException {
+    private void handleHeartbeatTimeout() throws IOException {
         statusListener.heartbeatTimeout();
 
         receivedData();
