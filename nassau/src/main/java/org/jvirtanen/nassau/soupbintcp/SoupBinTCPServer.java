@@ -65,7 +65,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      * @param statusListener the inbound status event listener
      */
     public SoupBinTCPServer(Clock clock, SocketChannel channel, int maxPayloadLength,
-            final MessageListener listener, final SoupBinTCPServerStatusListener statusListener) {
+            MessageListener listener, SoupBinTCPServerStatusListener statusListener) {
         super(clock, channel, Math.max(MIN_MAX_PAYLOAD_LENGTH, maxPayloadLength),
                 PACKET_TYPE_SERVER_HEARTBEAT);
 
