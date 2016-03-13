@@ -10,26 +10,30 @@ public interface MoldUDP64ClientStatusListener {
     /**
      * Indicates that the client state changed.
      *
+     * @param session the session
      * @param next the new client state
      * @throws IOException if an I/O error occurs
      */
-    void state(MoldUDP64ClientState next) throws IOException;
+    void state(MoldUDP64Client session, MoldUDP64ClientState next) throws IOException;
 
     /**
      * Indicates that a downstream packet was processed successfully.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
-    void downstream() throws IOException;
+    void downstream(MoldUDP64Client session) throws IOException;
 
     /**
      * Indicates that a request packet was sent.
      *
+     * @param session the session
      * @param sequenceNumber the sequence number
      * @param requestedMessageCount the requested message count
      * @throws IOException if an I/O error occurs
      */
-    void request(long sequenceNumber, int requestedMessageCount) throws IOException;
+    void request(MoldUDP64Client session, long sequenceNumber,
+            int requestedMessageCount) throws IOException;
 
     /**
      * Indicates that a downstream packet indicating the End of Session was
@@ -37,6 +41,6 @@ public interface MoldUDP64ClientStatusListener {
      *
      * @throws IOException if an I/O error occurs
      */
-    void endOfSession() throws IOException;
+    void endOfSession(MoldUDP64Client session) throws IOException;
 
 }

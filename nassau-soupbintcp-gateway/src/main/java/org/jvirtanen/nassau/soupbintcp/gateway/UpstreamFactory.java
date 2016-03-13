@@ -50,19 +50,19 @@ class UpstreamFactory {
         MoldUDP64ClientStatusListener statusListener = new MoldUDP64ClientStatusListener() {
 
             @Override
-            public void state(MoldUDP64ClientState next) {
+            public void state(MoldUDP64Client session, MoldUDP64ClientState next) {
             }
 
             @Override
-            public void downstream() {
+            public void downstream(MoldUDP64Client session) {
             }
 
             @Override
-            public void request(long sequenceNumber, int requestedMessageCount) {
+            public void request(MoldUDP64Client session, long sequenceNumber, int requestedMessageCount) {
             }
 
             @Override
-            public void endOfSession() throws IOException {
+            public void endOfSession(MoldUDP64Client session) throws IOException {
                 downstream.endSession();
             }
 
