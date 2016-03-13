@@ -22,8 +22,6 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private SocketChannel channel;
 
-    private PacketParser parser;
-
     /*
      * This variable is written on data reception and read on session
      * keep-alive. These two functions can run on different threads
@@ -51,7 +49,6 @@ public abstract class SoupBinTCPSession implements Closeable {
             byte heartbeatPacketType) {
         this.clock   = clock;
         this.channel = channel;
-        this.parser  = new PacketParser(this);
 
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
@@ -105,13 +102,44 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         rxBuffer.flip();
 
-        while (parser.parse(rxBuffer));
+        while (parse());
 
         rxBuffer.compact();
 
         receivedData();
 
         return bytes;
+    }
+
+    private boolean parse() throws IOException {
+        if (rxBuffer.remaining() < 2)
+            return false;
+
+        rxBuffer.mark();
+
+        rxBuffer.order(ByteOrder.BIG_ENDIAN);
+
+        int packetLength = getUnsignedShort(rxBuffer);
+        if (packetLength > rxBuffer.capacity() - 2)
+            throw new SoupBinTCPException("Packet length exceeds buffer capacity");
+
+        if (rxBuffer.remaining() < packetLength) {
+            rxBuffer.reset();
+            return false;
+        }
+
+        byte packetType = rxBuffer.get();
+
+        int limit = rxBuffer.limit();
+
+        rxBuffer.limit(rxBuffer.position() + packetLength - 1);
+
+        packet(packetType, rxBuffer);
+
+        rxBuffer.position(rxBuffer.limit());
+        rxBuffer.limit(limit);
+
+        return true;
     }
 
     /**
