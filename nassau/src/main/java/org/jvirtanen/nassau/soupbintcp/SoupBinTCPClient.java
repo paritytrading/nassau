@@ -117,53 +117,29 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
     }
 
     @Override
-    protected void debug(ByteBuffer buffer) {
-    }
-
-    @Override
-    protected void loginAccepted(ByteBuffer buffer) throws IOException {
-        loginAccepted.get(buffer);
-        statusListener.loginAccepted(loginAccepted);
-    }
-
-    @Override
-    protected void loginRejected(ByteBuffer buffer) throws IOException {
-        loginRejected.get(buffer);
-        statusListener.loginRejected(loginRejected);
-    }
-
-    @Override
-    protected void sequencedData(ByteBuffer buffer) throws IOException {
-        listener.message(buffer);
-    }
-
-    @Override
-    protected void serverHeartbeat() {
-    }
-
-    @Override
-    protected void endOfSession() throws IOException {
-        statusListener.endOfSession();
-    }
-
-    @Override
-    protected void loginRequest(ByteBuffer buffer) throws IOException {
-        unexpectedPacketType(PACKET_TYPE_LOGIN_REQUEST);
-    }
-
-    @Override
-    protected void unsequencedData(ByteBuffer buffer) throws IOException {
-        unexpectedPacketType(PACKET_TYPE_UNSEQUENCED_DATA);
-    }
-
-    @Override
-    protected void clientHeartbeat() throws IOException {
-        unexpectedPacketType(PACKET_TYPE_CLIENT_HEARTBEAT);
-    }
-
-    @Override
-    protected void logoutRequest() throws IOException {
-        unexpectedPacketType(PACKET_TYPE_LOGOUT_REQUEST);
+    protected void packet(byte packetType, ByteBuffer payload) throws IOException {
+        switch (packetType) {
+        case PACKET_TYPE_DEBUG:
+            break;
+        case PACKET_TYPE_LOGIN_ACCEPTED:
+            loginAccepted.get(payload);
+            statusListener.loginAccepted(loginAccepted);
+            break;
+        case PACKET_TYPE_LOGIN_REJECTED:
+            loginRejected.get(payload);
+            statusListener.loginRejected(loginRejected);
+            break;
+        case PACKET_TYPE_SEQUENCED_DATA:
+            listener.message(payload);
+            break;
+        case PACKET_TYPE_SERVER_HEARTBEAT:
+            break;
+        case PACKET_TYPE_END_OF_SESSION:
+            statusListener.endOfSession();
+            break;
+        default:
+            unexpectedPacketType(packetType);
+        }
     }
 
 }

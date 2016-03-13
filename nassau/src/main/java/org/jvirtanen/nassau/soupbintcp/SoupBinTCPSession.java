@@ -145,25 +145,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     protected abstract void heartbeatTimeout() throws IOException;
 
-    protected abstract void debug(ByteBuffer buffer) throws IOException;
-
-    protected abstract void loginAccepted(ByteBuffer buffer) throws IOException;
-
-    protected abstract void loginRejected(ByteBuffer buffer) throws IOException;
-
-    protected abstract void sequencedData(ByteBuffer buffer) throws IOException;
-
-    protected abstract void serverHeartbeat() throws IOException;
-
-    protected abstract void endOfSession() throws IOException;
-
-    protected abstract void loginRequest(ByteBuffer buffer) throws IOException;
-
-    protected abstract void unsequencedData(ByteBuffer buffer) throws IOException;
-
-    protected abstract void clientHeartbeat() throws IOException;
-
-    protected abstract void logoutRequest() throws IOException;
+    protected abstract void packet(byte packetType, ByteBuffer payload) throws IOException;
 
     protected void send(byte packetType) throws IOException {
         txPayload.clear();

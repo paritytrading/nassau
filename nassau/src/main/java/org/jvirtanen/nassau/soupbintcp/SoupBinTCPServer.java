@@ -129,52 +129,25 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
     }
 
     @Override
-    protected void debug(ByteBuffer buffer) {
-    }
-
-    @Override
-    protected void loginAccepted(ByteBuffer buffer) throws IOException {
-        unexpectedPacketType(PACKET_TYPE_LOGIN_ACCEPTED);
-    }
-
-    @Override
-    protected void loginRejected(ByteBuffer buffer) throws IOException {
-        unexpectedPacketType(PACKET_TYPE_LOGIN_REJECTED);
-    }
-
-    @Override
-    protected void sequencedData(ByteBuffer buffer) throws IOException {
-        unexpectedPacketType(PACKET_TYPE_SEQUENCED_DATA);
-    }
-
-    @Override
-    protected void serverHeartbeat() throws IOException {
-        unexpectedPacketType(PACKET_TYPE_SERVER_HEARTBEAT);
-    }
-
-    @Override
-    protected void endOfSession() throws IOException {
-        unexpectedPacketType(PACKET_TYPE_END_OF_SESSION);
-    }
-
-    @Override
-    protected void loginRequest(ByteBuffer buffer) throws IOException {
-        loginRequest.get(buffer);
-        statusListener.loginRequest(loginRequest);
-    }
-
-    @Override
-    protected void unsequencedData(ByteBuffer buffer) throws IOException {
-        listener.message(buffer);
-    }
-
-    @Override
-    protected void clientHeartbeat() {
-    }
-
-    @Override
-    protected void logoutRequest() throws IOException {
-        statusListener.logoutRequest();
+    protected void packet(byte packetType, ByteBuffer payload) throws IOException {
+        switch (packetType) {
+        case PACKET_TYPE_DEBUG:
+            break;
+        case PACKET_TYPE_LOGIN_REQUEST:
+            loginRequest.get(payload);
+            statusListener.loginRequest(loginRequest);
+            break;
+        case PACKET_TYPE_UNSEQUENCED_DATA:
+            listener.message(payload);
+            break;
+        case PACKET_TYPE_CLIENT_HEARTBEAT:
+            break;
+        case PACKET_TYPE_LOGOUT_REQUEST:
+            statusListener.logoutRequest();
+            break;
+        default:
+            unexpectedPacketType(packetType);
+        }
     }
 
 }
