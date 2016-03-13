@@ -52,15 +52,15 @@ class Server implements Closeable {
             transport = new SoupBinTCPServer(channel, this, new SoupBinTCPServerStatusListener() {
 
                 @Override
-                public void loginRequest(SoupBinTCP.LoginRequest message) {
+                public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest message) {
                 }
 
                 @Override
-                public void logoutRequest() {
+                public void logoutRequest(SoupBinTCPServer session) {
                 }
 
                 @Override
-                public void heartbeatTimeout() {
+                public void heartbeatTimeout(SoupBinTCPServer session) {
                 }
 
             });

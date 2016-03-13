@@ -12,31 +12,35 @@ public interface SoupBinTCPClientStatusListener {
     /**
      * Receive an indication of a heartbeat timeout.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
-    void heartbeatTimeout() throws IOException;
+    void heartbeatTimeout(SoupBinTCPClient session) throws IOException;
 
     /**
      * Receive a Login Accepted packet.
      *
+     * @param session the session
      * @param payload the packet payload
      * @throws IOException if an I/O error occurs
      */
-    void loginAccepted(LoginAccepted payload) throws IOException;
+    void loginAccepted(SoupBinTCPClient session, LoginAccepted payload) throws IOException;
 
     /**
      * Receive a Login Rejected packet.
      *
+     * @param session the session
      * @param payload the packet payload
      * @throws IOException if an I/O error occurs
      */
-    void loginRejected(LoginRejected payload) throws IOException;
+    void loginRejected(SoupBinTCPClient session, LoginRejected payload) throws IOException;
 
     /**
      * Receive an End Of Session packet.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
-    void endOfSession() throws IOException;
+    void endOfSession(SoupBinTCPClient session) throws IOException;
 
 }

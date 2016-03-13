@@ -231,7 +231,7 @@ public class MoldUDP64Client implements Closeable {
             }
 
             if (endOfSession) {
-                statusListener.endOfSession();
+                statusListener.endOfSession(this);
             } else {
                 long skipUntilSequenceNumber = Math.min(nextSequenceNumber, nextExpectedSequenceNumber);
 
@@ -248,7 +248,7 @@ public class MoldUDP64Client implements Closeable {
                 }
             }
 
-            statusListener.downstream();
+            statusListener.downstream(this);
         }
     }
 
@@ -264,7 +264,7 @@ public class MoldUDP64Client implements Closeable {
 
         while (requestChannel.send(txBuffer, requestAddress) == 0);
 
-        statusListener.request(requestFromSequenceNumber, requestedMessageCount);
+        statusListener.request(this, requestFromSequenceNumber, requestedMessageCount);
 
         requestSentMillis = clock.currentTimeMillis();
     }
@@ -272,7 +272,7 @@ public class MoldUDP64Client implements Closeable {
     private void state(MoldUDP64ClientState next) throws IOException {
         state = next;
 
-        statusListener.state(next);
+        statusListener.state(this, next);
     }
 
     private void read() throws IOException {

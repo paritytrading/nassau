@@ -12,23 +12,26 @@ public interface SoupBinTCPServerStatusListener {
     /**
      * Receive an indication of a heartbeat timeout.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
-    void heartbeatTimeout() throws IOException;
+    void heartbeatTimeout(SoupBinTCPServer session) throws IOException;
 
     /**
      * Receive a Login Request packet.
      *
+     * @param session the session
      * @param payload the packet payload
      * @throws IOException if an I/O error occurs
      */
-    void loginRequest(LoginRequest payload) throws IOException;
+    void loginRequest(SoupBinTCPServer session, LoginRequest payload) throws IOException;
 
     /**
      * Receive a Logout Request packet.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
-    void logoutRequest() throws IOException;
+    void logoutRequest(SoupBinTCPServer session) throws IOException;
 
 }

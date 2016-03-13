@@ -19,18 +19,18 @@ class SoupBinTCPServerStatus implements SoupBinTCPServerStatusListener {
     }
 
     @Override
-    public void loginRequest(SoupBinTCP.LoginRequest payload) {
+    public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) {
         events.add(new LoginRequest(payload.username, payload.password,
                     payload.requestedSession, payload.requestedSequenceNumber));
     }
 
     @Override
-    public void logoutRequest() {
+    public void logoutRequest(SoupBinTCPServer session) {
         events.add(new LogoutRequest());
     }
 
     @Override
-    public void heartbeatTimeout() {
+    public void heartbeatTimeout(SoupBinTCPServer session) {
         events.add(new HeartbeatTimeout());
     }
 

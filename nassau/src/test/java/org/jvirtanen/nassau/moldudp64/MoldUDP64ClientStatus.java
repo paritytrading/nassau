@@ -17,22 +17,22 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     @Override
-    public void state(MoldUDP64ClientState next) {
+    public void state(MoldUDP64Client session, MoldUDP64ClientState next) {
         events.add(new State(next));
     }
 
     @Override
-    public void downstream() {
+    public void downstream(MoldUDP64Client session) {
         events.add(new Downstream());
     }
 
     @Override
-    public void request(long sequenceNumber, int requestedMessageCount) {
+    public void request(MoldUDP64Client session, long sequenceNumber, int requestedMessageCount) {
         events.add(new Request(sequenceNumber, requestedMessageCount));
     }
 
     @Override
-    public void endOfSession() {
+    public void endOfSession(MoldUDP64Client session) {
         events.add(new EndOfSession());
     }
 
