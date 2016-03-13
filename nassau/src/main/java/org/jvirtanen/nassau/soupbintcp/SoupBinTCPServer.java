@@ -125,7 +125,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
 
     @Override
     protected void heartbeatTimeout() throws IOException {
-        statusListener.heartbeatTimeout();
+        statusListener.heartbeatTimeout(this);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
             break;
         case PACKET_TYPE_LOGIN_REQUEST:
             loginRequest.get(payload);
-            statusListener.loginRequest(loginRequest);
+            statusListener.loginRequest(this, loginRequest);
             break;
         case PACKET_TYPE_UNSEQUENCED_DATA:
             listener.message(payload);
@@ -143,7 +143,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
         case PACKET_TYPE_CLIENT_HEARTBEAT:
             break;
         case PACKET_TYPE_LOGOUT_REQUEST:
-            statusListener.logoutRequest();
+            statusListener.logoutRequest(this);
             break;
         default:
             unexpectedPacketType(packetType);

@@ -26,19 +26,19 @@ class Client implements Closeable, MessageListener {
         transport = new SoupBinTCPClient(channel, this, new SoupBinTCPClientStatusListener() {
 
             @Override
-            public void loginAccepted(SoupBinTCP.LoginAccepted payload) {
+            public void loginAccepted(SoupBinTCPClient session, SoupBinTCP.LoginAccepted payload) {
             }
 
             @Override
-            public void loginRejected(SoupBinTCP.LoginRejected payload) {
+            public void loginRejected(SoupBinTCPClient session, SoupBinTCP.LoginRejected payload) {
             }
 
             @Override
-            public void endOfSession() {
+            public void endOfSession(SoupBinTCPClient session) {
             }
 
             @Override
-            public void heartbeatTimeout() {
+            public void heartbeatTimeout(SoupBinTCPClient session) {
             }
 
         });

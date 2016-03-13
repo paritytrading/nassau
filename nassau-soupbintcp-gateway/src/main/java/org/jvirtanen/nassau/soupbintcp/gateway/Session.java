@@ -34,12 +34,12 @@ class Session implements Closeable, MessageListener, SoupBinTCPServerStatusListe
     }
 
     @Override
-    public void heartbeatTimeout() throws IOException {
+    public void heartbeatTimeout(SoupBinTCPServer session) throws IOException {
         close();
     }
 
     @Override
-    public void loginRequest(SoupBinTCP.LoginRequest payload) throws IOException {
+    public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) throws IOException {
         loginAccepted.session        = payload.requestedSession;
         loginAccepted.sequenceNumber = payload.requestedSequenceNumber;
 
@@ -47,7 +47,7 @@ class Session implements Closeable, MessageListener, SoupBinTCPServerStatusListe
     }
 
     @Override
-    public void logoutRequest() throws IOException {
+    public void logoutRequest(SoupBinTCPServer session) throws IOException {
         close();
     }
 
