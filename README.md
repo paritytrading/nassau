@@ -26,7 +26,7 @@ Nassau implements the following protocols:
 
 See the [Wiki][] for links to the protocol specifications.
 
-  [Wiki]: https://github.com/jvirtanen/nassau/wiki/
+  [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
 Besides the library, Nassau contains the following applications:
 
@@ -46,7 +46,7 @@ Download
 Add a Maven dependency to Nassau:
 
     <dependency>
-      <groupId>org.jvirtanen.nassau</groupId>
+      <groupId>com.paritytrading.nassau</groupId>
       <artifactId>nassau</artifactId>
       <version><!-- latest version --></version>
     </dependency>

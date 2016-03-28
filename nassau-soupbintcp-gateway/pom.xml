@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.jvirtanen.nassau</groupId>
+    <groupId>com.paritytrading.nassau</groupId>
     <artifactId>nassau-parent</artifactId>
     <version>0.8.2-SNAPSHOT</version>
   </parent>
@@ -41,7 +41,7 @@
         <configuration>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <mainClass>org.jvirtanen.nassau.soupbintcp.gateway.Gateway</mainClass>
+              <mainClass>com.paritytrading.nassau.soupbintcp.gateway.Gateway</mainClass>
             </transformer>
           </transformers>
         </configuration>
