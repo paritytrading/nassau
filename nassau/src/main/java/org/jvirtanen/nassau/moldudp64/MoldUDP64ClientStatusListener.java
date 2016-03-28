@@ -39,6 +39,7 @@ public interface MoldUDP64ClientStatusListener {
      * Indicates that a downstream packet indicating the End of Session was
      * received.
      *
+     * @param session the session
      * @throws IOException if an I/O error occurs
      */
     void endOfSession(MoldUDP64Client session) throws IOException;
