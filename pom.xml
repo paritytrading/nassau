@@ -9,14 +9,14 @@
     <version>7</version>
   </parent>
 
-  <groupId>org.jvirtanen.nassau</groupId>
+  <groupId>com.paritytrading.nassau</groupId>
   <artifactId>nassau-parent</artifactId>
   <version>0.8.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Nassau (Parent)</name>
   <description>NASDAQ transport protocols on the JVM.</description>
-  <url>https://github.com/jvirtanen/nassau</url>
+  <url>https://github.com/paritytrading/nassau</url>
 
   <licenses>
     <license>
@@ -28,14 +28,14 @@
   <developers>
     <developer>
       <name>Jussi Virtanen</name>
-      <email>jussi.k.virtanen@gmail.com</email>
+      <email>jussi.virtanen@paritytrading.com</email>
     </developer>
   </developers>
 
   <scm>
-    <connection>scm:git:git@github.com:jvirtanen/nassau.git</connection>
-    <developerConnection>scm:git:git@github.com:jvirtanen/nassau.git</developerConnection>
-    <url>https://github.com/jvirtanen/nassau</url>
+    <connection>scm:git:git@github.com:paritytrading/nassau.git</connection>
+    <developerConnection>scm:git:git@github.com:paritytrading/nassau.git</developerConnection>
+    <url>https://github.com/paritytrading/nassau</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -148,7 +148,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>org.jvirtanen.nassau.soupbintcp.gateway:*.perf</excludePackageNames>
+          <excludePackageNames>com.paritytrading.nassau.soupbintcp.gateway:*.perf</excludePackageNames>
           <show>public</show>
         </configuration>
       </plugin>
