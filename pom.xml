@@ -149,6 +149,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <excludePackageNames>org.jvirtanen.nassau.soupbintcp.gateway:*.perf</excludePackageNames>
+          <show>public</show>
         </configuration>
       </plugin>
       <plugin>
