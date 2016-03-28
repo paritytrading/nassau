@@ -2,6 +2,13 @@ Release Notes
 =============
 
 
+0.8.0 (2016-03-28)
+------------------
+
+- Add session parameter to MoldUDP64 client status listener
+- Add session parameter to SoupBinTCP session status listeners
+
+
 0.7.0 (2015-12-26)
 ------------------
 
