@@ -52,6 +52,17 @@ Add a Maven dependency to Nassau:
     </dependency>
 
 
+Links
+-----
+
+For more information about Nassau:
+
+  - Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
+    news and announcements
+  - Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
+    for discussions
+
+
 License
 -------
 
