@@ -43,7 +43,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private ByteBuffer[] txBuffers;
 
-    private ByteBuffer txHeartbeat;
+    private byte heartbeatPacketType;
 
     protected SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
             byte heartbeatPacketType) {
@@ -57,24 +57,20 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         /*
          * The built-in payload transmit buffer is used for Login Accepted,
-         * Login Rejected, End of Session, Login Request and Logout Request
-         * packets.
+         * Login Rejected, End of Session, Server Heartbeat, Login Request,
+         * Client Heartbeat, and Logout Request packets.
          */
         this.txHeader  = ByteBuffer.allocate(3);
         this.txPayload = ByteBuffer.allocate(46);
 
         this.txBuffers = new ByteBuffer[2];
 
-        this.txHeartbeat = ByteBuffer.allocate(3);
-
         this.txHeader.order(ByteOrder.BIG_ENDIAN);
         this.txPayload.order(ByteOrder.BIG_ENDIAN);
-        this.txHeartbeat.order(ByteOrder.BIG_ENDIAN);
 
         this.txBuffers[0] = txHeader;
 
-        putUnsignedShort(this.txHeartbeat, 1);
-        this.txHeartbeat.put(heartbeatPacketType);
+        this.heartbeatPacketType = heartbeatPacketType;
     }
 
     /**
@@ -158,7 +154,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         if (currentTimeMillis - lastRxMillis > RX_HEARTBEAT_TIMEOUT_MILLIS)
             handleHeartbeatTimeout();
         else if (currentTimeMillis - lastTxMillis > TX_HEARTBEAT_INTERVAL_MILLIS)
-            sendHeartbeat();
+            send(heartbeatPacketType);
     }
 
     /**
@@ -206,16 +202,6 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     protected void unexpectedPacketType(byte packetType) throws SoupBinTCPException {
         throw new SoupBinTCPException("Unexpected packet type: " + (char)packetType);
-    }
-
-    private void sendHeartbeat() throws IOException {
-        txHeartbeat.flip();
-
-        do {
-            channel.write(txHeartbeat);
-        } while (txHeartbeat.remaining() > 0);
-
-        sentData();
     }
 
     private void handleHeartbeatTimeout() throws IOException {
