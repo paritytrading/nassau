@@ -10,6 +10,30 @@ import java.nio.ByteBuffer;
  */
 public class SoupBinTCP {
 
+    /*
+     * These messages can be sent by both the client and server.
+     */
+    static final byte PACKET_TYPE_DEBUG = '+';
+
+    /*
+     * These messages are sent by the server to the client.
+     */
+    static final byte PACKET_TYPE_LOGIN_ACCEPTED   = 'A';
+    static final byte PACKET_TYPE_LOGIN_REJECTED   = 'J';
+    static final byte PACKET_TYPE_SEQUENCED_DATA   = 'S';
+    static final byte PACKET_TYPE_SERVER_HEARTBEAT = 'H';
+    static final byte PACKET_TYPE_END_OF_SESSION   = 'Z';
+
+    /*
+     * These messages are sent by the client to the server.
+     */
+    static final byte PACKET_TYPE_LOGIN_REQUEST    = 'L';
+    static final byte PACKET_TYPE_UNSEQUENCED_DATA = 'U';
+    static final byte PACKET_TYPE_CLIENT_HEARTBEAT = 'R';
+    static final byte PACKET_TYPE_LOGOUT_REQUEST   = 'O';
+
+    static final int MAX_PACKET_LENGTH = 65535;
+
     public static final byte LOGIN_REJECT_CODE_NOT_AUTHORIZED        = 'A';
     public static final byte LOGIN_REJECT_CODE_SESSION_NOT_AVAILABLE = 'S';
 

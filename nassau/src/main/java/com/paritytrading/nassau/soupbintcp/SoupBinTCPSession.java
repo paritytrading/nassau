@@ -1,6 +1,6 @@
 package com.paritytrading.nassau.soupbintcp;
 
-import static com.paritytrading.nassau.soupbintcp.Packets.*;
+import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 import static org.jvirtanen.nio.ByteBuffers.*;
 
 import com.paritytrading.nassau.util.Clock;
@@ -202,6 +202,10 @@ public abstract class SoupBinTCPSession implements Closeable {
         } while (remaining > 0);
 
         sentData();
+    }
+
+    protected void unexpectedPacketType(byte packetType) throws SoupBinTCPException {
+        throw new SoupBinTCPException("Unexpected packet type: " + (char)packetType);
     }
 
     private void sendHeartbeat() throws IOException {

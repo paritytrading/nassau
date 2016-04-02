@@ -1,6 +1,5 @@
 package com.paritytrading.nassau.soupbintcp;
 
-import static com.paritytrading.nassau.soupbintcp.Packets.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
 import java.io.IOException;
