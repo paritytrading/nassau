@@ -22,6 +22,8 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
 
     private LoginRequest loginRequest;
 
+    private ByteBuffer txPayload;
+
     private MessageListener listener;
 
     private SoupBinTCPServerStatusListener statusListener;
@@ -69,6 +71,12 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
                 PACKET_TYPE_SERVER_HEARTBEAT);
 
         this.loginRequest = new LoginRequest();
+
+        /*
+         * This built-in payload transmit buffer is used for Login Accepted
+         * and Login Rejected packets.
+         */
+        this.txPayload = ByteBuffer.allocate(30);
 
         this.listener = listener;
 
