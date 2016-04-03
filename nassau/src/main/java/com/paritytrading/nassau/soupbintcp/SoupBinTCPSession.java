@@ -151,10 +151,11 @@ public abstract class SoupBinTCPSession implements Closeable {
     public void keepAlive() throws IOException {
         long currentTimeMillis = clock.currentTimeMillis();
 
+        if (currentTimeMillis - lastTxMillis > TX_HEARTBEAT_INTERVAL_MILLIS)
+            send(heartbeatPacketType);
+
         if (currentTimeMillis - lastRxMillis > RX_HEARTBEAT_TIMEOUT_MILLIS)
             handleHeartbeatTimeout();
-        else if (currentTimeMillis - lastTxMillis > TX_HEARTBEAT_INTERVAL_MILLIS)
-            send(heartbeatPacketType);
     }
 
     /**
