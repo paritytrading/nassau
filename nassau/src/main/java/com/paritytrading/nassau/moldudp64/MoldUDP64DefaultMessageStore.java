@@ -2,11 +2,11 @@ package com.paritytrading.nassau.moldudp64;
 
 import static org.jvirtanen.nio.ByteBuffers.*;
 
+import com.paritytrading.nassau.MessageListener;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import com.paritytrading.nassau.MessageListener;
 
 /**
  * The default implementation of a MoldUDP64 message store.
