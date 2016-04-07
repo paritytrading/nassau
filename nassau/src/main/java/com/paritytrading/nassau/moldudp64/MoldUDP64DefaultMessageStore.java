@@ -1,6 +1,6 @@
 package com.paritytrading.nassau.moldudp64;
 
-import static org.jvirtanen.nio.ByteBuffers.*;
+import static com.paritytrading.foundation.ByteBuffers.*;
 
 import com.paritytrading.nassau.MessageListener;
 import java.io.IOException;
