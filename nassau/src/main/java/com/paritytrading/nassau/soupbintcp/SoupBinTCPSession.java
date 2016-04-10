@@ -39,7 +39,6 @@ public abstract class SoupBinTCPSession implements Closeable {
     private ByteBuffer rxBuffer;
 
     private ByteBuffer txHeader;
-    private ByteBuffer txPayload;
 
     private ByteBuffer[] txBuffers;
 
@@ -55,12 +54,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         this.rxBuffer = ByteBuffer.allocate(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
 
-        /*
-         * This built-in payload transmit buffer is used for End of Session,
-         * Server Heartbeat, Client Heartbeat, and Logout Request packets.
-         */
-        this.txHeader  = ByteBuffer.allocate(3);
-        this.txPayload = ByteBuffer.allocate(0);
+        this.txHeader = ByteBuffer.allocate(3);
 
         this.txBuffers = new ByteBuffer[2];
 
@@ -171,7 +165,16 @@ public abstract class SoupBinTCPSession implements Closeable {
     protected abstract void packet(byte packetType, ByteBuffer payload) throws IOException;
 
     protected void send(byte packetType) throws IOException {
-        send(packetType, txPayload);
+        txHeader.clear();
+        putUnsignedShort(txHeader, 1);
+        txHeader.put(packetType);
+        txHeader.flip();
+
+        do {
+            channel.write(txHeader);
+        } while (txHeader.hasRemaining());
+
+        sentData();
     }
 
     protected void send(byte packetType, ByteBuffer payload) throws IOException {
