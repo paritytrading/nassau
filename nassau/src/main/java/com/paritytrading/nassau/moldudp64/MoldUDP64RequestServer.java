@@ -1,7 +1,7 @@
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
-import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.io.Closeable;
 import java.io.IOException;

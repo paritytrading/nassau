@@ -1,11 +1,11 @@
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64DefaultMessageStore.*;
 import static com.paritytrading.nassau.util.Strings.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.Assert.*;
-import static org.jvirtanen.nio.ByteBuffers.*;
 
 import java.nio.ByteBuffer;
 import java.util.List;

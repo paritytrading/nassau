@@ -54,6 +54,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>com.paritytrading.foundation</groupId>
+        <artifactId>foundation</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+      <dependency>
         <groupId>com.typesafe</groupId>
         <artifactId>config</artifactId>
         <version>1.3.0</version>
@@ -72,11 +77,6 @@
         <groupId>org.jvirtanen.config</groupId>
         <artifactId>config-extras</artifactId>
         <version>0.1.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jvirtanen.nio</groupId>
-        <artifactId>nio-extras</artifactId>
-        <version>0.2.0</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.util</groupId>

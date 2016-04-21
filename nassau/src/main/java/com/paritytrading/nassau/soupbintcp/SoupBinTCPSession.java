@@ -1,7 +1,7 @@
 package com.paritytrading.nassau.soupbintcp;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
-import static org.jvirtanen.nio.ByteBuffers.*;
 
 import com.paritytrading.nassau.util.Clock;
 import java.io.Closeable;
