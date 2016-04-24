@@ -55,7 +55,7 @@ Add a Maven dependency to Nassau:
 Links
 -----
 
-For more information about Nassau:
+For more information on Nassau:
 
   - Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
     news and announcements
