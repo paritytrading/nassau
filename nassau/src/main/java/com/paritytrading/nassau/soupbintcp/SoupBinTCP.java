@@ -1,7 +1,5 @@
 package com.paritytrading.nassau.soupbintcp;
 
-import static com.paritytrading.nassau.soupbintcp.DataTypes.*;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -44,34 +42,25 @@ public class SoupBinTCP {
      * Payload for the Login Accepted packet.
      */
     public static class LoginAccepted {
-        public String session;
-        public long   sequenceNumber;
+        public byte[] session;
+        public byte[] sequenceNumber;
 
         /**
          * Construct an instance.
          */
         public LoginAccepted() {
-        }
-
-        /**
-         * Construct an instance.
-         *
-         * @param session the session
-         * @param sequenceNumber the sequence number
-         */
-        public LoginAccepted(String session, long sequenceNumber) {
-            this.session        = session;
-            this.sequenceNumber = sequenceNumber;
+            session        = new byte[10];
+            sequenceNumber = new byte[20];
         }
 
         void get(ByteBuffer buffer) throws IOException {
-            session        = getAlphanumeric(buffer, 10);
-            sequenceNumber = getNumeric(buffer, 20);
+            buffer.get(session);
+            buffer.get(sequenceNumber);
         }
 
         void put(ByteBuffer buffer) {
-            putAlphanumericPadLeft(buffer, session, 10);
-            putNumeric(buffer, sequenceNumber, 20);
+            buffer.put(session);
+            buffer.put(sequenceNumber);
         }
     }
 
@@ -87,15 +76,6 @@ public class SoupBinTCP {
         public LoginRejected() {
         }
 
-        /**
-         * Construct an instance.
-         *
-         * @param rejectReasonCode the reject reason code
-         */
-        public LoginRejected(byte rejectReasonCode) {
-            this.rejectReasonCode = rejectReasonCode;
-        }
-
         void get(ByteBuffer buffer) {
             rejectReasonCode = buffer.get();
         }
@@ -109,45 +89,33 @@ public class SoupBinTCP {
      * Payload for the Login Request packet.
      */
     public static class LoginRequest {
-        public String username;
-        public String password;
-        public String requestedSession;
-        public long   requestedSequenceNumber;
+        public byte[] username;
+        public byte[] password;
+        public byte[] requestedSession;
+        public byte[] requestedSequenceNumber;
 
         /**
          * Construct an instance.
          */
         public LoginRequest() {
-        }
-
-        /**
-         * Construct an instance.
-         *
-         * @param username the username
-         * @param password the password
-         * @param requestedSession the requested session
-         * @param requestedSequenceNumber the requested sequence number
-         */
-        public LoginRequest(String username, String password, String requestedSession,
-                long requestedSequenceNumber) {
-            this.username                = username;
-            this.password                = password;
-            this.requestedSession        = requestedSession;
-            this.requestedSequenceNumber = requestedSequenceNumber;
+            username                = new byte[6];
+            password                = new byte[10];
+            requestedSession        = new byte[10];
+            requestedSequenceNumber = new byte[20];
         }
 
         void get(ByteBuffer buffer) throws IOException {
-            username                = getAlphanumeric(buffer,  6);
-            password                = getAlphanumeric(buffer, 10);
-            requestedSession        = getAlphanumeric(buffer, 10);
-            requestedSequenceNumber = getNumeric(buffer, 20);
+            buffer.get(username);
+            buffer.get(password);
+            buffer.get(requestedSession);
+            buffer.get(requestedSequenceNumber);
         }
 
         void put(ByteBuffer buffer) {
-            putAlphanumericPadRight(buffer, username, 6);
-            putAlphanumericPadRight(buffer, password, 10);
-            putAlphanumericPadLeft(buffer, requestedSession, 10);
-            putNumeric(buffer, requestedSequenceNumber, 20);
+            buffer.put(username);
+            buffer.put(password);
+            buffer.put(requestedSession);
+            buffer.put(requestedSequenceNumber);
         }
     }
 

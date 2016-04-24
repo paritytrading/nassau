@@ -7,6 +7,7 @@ import static com.paritytrading.nassau.util.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.util.FixedClock;
 import com.paritytrading.nassau.util.Strings;
@@ -81,8 +82,8 @@ public class SoupBinTCPSessionTest {
 
     @Test
     public void loginAccepted() throws Exception {
-        loginAccepted.session        = "foo";
-        loginAccepted.sequenceNumber = 123;
+        ASCII.putRight(loginAccepted.session, "foo");
+        ASCII.putLongRight(loginAccepted.sequenceNumber, 123);
 
         server.accept(loginAccepted);
 
@@ -118,10 +119,10 @@ public class SoupBinTCPSessionTest {
 
     @Test
     public void loginRequest() throws Exception {
-        loginRequest.username                = "foo";
-        loginRequest.password                = "bar";
-        loginRequest.requestedSession        = "baz";
-        loginRequest.requestedSequenceNumber = 123;
+        ASCII.putLeft(loginRequest.username, "foo");
+        ASCII.putLeft(loginRequest.password, "bar");
+        ASCII.putRight(loginRequest.requestedSession, "baz");
+        ASCII.putLongRight(loginRequest.requestedSequenceNumber, 123);
 
         client.login(loginRequest);
 

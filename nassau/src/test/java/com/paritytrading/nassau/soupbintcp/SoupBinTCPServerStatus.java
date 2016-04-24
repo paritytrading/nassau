@@ -2,6 +2,7 @@ package com.paritytrading.nassau.soupbintcp;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
 
+import com.paritytrading.foundation.ASCII;
 import java.util.ArrayList;
 import java.util.List;
 import org.jvirtanen.value.Value;
@@ -19,18 +20,22 @@ class SoupBinTCPServerStatus implements SoupBinTCPServerStatusListener {
     }
 
     @Override
-    public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) {
-        events.add(new LoginRequest(payload.username, payload.password,
-                    payload.requestedSession, payload.requestedSequenceNumber));
+    public void loginRequest(SoupBinTCPServer server, SoupBinTCP.LoginRequest payload) {
+        String username                = ASCII.get(payload.username);
+        String password                = ASCII.get(payload.password);
+        String requestedSession        = ASCII.get(payload.requestedSession);
+        long   requestedSequenceNumber = ASCII.getLong(payload.requestedSequenceNumber);
+
+        events.add(new LoginRequest(username, password, requestedSession, requestedSequenceNumber));
     }
 
     @Override
-    public void logoutRequest(SoupBinTCPServer session) {
+    public void logoutRequest(SoupBinTCPServer server) {
         events.add(new LogoutRequest());
     }
 
     @Override
-    public void heartbeatTimeout(SoupBinTCPServer session) {
+    public void heartbeatTimeout(SoupBinTCPServer server) {
         events.add(new HeartbeatTimeout());
     }
 
