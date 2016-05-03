@@ -2,12 +2,12 @@ package com.paritytrading.nassau.soupbintcp;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.util.Clock;
 import com.paritytrading.nassau.util.SystemClock;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 
 /**
  * An implementation of the server side of the protocol.
