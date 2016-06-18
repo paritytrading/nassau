@@ -40,8 +40,10 @@ class Session implements Closeable, MessageListener, SoupBinTCPServerStatusListe
 
     @Override
     public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) throws IOException {
-        loginAccepted.session        = payload.requestedSession;
-        loginAccepted.sequenceNumber = payload.requestedSequenceNumber;
+        System.arraycopy(payload.requestedSession, 0, loginAccepted.session, 0,
+                payload.requestedSession.length);
+        System.arraycopy(payload.requestedSequenceNumber, 0, loginAccepted.sequenceNumber, 0,
+                payload.requestedSequenceNumber.length);
 
         downstream.accept(loginAccepted);
     }
