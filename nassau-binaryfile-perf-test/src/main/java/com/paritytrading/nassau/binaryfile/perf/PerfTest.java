@@ -32,7 +32,7 @@ class PerfTest {
 
         long started = System.nanoTime();
 
-        while (reader.read());
+        while (reader.read() >= 0);
 
         long finished = System.nanoTime();
 
