@@ -46,8 +46,6 @@ public class BinaryFILEReader implements Closeable {
         this.listener = listener;
 
         this.buffer = ByteBuffer.allocate(128 * 1024);
-
-        this.buffer.limit(0);
     }
 
     /**
@@ -69,32 +67,41 @@ public class BinaryFILEReader implements Closeable {
     }
 
     /**
-     * Read a message.
+     * Read messages. Invoke the message listener on each message.
      *
-     * @return true if a message was read, otherwise false
+     * @return The number of bytes read, possibly zero, or <code>-1</code>
+     *   if the channel has reached end-of-stream
      * @throws IOException if an I/O error occurs
      */
-    public boolean read() throws IOException {
-        if (buffer.remaining() < 2) {
-            buffer.compact();
+    public int read() throws IOException {
+        int bytes = channel.read(buffer);
 
-            if (channel.read(buffer) < 0)
-                return false;
+        if (bytes <= 0)
+            return bytes;
 
-            buffer.flip();
-        }
+        buffer.flip();
+
+        while (parse());
+
+        buffer.compact();
+
+        return bytes;
+    }
+
+    private boolean parse() throws IOException {
+        if (buffer.remaining() < 2)
+            return false;
+
+        buffer.mark();
 
         buffer.order(ByteOrder.BIG_ENDIAN);
 
         int payloadLength = getUnsignedShort(buffer);
 
         if (buffer.remaining() < payloadLength) {
-            buffer.compact();
+            buffer.reset();
 
-            if (channel.read(buffer) < 0)
-                throw new BinaryFILEException("Unexpected end-of-stream");
-
-            buffer.flip();
+            return false;
         }
 
         int limit = buffer.limit();

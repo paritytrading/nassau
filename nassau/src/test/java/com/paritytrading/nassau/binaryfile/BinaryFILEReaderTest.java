@@ -33,7 +33,7 @@ public class BinaryFILEReaderTest {
     public void readStream() throws Exception {
         BinaryFILEReader reader = new BinaryFILEReader(stream, messages);
 
-        while (reader.read());
+        while (reader.read() >= 0);
 
         assertEquals(asList("foo", "bar", "baz", "quux", ""), messages.collect());
     }
@@ -46,7 +46,7 @@ public class BinaryFILEReaderTest {
 
         BinaryFILEReader reader = new BinaryFILEReader(stream, parser);
 
-        while (reader.read());
+        while (reader.read() >= 0);
 
         assertEquals(asList("foo", "bar", "baz", "quux"), messages.collect());
         assertEquals(asList(new EndOfSession()), status.collect());
