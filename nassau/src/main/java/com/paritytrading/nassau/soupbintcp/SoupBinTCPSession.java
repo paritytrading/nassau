@@ -3,7 +3,7 @@ package com.paritytrading.nassau.soupbintcp;
 import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
-import com.paritytrading.nassau.util.Clock;
+import com.paritytrading.nassau.time.Clock;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;

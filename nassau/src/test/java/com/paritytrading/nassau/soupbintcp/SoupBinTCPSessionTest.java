@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.Strings;
-import com.paritytrading.nassau.util.FixedClock;
+import com.paritytrading.nassau.time.FixedClock;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.List;

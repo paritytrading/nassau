@@ -1,4 +1,4 @@
-package com.paritytrading.nassau.util;
+package com.paritytrading.nassau.time;
 
 /**
  * A time source.
