@@ -46,6 +46,7 @@
 
   <modules>
     <module>nassau</module>
+    <module>nassau-util</module>
     <module>nassau-binaryfile-recorder</module>
     <module>nassau-soupbintcp-gateway</module>
     <module>nassau-soupbintcp-perf-test</module>

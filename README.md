@@ -31,7 +31,12 @@ See the [Wiki][] for links to the protocol specifications.
 
   [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
-Besides the library, Nassau contains the following applications:
+Besides the core library, Nassau contains the following libraries:
+
+- [**Utilities**](nassau-util) contains utility methods for working with
+  NASDAQ transport protocols.
+
+In addition, Nassau contains the following applications:
 
 - [**BinaryFILE Recorder**](nassau-binaryfile-recorder) listens to a
   MoldUDP64 session and writes received messages to a BinaryFILE file.
