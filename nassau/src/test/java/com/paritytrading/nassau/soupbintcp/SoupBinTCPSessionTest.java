@@ -3,14 +3,14 @@ package com.paritytrading.nassau.soupbintcp;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatus.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatus.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
-import static com.paritytrading.nassau.util.Strings.*;
+import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.Messages;
+import com.paritytrading.nassau.Strings;
 import com.paritytrading.nassau.util.FixedClock;
-import com.paritytrading.nassau.util.Strings;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.List;

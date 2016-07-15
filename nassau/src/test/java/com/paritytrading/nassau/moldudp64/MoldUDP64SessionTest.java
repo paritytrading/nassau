@@ -2,14 +2,14 @@ package com.paritytrading.nassau.moldudp64;
 
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientState.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientStatus.*;
-import static com.paritytrading.nassau.util.Strings.*;
+import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
 import com.paritytrading.nassau.Messages;
+import com.paritytrading.nassau.Strings;
 import com.paritytrading.nassau.util.FixedClock;
-import com.paritytrading.nassau.util.Strings;
 import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.util.List;

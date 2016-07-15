@@ -5,7 +5,7 @@ import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
 import com.paritytrading.nassau.Messages;
-import com.paritytrading.nassau.util.Strings;
+import com.paritytrading.nassau.Strings;
 import java.io.InputStream;
 import org.junit.After;
 import org.junit.Before;
