@@ -2,6 +2,21 @@ Release Notes
 =============
 
 
+0.10.0 (2016-07-22)
+-------------------
+
+- Refactor SoupBinTCP implementation
+- Remove dependency on NIO Extras 0.1.0
+- Add dependency to Foundation 0.2.0
+- Reduce memory allocation in SoupBinTCP implementation
+- Add BinaryFILE write support
+- Add BinaryFILE recorder
+- Fix BinaryFILE reader interface
+- Add utility methods for BinaryFILE file format
+- Add utility methods for MoldUDP64 protocol
+- Add utility methods for SoupBinTCP protocol
+
+
 0.9.0 (2016-03-28)
 ------------------
 
