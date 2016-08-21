@@ -47,9 +47,10 @@ class Gateway {
     }
 
     private static DownstreamServer downstream(Config config, UpstreamFactory upstream) throws IOException {
-        int port = Configs.getPort(config, "downstream.port");
+        InetAddress address = Configs.getInetAddress(config, "downstream.address");
+        int         port    = Configs.getPort(config, "downstream.port");
 
-        return DownstreamServer.open(upstream, port);
+        return DownstreamServer.open(upstream, new InetSocketAddress(address, port));
     }
 
 }

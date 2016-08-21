@@ -22,10 +22,11 @@ class DownstreamServer {
         this.serverChannel = serverChannel;
     }
 
-    public static DownstreamServer open(UpstreamFactory upstream, int port) throws IOException {
+    public static DownstreamServer open(UpstreamFactory upstream,
+            InetSocketAddress address) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
-        serverChannel.bind(new InetSocketAddress(port));
+        serverChannel.bind(address);
         serverChannel.configureBlocking(false);
 
         return new DownstreamServer(upstream, serverChannel);
