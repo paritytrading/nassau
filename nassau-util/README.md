@@ -20,4 +20,4 @@ Add a Maven dependency to Nassau Utilities:
 License
 -------
 
-Nassau Utilities is released under Apache License, Version 2.0.
+Released under Apache License, Version 2.0.
