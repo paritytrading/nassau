@@ -21,5 +21,4 @@ responds to the client with a Sequenced Data packet.
 License
 -------
 
-Nassau SoupBinTCP Performance Test is released under the Apache License,
-Version 2.0.
+Released under the Apache License, Version 2.0.
