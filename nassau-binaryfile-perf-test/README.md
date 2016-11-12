@@ -19,5 +19,4 @@ records the time it takes to read them.
 License
 -------
 
-Nassau BinaryFILE Performance Test is released under the Apache License,
-Version 2.0.
+Released under the Apache License, Version 2.0.
