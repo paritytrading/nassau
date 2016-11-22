@@ -4,41 +4,40 @@ import static com.paritytrading.foundation.ByteBuffers.*;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.WritableByteChannel;
-import java.util.zip.GZIPOutputStream;
+import java.nio.channels.FileChannel;
 
 /**
  * An implementation of a BinaryFILE writer.
  */
 public class BinaryFILEWriter implements Closeable {
 
-    private WritableByteChannel channel;
+    private static final long DEFAULT_SIZE = 128 * 1024 * 1024;
 
-    private ByteBuffer header;
+    private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocate(0);
 
-    /**
-     * Create a BinaryFILE writer.
-     *
-     * @param stream an output stream
-     */
-    public BinaryFILEWriter(OutputStream stream) {
-        this(Channels.newChannel(stream));
-    }
+    private RandomAccessFile file;
 
-    /**
-     * Create a BinaryFILE writer.
-     *
-     * @param channel an output channel
-     */
-    public BinaryFILEWriter(WritableByteChannel channel) {
-        this.channel = channel;
+    private FileChannel channel;
 
-        this.header = ByteBuffer.allocate(2);
+    private long size;
+
+    private long position;
+
+    private ByteBuffer buffer;
+
+    private BinaryFILEWriter(RandomAccessFile file, long size) {
+        this.file = file;
+
+        this.channel = file.getChannel();
+
+        this.size = size;
+
+        this.position = 0;
+
+        this.buffer = EMPTY_BUFFER;
     }
 
     /**
@@ -49,12 +48,19 @@ public class BinaryFILEWriter implements Closeable {
      * @throws IOException if an I/O error occurs
      */
     public static BinaryFILEWriter open(File file) throws IOException {
-        FileOutputStream stream = new FileOutputStream(file);
+        return open(file, DEFAULT_SIZE);
+    }
 
-        if (file.getName().endsWith(".gz"))
-            return new BinaryFILEWriter(new GZIPOutputStream(stream, 65536));
-        else
-            return new BinaryFILEWriter(stream.getChannel());
+    /**
+     * Open a BinaryFILE writer.
+     *
+     * @param file the output file
+     * @param size the size of the memory-mapped region
+     * @return a BinaryFILE writer
+     * @throws IOException if an I/O error occurs
+     */
+    public static BinaryFILEWriter open(File file, long size) throws IOException {
+        return new BinaryFILEWriter(new RandomAccessFile(file, "rw"), size);
     }
 
     /**
@@ -64,25 +70,24 @@ public class BinaryFILEWriter implements Closeable {
      * @throws IOException if an I/O error occurs
      */
     public void write(ByteBuffer payload) throws IOException {
-        header.clear();
-        putUnsignedShort(header, payload.remaining());
-        header.flip();
+        if (buffer.remaining() < 2 + payload.remaining())
+            map();
 
-        // Unfortunately there is no way to get a GatheringByteChannel from a
-        // GZIPOutputStream.
-
-        do {
-            channel.write(header);
-        } while (header.hasRemaining());
-
-        do {
-            channel.write(payload);
-        } while (payload.hasRemaining());
+        putUnsignedShort(buffer, payload.remaining());
+        buffer.put(payload);
     }
 
     @Override
     public void close() throws IOException {
-        channel.close();
+        file.setLength(position + buffer.position());
+
+        file.close();
+    }
+
+    private void map() throws IOException {
+        position += buffer.position();
+
+        buffer = channel.map(FileChannel.MapMode.READ_WRITE, position, size);
     }
 
 }
