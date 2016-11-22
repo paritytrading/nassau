@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * An implementation of a BinaryFILE writer.
@@ -51,10 +50,7 @@ public class BinaryFILEWriter implements Closeable {
     public static BinaryFILEWriter open(File file) throws IOException {
         FileOutputStream stream = new FileOutputStream(file);
 
-        if (file.getName().endsWith(".gz"))
-            return new BinaryFILEWriter(new GZIPOutputStream(stream, 65536));
-        else
-            return new BinaryFILEWriter(stream.getChannel());
+        return new BinaryFILEWriter(stream.getChannel());
     }
 
     /**
@@ -67,9 +63,6 @@ public class BinaryFILEWriter implements Closeable {
         header.clear();
         putUnsignedShort(header, payload.remaining());
         header.flip();
-
-        // Unfortunately there is no way to get a GatheringByteChannel from a
-        // GZIPOutputStream.
 
         do {
             channel.write(header);
