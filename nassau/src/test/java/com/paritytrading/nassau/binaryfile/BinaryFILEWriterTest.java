@@ -4,7 +4,7 @@ import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -14,16 +14,18 @@ public class BinaryFILEWriterTest {
 
     @Test
     public void write() throws Exception {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        File file = File.createTempFile("binaryfile", ".dat");
 
-        BinaryFILEWriter writer = new BinaryFILEWriter(stream);
+        BinaryFILEWriter writer = BinaryFILEWriter.open(file);
 
         List<String> messages = asList("foo", "bar", "baz", "quux", "");
 
         for (String message : messages)
             writer.write(wrap(message));
 
-        byte[] writtenBytes  = stream.toByteArray();
+        writer.close();
+
+        byte[] writtenBytes  = Files.readAllBytes(file.toPath());
         byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource("/binaryfile.dat").toURI()));
 
         assertArrayEquals(expectedBytes, writtenBytes);
