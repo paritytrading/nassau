@@ -23,6 +23,7 @@ class DatagramChannels {
     static DatagramChannel openServerChannel(DatagramChannel clientChannel) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
+        channel.setOption(StandardSocketOptions.IP_MULTICAST_IF, loopbackInterface());
         channel.connect(new InetSocketAddress(multicastGroup(), getLocalPort(clientChannel)));
 
         return channel;
