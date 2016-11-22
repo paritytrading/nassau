@@ -1,6 +1,5 @@
 package com.paritytrading.nassau.binaryfile;
 
-import static com.paritytrading.nassau.binaryfile.BinaryFILEStatus.*;
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
