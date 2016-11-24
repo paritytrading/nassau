@@ -41,6 +41,28 @@ class Recorder {
     }
 
     private static void main(Config config, File file) throws IOException {
+        addShutdownHook();
+
+        final BinaryFILEWriter writer = BinaryFILEWriter.open(file);
+
+        MessageListener listener = new MessageListener() {
+
+            @Override
+            public void message(ByteBuffer buffer) throws IOException {
+                writer.write(buffer);
+            }
+
+        };
+
+        MoldUDP64Client client = join(config, listener);
+
+        receive(client);
+
+        client.close();
+        writer.close();
+    }
+
+    private static MoldUDP64Client join(Config config, MessageListener listener) throws IOException {
         NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "session.multicast-interface");
         InetAddress      multicastGroup     = Configs.getInetAddress(config, "session.multicast-group");
         int              multicastPort      = Configs.getPort(config, "session.multicast-port");
@@ -57,17 +79,6 @@ class Recorder {
         DatagramChannel requestChannel = DatagramChannel.open(StandardProtocolFamily.INET);
 
         requestChannel.configureBlocking(false);
-
-        final BinaryFILEWriter writer = BinaryFILEWriter.open(file);
-
-        MessageListener listener = new MessageListener() {
-
-            @Override
-            public void message(ByteBuffer buffer) throws IOException {
-                writer.write(buffer);
-            }
-
-        };
 
         MoldUDP64ClientStatusListener statusListener = new MoldUDP64ClientStatusListener() {
 
@@ -90,16 +101,16 @@ class Recorder {
 
         };
 
-        MoldUDP64Client client = new MoldUDP64Client(channel, requestChannel,
+        return new MoldUDP64Client(channel, requestChannel,
                 new InetSocketAddress(requestAddress, requestPort), listener, statusListener);
+    }
 
-        addShutdownHook();
-
+    private static void receive(MoldUDP64Client client) throws IOException {
         Selector selector = Selector.open();
 
-        SelectionKey key = channel.register(selector, SelectionKey.OP_READ);
+        SelectionKey key = client.getChannel().register(selector, SelectionKey.OP_READ);
 
-        SelectionKey requestKey = requestChannel.register(selector, SelectionKey.OP_READ);
+        SelectionKey requestKey = client.getRequestChannel().register(selector, SelectionKey.OP_READ);
 
         while (receive) {
             int numKeys = selector.select();
@@ -114,8 +125,7 @@ class Recorder {
             }
         };
 
-        writer.close();
-        client.close();
+        selector.close();
     }
 
     private static void addShutdownHook() {
