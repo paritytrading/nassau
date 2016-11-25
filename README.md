@@ -40,7 +40,8 @@ Besides the core library, Nassau contains the following libraries:
 In addition, Nassau contains the following applications:
 
 - [**BinaryFILE Recorder**](nassau-binaryfile-recorder) listens to a
-  MoldUDP64 session and writes received messages to a BinaryFILE file.
+  MoldUDP64 session or a SoupBinTCP session and writes received messages to
+  a BinaryFILE file.
 
 - [**SoupBinTCP Gateway**](nassau-soupbintcp-gateway) bridges the MoldUDP64
   protocol to the SoupBinTCP protocol.
