@@ -51,7 +51,7 @@ public class SoupBinTCP {
             ASCII.putLeft(message.username, username);
             ASCII.putLeft(message.password, password);
             ASCII.putRight(message.requestedSession, "");
-            ASCII.putLongRight(message.requestedSequenceNumber, 0);
+            ASCII.putLongRight(message.requestedSequenceNumber, 1);
 
             client.login(message);
 
