@@ -2,11 +2,15 @@ package com.paritytrading.nassau.binaryfile.recorder;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.binaryfile.BinaryFILEWriter;
 import com.paritytrading.nassau.moldudp64.MoldUDP64Client;
 import com.paritytrading.nassau.moldudp64.MoldUDP64ClientState;
 import com.paritytrading.nassau.moldudp64.MoldUDP64ClientStatusListener;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.File;
@@ -21,9 +25,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
 import org.jvirtanen.config.Configs;
 
 class Recorder {
+
+    private static final int TIMEOUT_MILLIS = 1000;
 
     private static volatile boolean receive = true;
 
@@ -54,12 +61,69 @@ class Recorder {
 
         };
 
-        MoldUDP64Client client = join(config, listener);
+        if (config.hasPath("session.multicast-interface")) {
+            MoldUDP64Client client = join(config, listener);
 
-        receive(client);
+            receive(client);
 
-        client.close();
+            client.close();
+        } else {
+            SoupBinTCPClient client = connect(config, listener);
+
+            receive(client);
+
+            client.close();
+        }
+
         writer.close();
+    }
+
+    private static SoupBinTCPClient connect(Config config, MessageListener listener) throws IOException {
+        InetAddress address  = Configs.getInetAddress(config, "session.address");
+        int         port     = Configs.getPort(config, "session.port");
+        String      username = config.getString("session.username");
+        String      password = config.getString("session.password");
+
+        SocketChannel channel = SocketChannel.open();
+
+        channel.connect(new InetSocketAddress(address, port));
+        channel.configureBlocking(false);
+
+        SoupBinTCPClientStatusListener statusListener = new SoupBinTCPClientStatusListener() {
+
+            @Override
+            public void heartbeatTimeout(SoupBinTCPClient session) {
+                receive = false;
+            };
+
+            @Override
+            public void loginAccepted(SoupBinTCPClient session, SoupBinTCP.LoginAccepted payload) {
+            }
+
+            @Override
+            public void loginRejected(SoupBinTCPClient session, SoupBinTCP.LoginRejected payload) {
+                receive = false;
+            }
+
+            @Override
+            public void endOfSession(SoupBinTCPClient session) {
+                receive = false;
+            }
+
+        };
+
+        SoupBinTCPClient client = new SoupBinTCPClient(channel, listener, statusListener);
+
+        SoupBinTCP.LoginRequest message = new SoupBinTCP.LoginRequest();
+
+        ASCII.putLeft(message.username, username);
+        ASCII.putLeft(message.password, password);
+        ASCII.putRight(message.requestedSession, "");
+        ASCII.putLongRight(message.requestedSequenceNumber, 1);
+
+        client.login(message);
+
+        return client;
     }
 
     private static MoldUDP64Client join(Config config, MessageListener listener) throws IOException {
@@ -124,6 +188,26 @@ class Recorder {
                 selector.selectedKeys().clear();
             }
         };
+
+        selector.close();
+    }
+
+    private static void receive(SoupBinTCPClient client) throws IOException {
+        Selector selector = Selector.open();
+
+        SelectionKey key = client.getChannel().register(selector, SelectionKey.OP_READ);
+
+        while (receive) {
+            int numKeys = selector.select(TIMEOUT_MILLIS);
+            if (numKeys > 0) {
+                if (client.receive() < 0)
+                    break;
+
+                selector.selectedKeys().clear();
+            }
+
+            client.keepAlive();
+        }
 
         selector.close();
     }
