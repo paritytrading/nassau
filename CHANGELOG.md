@@ -2,6 +2,19 @@ Release Notes
 =============
 
 
+0.11.0 (2016-11-27)
+-------------------
+
+- Make SoupBinTCP server address configurable in SoupBinTCP gateway
+- Update example configuration file for SoupBinTCP gateway
+- Update example configuration file for BinaryFILE recorder
+- Remove GZIP support from BinaryFILE writer
+- Improve BinaryFILE write performance
+- Add SoupBinTCP support to BinaryFILE recorder
+- Fix sequence number in SoupBinTCP gateway
+- Fix sequence number in SoupBinTCP utilities
+
+
 0.10.0 (2016-07-22)
 -------------------
 
