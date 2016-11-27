@@ -14,6 +14,7 @@ import com.paritytrading.nassau.time.FixedClock;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,7 +28,7 @@ public class SoupBinTCPSessionTest {
     private static final int MAX_TX_PAYLOAD_LENGTH = 65534;
 
     @Rule
-    public Timeout timeout = new Timeout(1000);
+    public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

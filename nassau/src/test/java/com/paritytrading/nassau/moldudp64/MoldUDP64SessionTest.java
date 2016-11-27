@@ -13,6 +13,7 @@ import com.paritytrading.nassau.time.FixedClock;
 import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,7 +27,7 @@ public class MoldUDP64SessionTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Rule
-    public Timeout timeout = new Timeout(1000);
+    public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
 
     private FixedClock clock;
 
