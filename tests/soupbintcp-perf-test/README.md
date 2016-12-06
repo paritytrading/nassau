@@ -10,7 +10,7 @@ Usage
 
 Run Nassau SoupBinTCP Performance Test with Java:
 
-    java -jar <executable> <packets>
+    java -jar nassau-soupbintcp-perf-test.jar <packets>
 
 The latency benchmark measures the round-trip time (RTT) over the loopback
 interface. A SoupBinTCP client running on one thread sends an Unsequenced
