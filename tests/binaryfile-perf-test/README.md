@@ -10,7 +10,7 @@ Usage
 
 Run Nassau BinaryFILE Performance Test with Java:
 
-    java -jar <executable> <input-file>
+    java -jar nassau-binaryfile-perf-test.jar <input-file>
 
 The throughput benchmark counts the number of messages in the input file and
 records the time it takes to read them.
