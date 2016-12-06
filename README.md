@@ -48,8 +48,8 @@ Nassau contains the following applications:
 - [**BinaryFILE Recorder**](applications/binaryfile-recorder) records a
   MoldUDP64 or SoupBinTCP session to a BinaryFILE file.
 
-- [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) bridges the
-  MoldUDP64 protocol to the SoupBinTCP protocol.
+- [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) serves a MoldUDP64
+  session over the SoupBinTCP protocol.
 
 Nassau contains the following test applications:
 

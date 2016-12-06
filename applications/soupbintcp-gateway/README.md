@@ -1,8 +1,8 @@
 Nassau SoupBinTCP Gateway
 =========================
 
-Nassau SoupBinTCP Gateway bridges the NASDAQ MoldUDP64 1.00 protocol to the
-NASDAQ SoupBinTCP 3.00 protocol.
+Nassau SoupBinTCP Gateway serves a MoldUDP64 session over the SoupBinTCP
+protocol.
 
 
 Usage
