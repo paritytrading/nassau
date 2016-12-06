@@ -54,7 +54,7 @@ Nassau contains the following applications:
 Nassau contains the following test applications:
 
 - [**SoupBinTCP Performance Test**](tests/soupbintcp-perf-test) is a simple
-  latency benchmark for the SoupBinTCP implementation.
+  benchmark for the SoupBinTCP implementation.
 
 - [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
   throughput benchmark for the BinaryFILE implementation.

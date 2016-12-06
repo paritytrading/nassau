@@ -1,8 +1,8 @@
 Nassau SoupBinTCP Performance Test
 ==================================
 
-Nassau SoupBinTCP Performance Test is a simple latency benchmark for the
-NASDAQ SoupBinTCP 3.00 implementation.
+Nassau SoupBinTCP Performance Test is a simple benchmark for the SoupBinTCP
+implementation.
 
 
 Usage
