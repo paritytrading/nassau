@@ -14,8 +14,8 @@ use it to provide your own services using these protocols.
 Nassau requires Java Runtime Environment (JRE) 7 or newer.
 
 
-Features
---------
+Protocols
+---------
 
 Nassau implements the following protocols:
 
@@ -32,12 +32,18 @@ See the [Wiki][] for links to the protocol specifications.
 
   [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
-Besides the core library, Nassau contains the following libraries:
+
+Modules
+-------
+
+Nassau contains the following libraries:
+
+- [**Core**](libraries/core) implements the NASDAQ transport protocols.
 
 - [**Utilities**](libraries/util) contains utility methods for working with
   NASDAQ transport protocols.
 
-In addition, Nassau contains the following applications:
+Nassau contains the following applications:
 
 - [**BinaryFILE Recorder**](applications/binaryfile-recorder) listens to a
   MoldUDP64 session or a SoupBinTCP session and writes received messages to
@@ -46,23 +52,13 @@ In addition, Nassau contains the following applications:
 - [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) bridges the
   MoldUDP64 protocol to the SoupBinTCP protocol.
 
+Nassau contains the following test applications:
+
 - [**SoupBinTCP Performance Test**](tests/soupbintcp-perf-test) is a simple
   latency benchmark for the SoupBinTCP implementation.
 
 - [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
   throughput benchmark for the BinaryFILE implementation.
-
-
-Download
---------
-
-Add a Maven dependency to Nassau:
-
-    <dependency>
-      <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau-core</artifactId>
-      <version><!-- latest version --></version>
-    </dependency>
 
 
 Links
