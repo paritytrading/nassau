@@ -45,7 +45,7 @@
   </properties>
 
   <modules>
-    <module>nassau-core</module>
+    <module>libraries/core</module>
     <module>nassau-util</module>
     <module>nassau-binaryfile-recorder</module>
     <module>nassau-soupbintcp-gateway</module>
