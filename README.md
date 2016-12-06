@@ -43,8 +43,8 @@ In addition, Nassau contains the following applications:
   MoldUDP64 session or a SoupBinTCP session and writes received messages to
   a BinaryFILE file.
 
-- [**SoupBinTCP Gateway**](nassau-soupbintcp-gateway) bridges the MoldUDP64
-  protocol to the SoupBinTCP protocol.
+- [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) bridges the
+  MoldUDP64 protocol to the SoupBinTCP protocol.
 
 - [**SoupBinTCP Performance Test**](nassau-soupbintcp-perf-test) is a simple
   latency benchmark for the SoupBinTCP implementation.

@@ -48,7 +48,7 @@
     <module>libraries/core</module>
     <module>libraries/util</module>
     <module>applications/binaryfile-recorder</module>
-    <module>nassau-soupbintcp-gateway</module>
+    <module>applications/soupbintcp-gateway</module>
     <module>nassau-soupbintcp-perf-test</module>
     <module>nassau-binaryfile-perf-test</module>
   </modules>
