@@ -50,7 +50,7 @@
     <module>applications/binaryfile-recorder</module>
     <module>applications/soupbintcp-gateway</module>
     <module>tests/soupbintcp-perf-test</module>
-    <module>nassau-binaryfile-perf-test</module>
+    <module>tests/binaryfile-perf-test</module>
   </modules>
 
   <dependencyManagement>
