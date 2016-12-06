@@ -34,7 +34,7 @@ See the [Wiki][] for links to the protocol specifications.
 
 Besides the core library, Nassau contains the following libraries:
 
-- [**Utilities**](nassau-util) contains utility methods for working with
+- [**Utilities**](libraries/util) contains utility methods for working with
   NASDAQ transport protocols.
 
 In addition, Nassau contains the following applications:
