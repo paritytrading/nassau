@@ -10,7 +10,7 @@ Usage
 
 Run Nassau SoupBinTCP Gateway with Java:
 
-    java -jar <executable> <configuration-file>
+    java -jar nassau-soupbintcp-gateway.jar <configuration-file>
 
 When started, the gateway starts listening for SoupBinTCP sessions initiated
 by clients.
