@@ -39,7 +39,7 @@ Besides the core library, Nassau contains the following libraries:
 
 In addition, Nassau contains the following applications:
 
-- [**BinaryFILE Recorder**](nassau-binaryfile-recorder) listens to a
+- [**BinaryFILE Recorder**](applications/binaryfile-recorder) listens to a
   MoldUDP64 session or a SoupBinTCP session and writes received messages to
   a BinaryFILE file.
 
