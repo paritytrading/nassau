@@ -57,7 +57,7 @@ Nassau contains the following test applications:
   benchmark for the SoupBinTCP implementation.
 
 - [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
-  throughput benchmark for the BinaryFILE implementation.
+  benchmark for the BinaryFILE implementation.
 
 
 Links

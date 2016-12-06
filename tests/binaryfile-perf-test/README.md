@@ -1,8 +1,8 @@
 Nassau BinaryFILE Performance Test
 ==================================
 
-Nassau BinaryFILE Performance Test is a simple throughput benchmark for the
-NASDAQ BinaryFILE 1.00 implementation.
+Nassau BinaryFILE Performance Test is a simple benchmark for the BinaryFILE
+implementation.
 
 
 Usage
