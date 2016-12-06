@@ -11,7 +11,7 @@ Usage
 
 Run Nassau BinaryFILE Recorder with Java:
 
-    java -jar <executable> <configuration-file> <output-file>
+    java -jar nassau-binaryfile-recorder.jar <configuration-file> <output-file>
 
 When started, the recorder starts writing received messages to the output
 file.
