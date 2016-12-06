@@ -9,9 +9,9 @@
     <version>0.11.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>nassau</artifactId>
+  <artifactId>nassau-core</artifactId>
 
-  <name>Nassau</name>
+  <name>Nassau Core</name>
 
   <dependencies>
     <dependency>

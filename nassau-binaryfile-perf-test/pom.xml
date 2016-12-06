@@ -16,7 +16,7 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nassau</artifactId>
+      <artifactId>nassau-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

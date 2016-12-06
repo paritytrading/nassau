@@ -60,7 +60,7 @@ Add a Maven dependency to Nassau:
 
     <dependency>
       <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau</artifactId>
+      <artifactId>nassau-core</artifactId>
       <version><!-- latest version --></version>
     </dependency>
 
