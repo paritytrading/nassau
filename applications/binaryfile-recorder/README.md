@@ -1,9 +1,8 @@
 Nassau BinaryFILE Recorder
 ==========================
 
-Nassau BinaryFILE Recorder listens to a NASDAQ MoldUDP64 1.00 session or
-a NASDAQ SoupBinTCP 3.00 session and writes received messages to a NASDAQ
-BinaryFILE 1.00 file.
+Nassau BinaryFILE Recorder records a MoldUDP64 or SoupBinTCP session to a
+BinaryFILE file.
 
 
 Usage
