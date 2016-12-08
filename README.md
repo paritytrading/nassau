@@ -60,6 +60,14 @@ Nassau contains the following test applications:
   benchmark for the BinaryFILE implementation.
 
 
+Build
+-----
+
+Build Nassau with Maven:
+
+    mvn package
+
+
 Links
 -----
 
