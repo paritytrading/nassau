@@ -33,6 +33,14 @@ See the [Wiki][] for links to the protocol specifications.
   [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
 
+Download
+--------
+
+See the [latest release][] on GitHub.
+
+  [latest release]: https://github.com/paritytrading/nassau/releases/latest
+
+
 Modules
 -------
 
