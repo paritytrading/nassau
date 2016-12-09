@@ -5,6 +5,14 @@ Nassau SoupBinTCP Performance Test is a simple benchmark for the SoupBinTCP
 implementation.
 
 
+Download
+--------
+
+Download the [latest release][] from GitHub.
+
+  [latest release]: https://github.com/paritytrading/nassau/releases/latest
+
+
 Usage
 -----
 
