@@ -5,6 +5,14 @@ Nassau BinaryFILE Performance Test is a simple benchmark for the BinaryFILE
 implementation.
 
 
+Download
+--------
+
+Download the [latest release][] from GitHub.
+
+  [latest release]: https://github.com/paritytrading/nassau/releases/latest
+
+
 Usage
 -----
 
