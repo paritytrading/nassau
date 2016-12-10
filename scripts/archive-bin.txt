@@ -1,0 +1,16 @@
+CHANGELOG.md
+LICENSE.txt
+README.md
+applications/binaryfile-recorder/README.md
+applications/binaryfile-recorder/etc/devel-tcp.conf
+applications/binaryfile-recorder/etc/devel-udp.conf
+applications/binaryfile-recorder/nassau-binaryfile-recorder.jar
+applications/soupbintcp-gateway/README.md
+applications/soupbintcp-gateway/etc/devel.conf
+applications/soupbintcp-gateway/nassau-soupbintcp-gateway.jar
+libraries/core/README.md
+libraries/util/README.md
+tests/binaryfile-perf-test/README.md
+tests/binaryfile-perf-test/nassau-binaryfile-perf-test.jar
+tests/soupbintcp-perf-test/README.md
+tests/soupbintcp-perf-test/nassau-soupbintcp-perf-test.jar
