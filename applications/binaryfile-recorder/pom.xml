@@ -7,6 +7,7 @@
     <groupId>com.paritytrading.nassau</groupId>
     <artifactId>nassau-parent</artifactId>
     <version>0.11.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>nassau-binaryfile-recorder</artifactId>
@@ -16,7 +17,7 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nassau</artifactId>
+      <artifactId>nassau-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -41,8 +42,16 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
+          <outputFile>nassau-binaryfile-recorder.jar</outputFile>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
               <mainClass>com.paritytrading.nassau.binaryfile.recorder.Recorder</mainClass>

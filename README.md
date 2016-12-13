@@ -14,8 +14,8 @@ use it to provide your own services using these protocols.
 Nassau requires Java Runtime Environment (JRE) 7 or newer.
 
 
-Features
---------
+Protocols
+---------
 
 Nassau implements the following protocols:
 
@@ -32,37 +32,48 @@ See the [Wiki][] for links to the protocol specifications.
 
   [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
-Besides the core library, Nassau contains the following libraries:
-
-- [**Utilities**](nassau-util) contains utility methods for working with
-  NASDAQ transport protocols.
-
-In addition, Nassau contains the following applications:
-
-- [**BinaryFILE Recorder**](nassau-binaryfile-recorder) listens to a
-  MoldUDP64 session or a SoupBinTCP session and writes received messages to
-  a BinaryFILE file.
-
-- [**SoupBinTCP Gateway**](nassau-soupbintcp-gateway) bridges the MoldUDP64
-  protocol to the SoupBinTCP protocol.
-
-- [**SoupBinTCP Performance Test**](nassau-soupbintcp-perf-test) is a simple
-  latency benchmark for the SoupBinTCP implementation.
-
-- [**BinaryFILE Performance Test**](nassau-binaryfile-perf-test) is a simple
-  throughput benchmark for the BinaryFILE implementation.
-
 
 Download
 --------
 
-Add a Maven dependency to Nassau:
+See the [latest release][] on GitHub.
 
-    <dependency>
-      <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau</artifactId>
-      <version><!-- latest version --></version>
-    </dependency>
+  [latest release]: https://github.com/paritytrading/nassau/releases/latest
+
+
+Modules
+-------
+
+Nassau contains the following libraries:
+
+- [**Core**](libraries/core) implements the NASDAQ transport protocols.
+
+- [**Utilities**](libraries/util) contains utility methods for working with
+  NASDAQ transport protocols.
+
+Nassau contains the following applications:
+
+- [**BinaryFILE Recorder**](applications/binaryfile-recorder) records a
+  MoldUDP64 or SoupBinTCP session to a BinaryFILE file.
+
+- [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) serves a MoldUDP64
+  session over the SoupBinTCP protocol.
+
+Nassau contains the following test applications:
+
+- [**SoupBinTCP Performance Test**](tests/soupbintcp-perf-test) is a simple
+  benchmark for the SoupBinTCP implementation.
+
+- [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
+  benchmark for the BinaryFILE implementation.
+
+
+Build
+-----
+
+Build Nassau with Maven:
+
+    mvn package
 
 
 Links

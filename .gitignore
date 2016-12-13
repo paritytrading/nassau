@@ -1,3 +1,4 @@
+*.jar
 pom.xml.*
 release.properties
 target/

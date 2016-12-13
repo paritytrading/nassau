@@ -7,11 +7,12 @@
     <groupId>com.paritytrading.nassau</groupId>
     <artifactId>nassau-parent</artifactId>
     <version>0.11.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>nassau</artifactId>
+  <artifactId>nassau-core</artifactId>
 
-  <name>Nassau</name>
+  <name>Nassau Core</name>
 
   <dependencies>
     <dependency>

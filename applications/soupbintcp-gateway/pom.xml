@@ -7,21 +7,30 @@
     <groupId>com.paritytrading.nassau</groupId>
     <artifactId>nassau-parent</artifactId>
     <version>0.11.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>nassau-soupbintcp-perf-test</artifactId>
+  <artifactId>nassau-soupbintcp-gateway</artifactId>
 
-  <name>Nassau SoupBinTCP Performance Test</name>
+  <name>Nassau SoupBinTCP Gateway</name>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nassau</artifactId>
+      <artifactId>nassau-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.hdrhistogram</groupId>
-      <artifactId>HdrHistogram</artifactId>
+      <groupId>com.paritytrading.foundation</groupId>
+      <artifactId>foundation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.config</groupId>
+      <artifactId>config-extras</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jvirtanen.util</groupId>
@@ -33,11 +42,19 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
+          <outputFile>nassau-soupbintcp-gateway.jar</outputFile>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <mainClass>com.paritytrading.nassau.soupbintcp.perf.PerfTest</mainClass>
+              <mainClass>com.paritytrading.nassau.soupbintcp.gateway.Gateway</mainClass>
             </transformer>
           </transformers>
         </configuration>
