@@ -64,7 +64,7 @@ public class MoldUDP64SessionTest {
         clientStatus = new MoldUDP64ClientStatus();
 
         client = new MoldUDP64Client(clock, clientChannel, clientRequestChannel,
-                requestAddress, clientMessages, clientStatus);
+                requestAddress, clientMessages, clientStatus, 1);
 
         server = new MoldUDP64Server(clock, serverChannel, "nassau");
 
