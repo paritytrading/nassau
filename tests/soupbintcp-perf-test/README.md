@@ -20,7 +20,7 @@ Run Nassau SoupBinTCP Performance Test with Java:
 
     java -jar nassau-soupbintcp-perf-test.jar <packets>
 
-The command line options are as follows:
+The command line arguments are as follows:
 
 - `<packets>`: The number of packets to send.
 
