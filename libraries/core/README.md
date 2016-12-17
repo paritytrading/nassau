@@ -19,11 +19,13 @@ Download
 
 Add a Maven dependency to Nassau Core:
 
-    <dependency>
-      <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau-core</artifactId>
-      <version><!-- latest release --></version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>com.paritytrading.nassau</groupId>
+  <artifactId>nassau-core</artifactId>
+  <version><!-- latest release --></version>
+</dependency>
+```
 
 See the [latest release][] on GitHub.
 
