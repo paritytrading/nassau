@@ -20,11 +20,13 @@ Download
 
 Add a Maven dependency to Nassau Utilities:
 
-    <dependency>
-      <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau-util</artifactId>
-      <version><!-- latest release --></version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>com.paritytrading.nassau</groupId>
+  <artifactId>nassau-util</artifactId>
+  <version><!-- latest release --></version>
+</dependency>
+```
 
 See the [latest release][] on GitHub.
 
