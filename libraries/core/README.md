@@ -11,7 +11,7 @@ Nassau Core has the following features:
 
 - SoupBinTCP client and server implementation
 - MoldUDP64 client, server, and request server implementation
-- BinaryFILE read and write support
+- BinaryFILE reader and writer implementation
 
 
 Download
