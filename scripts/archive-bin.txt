@@ -2,8 +2,8 @@ CHANGELOG.md
 LICENSE.txt
 README.md
 applications/binaryfile-recorder/README.md
-applications/binaryfile-recorder/etc/devel-tcp.conf
-applications/binaryfile-recorder/etc/devel-udp.conf
+applications/binaryfile-recorder/etc/example-tcp.conf
+applications/binaryfile-recorder/etc/example-udp.conf
 applications/binaryfile-recorder/nassau-binaryfile-recorder.jar
 applications/soupbintcp-gateway/README.md
 applications/soupbintcp-gateway/etc/devel.conf
