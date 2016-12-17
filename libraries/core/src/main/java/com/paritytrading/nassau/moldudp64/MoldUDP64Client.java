@@ -52,7 +52,8 @@ public class MoldUDP64Client implements Closeable {
 
     MoldUDP64Client(Clock clock, DatagramChannel channel,
             DatagramChannel requestChannel, SocketAddress requestAddress,
-            MessageListener listener, MoldUDP64ClientStatusListener statusListener) {
+            MessageListener listener, MoldUDP64ClientStatusListener statusListener,
+            long requestedSequenceNumber) {
         this.clock = clock;
 
         this.channel = channel;
@@ -70,7 +71,7 @@ public class MoldUDP64Client implements Closeable {
 
         this.session = new byte[SESSION_LENGTH];
 
-        this.nextExpectedSequenceNumber = 1;
+        this.nextExpectedSequenceNumber = Math.max(1, requestedSequenceNumber);
 
         this.requestUntilSequenceNumber = REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN;
 
@@ -92,7 +93,25 @@ public class MoldUDP64Client implements Closeable {
     public MoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
             MessageListener listener, MoldUDP64ClientStatusListener statusListener) {
         this(SystemClock.INSTANCE, channel, channel, requestAddress, listener,
-                statusListener);
+                statusListener, 1);
+    }
+
+    /**
+     * Create a MoldUDP64 client. Use the underlying datagram channel both for
+     * receiving downstream packets and sending request packets. The underlying
+     * datagram channel can be either blocking or non-blocking.
+     *
+     * @param channel the underlying datagram channel
+     * @param requestAddress the request address
+     * @param listener the message listener
+     * @param statusListener the status listener
+     * @param requestedSequenceNumber the requested initial sequence number
+     */
+    public MoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
+            MessageListener listener, MoldUDP64ClientStatusListener statusListener,
+            long requestedSequenceNumber) {
+        this(SystemClock.INSTANCE, channel, channel, requestAddress, listener,
+                statusListener, requestedSequenceNumber);
     }
 
     /**
@@ -112,7 +131,29 @@ public class MoldUDP64Client implements Closeable {
             SocketAddress requestAddress, MessageListener listener,
             MoldUDP64ClientStatusListener statusListener) {
         this(SystemClock.INSTANCE, channel, requestChannel, requestAddress,
-                listener, statusListener);
+                listener, statusListener, 1);
+    }
+
+    /**
+     * Create a MoldUDP64 client. Use the underlying datagram channel for
+     * receiving downstream packets and the underlying request datagram
+     * channel for sending request packets. Both the underlying datagram
+     * channel and the underlying request datagram channel must be
+     * non-blocking.
+     *
+     * @param channel the underlying datagram channel
+     * @param requestChannel the underlying request datagram channel
+     * @param requestAddress the request address
+     * @param listener the message listener
+     * @param statusListener the status listener
+     * @param requestedSequenceNumber the requested initial sequence number
+     */
+    public MoldUDP64Client(DatagramChannel channel, DatagramChannel requestChannel,
+            SocketAddress requestAddress, MessageListener listener,
+            MoldUDP64ClientStatusListener statusListener,
+            long requestedSequenceNumber) {
+        this(SystemClock.INSTANCE, channel, requestChannel, requestAddress,
+                listener, statusListener, requestedSequenceNumber);
     }
 
     /**
