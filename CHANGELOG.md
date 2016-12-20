@@ -2,6 +2,14 @@ Release Notes
 =============
 
 
+0.12.0 (2016-12-20)
+-------------------
+
+- Improve project structure
+- Improve documentation
+- Add requested initial sequence number support to MoldUDP64 client
+
+
 0.11.0 (2016-11-27)
 -------------------
 
