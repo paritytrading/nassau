@@ -11,7 +11,7 @@ Nassau Core has the following features:
 
 - SoupBinTCP client and server implementation
 - MoldUDP64 client, server, and request server implementation
-- BinaryFILE read and write support
+- BinaryFILE reader and writer implementation
 
 
 Download
@@ -19,11 +19,13 @@ Download
 
 Add a Maven dependency to Nassau Core:
 
-    <dependency>
-      <groupId>com.paritytrading.nassau</groupId>
-      <artifactId>nassau-core</artifactId>
-      <version><!-- latest release --></version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>com.paritytrading.nassau</groupId>
+  <artifactId>nassau-core</artifactId>
+  <version><!-- latest release --></version>
+</dependency>
+```
 
 See the [latest release][] on GitHub.
 

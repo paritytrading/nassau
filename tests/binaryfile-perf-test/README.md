@@ -20,7 +20,7 @@ Run Nassau BinaryFILE Performance Test with Java:
 
     java -jar nassau-binaryfile-perf-test.jar <input-file>
 
-The command line options are as follows:
+The command line arguments are as follows:
 
 - `<input-file>`: The input file. The application reads messages from the
   input file in the BinaryFILE file format.
