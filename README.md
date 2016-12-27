@@ -11,7 +11,7 @@ use it to provide your own services using these protocols.
   [SIX Swiss Exchange]: http://six-swiss-exchange.com
   [TOM]: http://tommtf.eu
 
-Nassau requires Java Runtime Environment (JRE) 7 or newer.
+Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
 
 Protocols
