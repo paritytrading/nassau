@@ -73,7 +73,9 @@ Build
 
 Build Nassau with Maven:
 
-    mvn package
+```
+mvn package
+```
 
 
 Links
