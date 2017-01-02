@@ -18,7 +18,9 @@ Usage
 
 Run Nassau BinaryFILE Performance Test with Java:
 
-    java -jar nassau-binaryfile-perf-test.jar <input-file>
+```
+java -jar nassau-binaryfile-perf-test.jar <input-file>
+```
 
 The command line arguments are as follows:
 
