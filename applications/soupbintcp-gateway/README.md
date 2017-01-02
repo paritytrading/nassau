@@ -18,7 +18,9 @@ Usage
 
 Run Nassau SoupBinTCP Gateway with Java:
 
-    java -jar nassau-soupbintcp-gateway.jar <configuration-file>
+```
+java -jar nassau-soupbintcp-gateway.jar <configuration-file>
+```
 
 The command line arguments are as follows:
 
@@ -38,34 +40,36 @@ called the upstream, the SoupBinTCP session the downstream.
 
 The following configuration parameters are required:
 
-    upstream {
+```
+upstream {
 
-        # The IP address or name of the network interface for the MoldUDP64 session.
-        multicast-interface = 127.0.0.1
+    # The IP address or name of the network interface for the MoldUDP64 session.
+    multicast-interface = 127.0.0.1
 
-        # The IP address of the multicast group for the MoldUDP64 session.
-        multicast-group = 224.0.0.1
+    # The IP address of the multicast group for the MoldUDP64 session.
+    multicast-group = 224.0.0.1
 
-        # The UDP port for the MoldUDP64 session.
-        multicast-port = 5000
+    # The UDP port for the MoldUDP64 session.
+    multicast-port = 5000
 
-        # The IP address of the MoldUDP64 request server.
-        request-address = 127.0.0.1
+    # The IP address of the MoldUDP64 request server.
+    request-address = 127.0.0.1
 
-        # The UDP port of the MoldUDP64 request server.
-        request-port = 5001
+    # The UDP port of the MoldUDP64 request server.
+    request-port = 5001
 
-    }
+}
 
-    downstream {
+downstream {
 
-        # The local IP address for the SoupBinTCP server.
-        address = 0.0.0.0
+    # The local IP address for the SoupBinTCP server.
+    address = 0.0.0.0
 
-        # The local TCP port for the SoupBinTCP server.
-        port = 5000
+    # The local TCP port for the SoupBinTCP server.
+    port = 5000
 
-    }
+}
+```
 
 See the `etc` directory for an example configuration file.
 
