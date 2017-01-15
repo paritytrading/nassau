@@ -71,7 +71,7 @@ public class MoldUDP64Client implements Closeable {
 
         this.session = new byte[SESSION_LENGTH];
 
-        this.nextExpectedSequenceNumber = Math.max(1, requestedSequenceNumber);
+        this.nextExpectedSequenceNumber = Math.max(0, requestedSequenceNumber);
 
         this.requestUntilSequenceNumber = REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN;
 
@@ -100,6 +100,9 @@ public class MoldUDP64Client implements Closeable {
      * Create a MoldUDP64 client. Use the underlying datagram channel both for
      * receiving downstream packets and sending request packets. The underlying
      * datagram channel can be either blocking or non-blocking.
+     *
+     * <p>Set the requested initial sequence number to 0 to start from the
+     * first received message.</p>
      *
      * @param channel the underlying datagram channel
      * @param requestAddress the request address
@@ -140,6 +143,9 @@ public class MoldUDP64Client implements Closeable {
      * channel for sending request packets. Both the underlying datagram
      * channel and the underlying request datagram channel must be
      * non-blocking.
+     *
+     * <p>Set the requested initial sequence number to 0 to start from the
+     * first received message.</p>
      *
      * @param channel the underlying datagram channel
      * @param requestChannel the underlying request datagram channel
@@ -236,6 +242,9 @@ public class MoldUDP64Client implements Closeable {
             messageCount = 0;
 
         long nextSequenceNumber = sequenceNumber + messageCount;
+
+        if (nextExpectedSequenceNumber == 0)
+            nextExpectedSequenceNumber = sequenceNumber;
 
         if (sequenceNumber > nextExpectedSequenceNumber) {
             if (requestUntilSequenceNumber == REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN) {
