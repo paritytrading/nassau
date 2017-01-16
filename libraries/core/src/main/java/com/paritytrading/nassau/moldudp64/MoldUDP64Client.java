@@ -42,7 +42,7 @@ public class MoldUDP64Client implements Closeable {
 
     private byte[] session;
 
-    private long nextExpectedSequenceNumber;
+    protected long nextExpectedSequenceNumber;
 
     private long requestUntilSequenceNumber;
 
