@@ -440,4 +440,31 @@ public class MoldUDP64SessionTest {
                     new Downstream()), clientStatus.collect());
     }
 
+    @Test
+    public void firstReceivedMessage() throws Exception {
+        List<String> messages = asList("foo", "bar");
+
+        client.nextExpectedSequenceNumber = 0;
+
+        packet.clear();
+        packet.put(wrap("foo"));
+
+        server.nextSequenceNumber = 3;
+        server.send(packet);
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+                    new Downstream()), clientStatus.collect());
+    }
+
 }
