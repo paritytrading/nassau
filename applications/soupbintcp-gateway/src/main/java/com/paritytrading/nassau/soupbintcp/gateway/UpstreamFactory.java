@@ -54,7 +54,7 @@ class UpstreamFactory {
             }
 
             @Override
-            public void downstream(MoldUDP64Client session) {
+            public void downstream(MoldUDP64Client session, long sequenceNumber, int messageCount) {
             }
 
             @Override

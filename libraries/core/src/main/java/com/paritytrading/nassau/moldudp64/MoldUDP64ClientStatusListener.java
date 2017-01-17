@@ -20,9 +20,12 @@ public interface MoldUDP64ClientStatusListener {
      * Indicates that a downstream packet was processed successfully.
      *
      * @param session the session
+     * @param sequenceNumber the sequence number
+     * @param messageCount the message count
      * @throws IOException if an I/O error occurs
      */
-    void downstream(MoldUDP64Client session) throws IOException;
+    void downstream(MoldUDP64Client session, long sequenceNumber,
+            int messageCount) throws IOException;
 
     /**
      * Indicates that a request packet was sent.

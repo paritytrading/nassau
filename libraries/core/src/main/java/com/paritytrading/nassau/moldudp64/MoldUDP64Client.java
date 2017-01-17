@@ -285,20 +285,14 @@ public class MoldUDP64Client implements Closeable {
             } else {
                 long skipUntilSequenceNumber = Math.min(nextSequenceNumber, nextExpectedSequenceNumber);
 
-                while (sequenceNumber < skipUntilSequenceNumber) {
+                for (long s = sequenceNumber; s < skipUntilSequenceNumber; s++)
                     skip();
 
-                    sequenceNumber++;
-                }
-
-                while (nextExpectedSequenceNumber < nextSequenceNumber) {
+                for (; nextExpectedSequenceNumber < nextSequenceNumber; nextExpectedSequenceNumber++)
                     read();
-
-                    nextExpectedSequenceNumber++;
-                }
             }
 
-            statusListener.downstream(this);
+            statusListener.downstream(this, sequenceNumber, messageCount);
         }
     }
 

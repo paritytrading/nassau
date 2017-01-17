@@ -22,8 +22,8 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     @Override
-    public void downstream(MoldUDP64Client session) {
-        events.add(new Downstream());
+    public void downstream(MoldUDP64Client session, long sequenceNumber, int messageCount) {
+        events.add(new Downstream(sequenceNumber, messageCount));
     }
 
     @Override
@@ -48,6 +48,13 @@ class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
     }
 
     public static class Downstream extends Value implements Event {
+        public final long sequenceNumber;
+        public final int  messageCount;
+
+        public Downstream(long sequenceNumber, int messageCount) {
+            this.sequenceNumber = sequenceNumber;
+            this.messageCount   = messageCount;
+        }
     }
 
     public static class Request extends Value implements Event {
