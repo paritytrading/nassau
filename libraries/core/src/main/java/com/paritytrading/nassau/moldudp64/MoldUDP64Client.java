@@ -322,6 +322,9 @@ public class MoldUDP64Client implements Closeable {
     private void read() throws IOException {
         int messageLength = readMessageLength();
 
+        if (rxBuffer.remaining() < messageLength)
+            truncatedPacket();
+
         int limit = rxBuffer.limit();
 
         rxBuffer.limit(rxBuffer.position() + messageLength);
@@ -335,6 +338,9 @@ public class MoldUDP64Client implements Closeable {
     private void skip() throws IOException {
         int messageLength = readMessageLength();
 
+        if (rxBuffer.remaining() < messageLength)
+            truncatedPacket();
+
         rxBuffer.position(rxBuffer.position() + messageLength);
     }
 
@@ -344,12 +350,7 @@ public class MoldUDP64Client implements Closeable {
 
         rxBuffer.order(ByteOrder.BIG_ENDIAN);
 
-        int messageLength = getUnsignedShort(rxBuffer);
-
-        if (rxBuffer.remaining() < messageLength)
-            truncatedPacket();
-
-        return messageLength;
+        return getUnsignedShort(rxBuffer);
     }
 
     private void truncatedPacket() throws MoldUDP64Exception {
