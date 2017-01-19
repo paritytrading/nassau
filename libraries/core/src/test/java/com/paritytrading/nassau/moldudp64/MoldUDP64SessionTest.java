@@ -91,7 +91,7 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(asList("foo"), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 1)),
                 clientStatus.collect());
     }
 
@@ -106,7 +106,7 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(asList("foo", "bar"), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 2)),
                 clientStatus.collect());
     }
 
@@ -117,7 +117,7 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0)),
                 clientStatus.collect());
     }
 
@@ -128,7 +128,7 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new EndOfSession(), new Downstream(1, 0)),
                 clientStatus.collect());
     }
 
@@ -154,8 +154,8 @@ public class MoldUDP64SessionTest {
             client.receive();
 
         assertEquals(emptyList(), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
-                    new Downstream()), clientStatus.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0),
+                    new Downstream(1, 0)), clientStatus.collect());
     }
 
     @Test
@@ -169,7 +169,7 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(asList(message), clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 1)),
                 clientStatus.collect());
     }
 
@@ -198,7 +198,7 @@ public class MoldUDP64SessionTest {
 
         assertEquals(messages, clientMessages.collect());
         assertEquals(asList(new State(BACKFILL), new Request(1, 3),
-                    new State(SYNCHRONIZED), new Downstream()),
+                    new State(SYNCHRONIZED), new Downstream(1, 3)),
                 clientStatus.collect());
     }
 
@@ -224,9 +224,9 @@ public class MoldUDP64SessionTest {
         client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0),
                     new State(GAP_FILL), new Request(1, 3),
-                    new State(SYNCHRONIZED), new Downstream()),
+                    new State(SYNCHRONIZED), new Downstream(1, 3)),
                 clientStatus.collect());
     }
 
@@ -265,10 +265,10 @@ public class MoldUDP64SessionTest {
         client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0),
                     new State(GAP_FILL), new Request(1, 1),
-                    new Request(2, 2), new Downstream(),
-                    new State(SYNCHRONIZED), new Downstream()),
+                    new Request(2, 2), new Downstream(1, 1),
+                    new State(SYNCHRONIZED), new Downstream(2, 2)),
                 clientStatus.collect());
     }
 
@@ -294,9 +294,9 @@ public class MoldUDP64SessionTest {
         client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0),
                     new State(GAP_FILL), new Request(1, 3),
-                    new State(SYNCHRONIZED), new Downstream()),
+                    new State(SYNCHRONIZED), new Downstream(1, 3)),
                 clientStatus.collect());
     }
 
@@ -337,10 +337,10 @@ public class MoldUDP64SessionTest {
         client.receiveResponse();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 0),
                     new State(GAP_FILL), new Request(1, 2),
                     new Request(1, 3), new State(SYNCHRONIZED),
-                    new Downstream()), clientStatus.collect());
+                    new Downstream(1, 3)), clientStatus.collect());
     }
 
     @Test
@@ -373,8 +373,8 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
-                    new Downstream(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 1),
+                    new Downstream(1, 2), new Downstream(3, 1)),
                 clientStatus.collect());
     }
 
@@ -408,9 +408,63 @@ public class MoldUDP64SessionTest {
         client.receive();
 
         assertEquals(messages, clientMessages.collect());
-        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(),
-                    new Downstream(), new Downstream()),
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(1, 1),
+                    new Downstream(1, 1), new Downstream(2, 2)),
                 clientStatus.collect());
+    }
+
+    @Test
+    public void requestedSequenceNumber() throws Exception {
+        List<String> messages = asList("bar");
+
+        client.nextExpectedSequenceNumber = 4;
+
+        packet.clear();
+        packet.put(wrap("foo"));
+
+        server.nextSequenceNumber = 3;
+        server.send(packet);
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(3, 1),
+                    new Downstream(4, 1)), clientStatus.collect());
+    }
+
+    @Test
+    public void firstReceivedMessage() throws Exception {
+        List<String> messages = asList("foo", "bar");
+
+        client.nextExpectedSequenceNumber = 0;
+
+        packet.clear();
+        packet.put(wrap("foo"));
+
+        server.nextSequenceNumber = 3;
+        server.send(packet);
+
+        client.receive();
+
+        packet.clear();
+        packet.put(wrap("bar"));
+
+        server.nextSequenceNumber = 4;
+        server.send(packet);
+
+        client.receive();
+
+        assertEquals(messages, clientMessages.collect());
+        assertEquals(asList(new State(SYNCHRONIZED), new Downstream(3, 1),
+                    new Downstream(4, 1)), clientStatus.collect());
     }
 
 }
