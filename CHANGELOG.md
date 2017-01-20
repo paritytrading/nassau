@@ -2,6 +2,15 @@ Release Notes
 =============
 
 
+0.13.0 (2017-01-20)
+-------------------
+
+- Upgrade to Java 8
+- Improve support for requested initial sequence number in MoldUDP64 client
+- Add downstream sequence number and message count parameters to MoldUDP64
+  client status listener
+
+
 0.12.0 (2016-12-20)
 -------------------
 
