@@ -59,8 +59,7 @@ public class SoupBinTCPSessionTest {
         ServerSocketChannel acceptor = ServerSocketChannel.open();
         acceptor.bind(null);
 
-        SocketChannel clientChannel = SocketChannel.open();
-        clientChannel.connect(acceptor.getLocalAddress());
+        SocketChannel clientChannel = SocketChannel.open(acceptor.getLocalAddress());
 
         SocketChannel serverChannel = acceptor.accept();
         acceptor.close();
