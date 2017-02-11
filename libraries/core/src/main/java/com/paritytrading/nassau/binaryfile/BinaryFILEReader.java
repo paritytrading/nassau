@@ -21,6 +21,8 @@ public class BinaryFILEReader implements Closeable {
 
     private static final int BUFFER_SIZE = 128 * 1024;
 
+    private static final int GZIP_BUFFER_SIZE = 64 * 1024;
+
     private ReadableByteChannel channel;
 
     private MessageListener listener;
@@ -63,7 +65,7 @@ public class BinaryFILEReader implements Closeable {
         FileInputStream stream = new FileInputStream(file);
 
         if (file.getName().endsWith(".gz"))
-            return new BinaryFILEReader(new GZIPInputStream(stream, 65536), listener);
+            return new BinaryFILEReader(new GZIPInputStream(stream, GZIP_BUFFER_SIZE), listener);
         else
             return new BinaryFILEReader(stream.getChannel(), listener);
     }
