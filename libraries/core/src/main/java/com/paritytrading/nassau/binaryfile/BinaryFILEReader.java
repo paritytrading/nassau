@@ -19,6 +19,8 @@ import java.util.zip.GZIPInputStream;
  */
 public class BinaryFILEReader implements Closeable {
 
+    private static final int BUFFER_SIZE = 128 * 1024;
+
     private ReadableByteChannel channel;
 
     private MessageListener listener;
@@ -45,7 +47,7 @@ public class BinaryFILEReader implements Closeable {
         this.channel  = channel;
         this.listener = listener;
 
-        this.buffer = ByteBuffer.allocate(128 * 1024);
+        this.buffer = ByteBuffer.allocate(BUFFER_SIZE);
     }
 
     /**
