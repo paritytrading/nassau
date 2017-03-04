@@ -1,20 +1,15 @@
-Nassau BinaryFILE Performance Test
-==================================
+# Nassau BinaryFILE Performance Test
 
 Nassau BinaryFILE Performance Test is a simple benchmark for the BinaryFILE
 implementation.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Nassau BinaryFILE Performance Test with Java:
 
@@ -30,8 +25,6 @@ The command line arguments are as follows:
 The application counts the number of messages in the input file and records
 the time it takes to read them.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

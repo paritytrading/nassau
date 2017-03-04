@@ -1,12 +1,9 @@
-Nassau Utilities
-================
+# Nassau Utilities
 
 Nassau Utilities contains utility methods for working with NASDAQ transport
 protocols.
 
-
-Features
---------
+## Features
 
 Nassau Utilities contains the following utility methods:
 
@@ -14,9 +11,7 @@ Nassau Utilities contains the following utility methods:
 - `MoldUDP64.receive()` for receiving all messages in a MoldUDP64 session
 - `BinaryFILE.read()` for reading all messages in a BinaryFILE file
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Nassau Utilities:
 
@@ -32,8 +27,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-License
--------
+## License
 
 Released under Apache License, Version 2.0.

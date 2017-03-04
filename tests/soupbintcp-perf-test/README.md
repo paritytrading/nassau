@@ -1,20 +1,15 @@
-Nassau SoupBinTCP Performance Test
-==================================
+# Nassau SoupBinTCP Performance Test
 
 Nassau SoupBinTCP Performance Test is a simple benchmark for the SoupBinTCP
 implementation.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Nassau SoupBinTCP Performance Test with Java:
 
@@ -31,8 +26,6 @@ interface. A SoupBinTCP client running on one thread sends an Unsequenced
 Data packet to a SoupBinTCP server running on another thread. The server
 responds to the client with a Sequenced Data packet.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

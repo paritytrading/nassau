@@ -1,20 +1,15 @@
-Nassau SoupBinTCP Gateway
-=========================
+# Nassau SoupBinTCP Gateway
 
 Nassau SoupBinTCP Gateway serves a MoldUDP64 session over the SoupBinTCP
 protocol.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Nassau SoupBinTCP Gateway with Java:
 
@@ -30,9 +25,7 @@ The command line arguments are as follows:
 Once started, the application starts listening for incoming connections from
 SoupBinTCP clients.
 
-
-Configuration
--------------
+## Configuration
 
 Nassau SoupBinTCP Gateway uses a configuration file to specify how to join a
 MoldUDP64 session and serve a SoupBinTCP session. The MoldUDP64 session is
@@ -73,8 +66,6 @@ downstream {
 
 See the `etc` directory for an example configuration file.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

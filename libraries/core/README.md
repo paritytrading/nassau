@@ -1,11 +1,8 @@
-Nassau Core
-===========
+# Nassau Core
 
 Nassau Core implements the NASDAQ transport protocols.
 
-
-Features
---------
+## Features
 
 Nassau Core has the following features:
 
@@ -13,9 +10,7 @@ Nassau Core has the following features:
 - MoldUDP64 client, server, and request server implementation
 - BinaryFILE reader and writer implementation
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Nassau Core:
 
@@ -31,8 +26,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

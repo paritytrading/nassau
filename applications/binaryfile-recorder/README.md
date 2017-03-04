@@ -1,20 +1,15 @@
-Nassau BinaryFILE Recorder
-==========================
+# Nassau BinaryFILE Recorder
 
 Nassau BinaryFILE Recorder records a MoldUDP64 or SoupBinTCP session to a
 BinaryFILE file.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Nassau BinaryFILE Recorder with Java:
 
@@ -36,9 +31,7 @@ file. The application terminates when it receives a packet indicating the End
 of Session or, in case of SoupBinTCP, the SoupBinTCP server disconnects. You
 can also terminate the application at any time.
 
-
-Configuration
--------------
+## Configuration
 
 Nassau BinaryFILE Recorder uses a configuration file to specify how to join a
 MoldUDP64 session or connect to a SoupBinTCP session.
@@ -88,8 +81,6 @@ session {
 
 See the `etc` directory for example configuration files.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

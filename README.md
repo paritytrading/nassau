@@ -1,5 +1,4 @@
-Nassau
-======
+# Nassau
 
 Nassau implements NASDAQ transport protocols on the JVM.
 
@@ -14,9 +13,7 @@ can also use it to provide your own services using these protocols.
 
 Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
-
-Protocols
----------
+## Protocols
 
 Nassau implements the following protocols:
 
@@ -33,9 +30,7 @@ See the [Wiki][] for links to the protocol specifications.
 
   [Wiki]: https://github.com/paritytrading/nassau/wiki/
 
-
-Download
---------
+## Download
 
 See the [latest release][] on GitHub.
 
@@ -69,8 +64,7 @@ Nassau contains the following test applications:
   benchmark for the BinaryFILE implementation.
 
 
-Build
------
+## Build
 
 Build Nassau with Maven:
 
@@ -78,9 +72,7 @@ Build Nassau with Maven:
 mvn package
 ```
 
-
-Links
------
+## Links
 
 For more information on Nassau:
 
@@ -91,9 +83,7 @@ For more information on Nassau:
 - Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
   for discussions
 
-
-License
--------
+## License
 
 Copyright 2014 Jussi Virtanen.
 
