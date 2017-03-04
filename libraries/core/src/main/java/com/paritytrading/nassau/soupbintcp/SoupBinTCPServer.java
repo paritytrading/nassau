@@ -76,7 +76,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
          * This built-in payload transmit buffer is used for Login Accepted
          * and Login Rejected packets.
          */
-        this.txPayload = ByteBuffer.allocate(30);
+        this.txPayload = ByteBuffer.allocateDirect(30);
 
         this.listener = listener;
 

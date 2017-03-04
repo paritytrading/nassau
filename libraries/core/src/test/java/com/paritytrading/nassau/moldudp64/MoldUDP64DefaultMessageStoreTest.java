@@ -22,7 +22,7 @@ public class MoldUDP64DefaultMessageStoreTest {
     public void setUp() {
         store = new MoldUDP64DefaultMessageStore();
 
-        buffer = ByteBuffer.allocate(1024);
+        buffer = ByteBuffer.allocateDirect(1024);
     }
 
     @Test

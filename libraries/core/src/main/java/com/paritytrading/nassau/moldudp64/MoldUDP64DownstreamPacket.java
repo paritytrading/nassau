@@ -22,7 +22,7 @@ public class MoldUDP64DownstreamPacket {
     public MoldUDP64DownstreamPacket() {
         this.messageCount = 0;
 
-        this.payload = ByteBuffer.allocate(MAX_PAYLOAD_LENGTH);
+        this.payload = ByteBuffer.allocateDirect(MAX_PAYLOAD_LENGTH);
     }
 
     /**

@@ -62,7 +62,7 @@ public class MoldUDP64Server implements Closeable {
 
         this.lastHeartbeatMillis = clock.currentTimeMillis();
 
-        txBuffers[0] = ByteBuffer.allocate(HEADER_LENGTH);
+        txBuffers[0] = ByteBuffer.allocateDirect(HEADER_LENGTH);
     }
 
     /**

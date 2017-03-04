@@ -49,7 +49,7 @@ public class BinaryFILEReader implements Closeable {
         this.channel  = channel;
         this.listener = listener;
 
-        this.buffer = ByteBuffer.allocate(BUFFER_SIZE);
+        this.buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
     }
 
     /**

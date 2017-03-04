@@ -32,8 +32,8 @@ public class MoldUDP64RequestServer implements Closeable {
     public MoldUDP64RequestServer(DatagramChannel channel) {
         this.channel = channel;
 
-        this.rxBuffer = ByteBuffer.allocate(HEADER_LENGTH);
-        this.txBuffer = ByteBuffer.allocate(HEADER_LENGTH + MAX_PAYLOAD_LENGTH);
+        this.rxBuffer = ByteBuffer.allocateDirect(HEADER_LENGTH);
+        this.txBuffer = ByteBuffer.allocateDirect(HEADER_LENGTH + MAX_PAYLOAD_LENGTH);
 
         this.session = new byte[SESSION_LENGTH];
     }

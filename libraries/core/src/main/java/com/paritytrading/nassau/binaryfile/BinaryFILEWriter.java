@@ -16,7 +16,7 @@ public class BinaryFILEWriter implements Closeable {
 
     private static final long DEFAULT_SIZE = 128 * 1024 * 1024;
 
-    private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocate(0);
+    private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocateDirect(0);
 
     private RandomAccessFile file;
 

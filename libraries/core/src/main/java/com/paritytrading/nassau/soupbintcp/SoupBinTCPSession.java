@@ -52,9 +52,9 @@ public abstract class SoupBinTCPSession implements Closeable {
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
 
-        this.rxBuffer = ByteBuffer.allocate(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
+        this.rxBuffer = ByteBuffer.allocateDirect(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
 
-        this.txHeader = ByteBuffer.allocate(3);
+        this.txHeader = ByteBuffer.allocateDirect(3);
 
         this.txBuffers = new ByteBuffer[2];
 

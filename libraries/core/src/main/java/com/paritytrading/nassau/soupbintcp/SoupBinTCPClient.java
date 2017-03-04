@@ -78,7 +78,7 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
          * This built-in payload transmit buffer is used for Login Request
          * packets.
          */
-        this.txPayload = ByteBuffer.allocate(46);
+        this.txPayload = ByteBuffer.allocateDirect(46);
 
         this.listener = listener;
 
