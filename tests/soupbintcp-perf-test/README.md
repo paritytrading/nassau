@@ -26,6 +26,24 @@ interface. A SoupBinTCP client running on one thread sends an Unsequenced
 Data packet to a SoupBinTCP server running on another thread. The server
 responds to the client with a Sequenced Data packet.
 
+## Results
+
+The following results have been obtained on an Amazon Web Services (AWS)
+c4.xlarge EC2 instance running Amazon Linux 2016.09 and OpenJDK 8:
+
+```
+Warming up...
+Benchmarking...
+Results (n = 50000):
+
+   50.00%:       5.58 µs
+   90.00%:       6.90 µs
+   99.00%:       8.54 µs
+   99.90%:      14.65 µs
+   99.99%:      31.62 µs
+  100.00%:      48.61 µs
+```
+
 ## License
 
 Released under the Apache License, Version 2.0.

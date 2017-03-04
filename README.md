@@ -11,6 +11,12 @@ can also use it to provide your own services using these protocols.
   [SIX Swiss Exchange]: http://six-swiss-exchange.com
   [TOM]: http://tommtf.eu
 
+Nassau is designed to exhibit low and predictable latency. To achieve this, it
+supports non-blocking, zero-copy networking and does not allocate any memory
+on message reception or transmission. The SoupBinTCP implementation can
+achieve [5.6 µs round-trip time (RTT)](tests/soupbintcp-perf-test) over the
+loopback interface.
+
 Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
 ## Protocols
