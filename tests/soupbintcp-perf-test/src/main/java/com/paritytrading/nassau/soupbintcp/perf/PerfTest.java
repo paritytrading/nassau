@@ -77,6 +77,7 @@ class PerfTest {
 
         System.out.printf("Results (n = %d):\n", packets);
         System.out.printf("\n");
+        System.out.printf( "      Min: %10.2f µs\n", client.getHistogram().getMinValue()                / 1000.0);
         System.out.printf("   50.00%%: %10.2f µs\n", client.getHistogram().getValueAtPercentile(50.00)  / 1000.0);
         System.out.printf("   90.00%%: %10.2f µs\n", client.getHistogram().getValueAtPercentile(90.00)  / 1000.0);
         System.out.printf("   99.00%%: %10.2f µs\n", client.getHistogram().getValueAtPercentile(99.00)  / 1000.0);
