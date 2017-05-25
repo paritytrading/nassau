@@ -78,8 +78,8 @@ public abstract class SoupBinTCPSession implements Closeable {
      * Receive data from the underlying socket channel. For each packet
      * received, invoke the corresponding listener if applicable.
      *
-     * @return The number of bytes read, possibly zero, or <code>-1</code>
-     *   if the channel has reached end-of-stream
+     * @return The number of bytes read, possibly zero, or {@code -1} if the
+     *   channel has reached end-of-stream
      * @throws IOException if an I/O error occurs
      */
     public int receive() throws IOException {
