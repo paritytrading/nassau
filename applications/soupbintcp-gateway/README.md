@@ -56,7 +56,7 @@ upstream {
 downstream {
 
     # The local IP address for the SoupBinTCP server.
-    address = 0.0.0.0
+    address = 127.0.0.1
 
     # The local TCP port for the SoupBinTCP server.
     port = 5000
