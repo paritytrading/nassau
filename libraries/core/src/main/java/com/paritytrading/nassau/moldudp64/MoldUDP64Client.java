@@ -48,8 +48,6 @@ public class MoldUDP64Client implements Closeable {
 
     private long requestSentMillis;
 
-    private MoldUDP64ClientState state;
-
     MoldUDP64Client(Clock clock, DatagramChannel channel,
             DatagramChannel requestChannel, SocketAddress requestAddress,
             MessageListener listener, MoldUDP64ClientStatusListener statusListener,
@@ -76,8 +74,6 @@ public class MoldUDP64Client implements Closeable {
         this.requestUntilSequenceNumber = REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN;
 
         this.requestSentMillis = 0;
-
-        this.state = UNKNOWN;
     }
 
     /**
@@ -248,13 +244,13 @@ public class MoldUDP64Client implements Closeable {
 
         if (sequenceNumber > nextExpectedSequenceNumber) {
             if (requestUntilSequenceNumber == REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN) {
-                state(BACKFILL);
+                statusListener.state(this, BACKFILL);
 
                 requestUntilSequenceNumber = nextSequenceNumber;
 
                 request(nextExpectedSequenceNumber, requestUntilSequenceNumber);
             } else if (requestUntilSequenceNumber == 0) {
-                state(GAP_FILL);
+                statusListener.state(this, GAP_FILL);
 
                 requestUntilSequenceNumber = nextSequenceNumber;
 
@@ -270,11 +266,11 @@ public class MoldUDP64Client implements Closeable {
                 if (requestUntilSequenceNumber == REQUEST_UNTIL_SEQUENCE_NUMBER_UNKNOWN) {
                     requestUntilSequenceNumber = 0;
 
-                    state(SYNCHRONIZED);
+                    statusListener.state(this, SYNCHRONIZED);
                 } else if (requestUntilSequenceNumber == nextSequenceNumber) {
                     requestUntilSequenceNumber = 0;
 
-                    state(SYNCHRONIZED);
+                    statusListener.state(this, SYNCHRONIZED);
                 } else {
                     request(nextSequenceNumber, requestUntilSequenceNumber);
                 }
@@ -311,12 +307,6 @@ public class MoldUDP64Client implements Closeable {
         statusListener.request(this, requestFromSequenceNumber, requestedMessageCount);
 
         requestSentMillis = clock.currentTimeMillis();
-    }
-
-    private void state(MoldUDP64ClientState next) throws IOException {
-        state = next;
-
-        statusListener.state(this, next);
     }
 
     private void read() throws IOException {
