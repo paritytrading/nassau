@@ -248,18 +248,18 @@ public class MoldUDP64Client implements Closeable {
 
                 requestUntilSequenceNumber = nextSequenceNumber;
 
-                request(nextExpectedSequenceNumber, requestUntilSequenceNumber);
+                request(nextExpectedSequenceNumber);
             } else if (requestUntilSequenceNumber == 0) {
                 statusListener.state(this, GAP_FILL);
 
                 requestUntilSequenceNumber = nextSequenceNumber;
 
-                request(nextExpectedSequenceNumber, requestUntilSequenceNumber);
+                request(nextExpectedSequenceNumber);
             } else {
                 requestUntilSequenceNumber = Math.max(requestUntilSequenceNumber, nextSequenceNumber);
 
                 if (clock.currentTimeMillis() - requestSentMillis > REQUEST_TIMEOUT_MILLIS)
-                    request(nextExpectedSequenceNumber, requestUntilSequenceNumber);
+                    request(nextExpectedSequenceNumber);
             }
         } else {
             if (requestUntilSequenceNumber != 0) {
@@ -272,7 +272,7 @@ public class MoldUDP64Client implements Closeable {
 
                     statusListener.state(this, SYNCHRONIZED);
                 } else {
-                    request(nextSequenceNumber, requestUntilSequenceNumber);
+                    request(nextSequenceNumber);
                 }
             }
 
@@ -292,7 +292,7 @@ public class MoldUDP64Client implements Closeable {
         }
     }
 
-    private void request(long requestFromSequenceNumber, long requestUntilSequenceNumber) throws IOException {
+    private void request(long requestFromSequenceNumber) throws IOException {
         int requestedMessageCount = (int)Math.min(requestUntilSequenceNumber - requestFromSequenceNumber,
                 MAX_MESSAGE_COUNT);
 
