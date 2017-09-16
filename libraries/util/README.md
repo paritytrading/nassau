@@ -11,6 +11,15 @@ Nassau Utilities contains the following utility methods:
 - `MoldUDP64.receive()` for receiving all messages in a MoldUDP64 session
 - `BinaryFILE.read()` for reading all messages in a BinaryFILE file
 
+## Dependencies
+
+Nassau Utilities depends on the following libraries:
+
+- [Foundation][] 0.2.1
+- Nassau Core
+
+  [Foundation]: https://github.com/paritytrading/foundation
+
 ## Download
 
 Add a Maven dependency to Nassau Utilities:
