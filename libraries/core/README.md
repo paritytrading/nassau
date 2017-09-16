@@ -10,6 +10,14 @@ Nassau Core has the following features:
 - MoldUDP64 client, server, and request server implementation
 - BinaryFILE reader and writer implementation
 
+## Dependencies
+
+Nassau Core depends on the following libraries:
+
+- [Foundation][] 0.2.1
+
+  [Foundation]: https://github.com/paritytrading/foundation
+
 ## Download
 
 Add a Maven dependency to Nassau Core:
