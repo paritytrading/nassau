@@ -25,28 +25,23 @@ class PerfTest {
         final Server server = Server.open(new InetSocketAddress(0));
         final Client client = Client.connect(server.getLocalAddress());
 
-        new Thread(new Runnable() {
+        new Thread(() -> {
+            Server.Session session = null;
 
-            @Override
-            public void run() {
-                Server.Session session = null;
+            try {
+                session = server.accept();
 
+                server.close();
+
+                while (session.receive() != -1);
+            } catch (IOException e) {
+            } finally {
                 try {
-                    session = server.accept();
-
-                    server.close();
-
-                    while (session.receive() != -1);
+                    if (session != null)
+                        session.close();
                 } catch (IOException e) {
-                } finally {
-                    try {
-                        if (session != null)
-                            session.close();
-                    } catch (IOException e) {
-                    }
                 }
             }
-
         }).start();
 
         ByteBuffer buffer = ByteBuffer.wrap(new byte[] { 'f', 'o', 'o' });
