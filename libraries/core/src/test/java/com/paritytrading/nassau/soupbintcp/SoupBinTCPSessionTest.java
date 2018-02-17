@@ -19,7 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
 
 public class SoupBinTCPSessionTest {
@@ -29,9 +28,6 @@ public class SoupBinTCPSessionTest {
 
     @Rule
     public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     private SoupBinTCP.LoginAccepted loginAccepted;
     private SoupBinTCP.LoginRejected loginRejected;
@@ -168,10 +164,8 @@ public class SoupBinTCPSessionTest {
         assertEquals(asList(message), serverMessages.collect());
     }
 
-    @Test
+    @Test(expected=SoupBinTCPException.class)
     public void maximumPacketLengthExceededForInboundUnsequencedData() throws Exception {
-        exception.expect(SoupBinTCPException.class);
-
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH + 1);
 
         client.send(wrap(message));
@@ -185,10 +179,8 @@ public class SoupBinTCPSessionTest {
         client.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH)));
     }
 
-    @Test
+    @Test(expected=SoupBinTCPException.class)
     public void maximumPacketLengthExceededForOutboundUnsequencedData() throws Exception {
-        exception.expect(SoupBinTCPException.class);
-
         client.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
     }
 
@@ -217,10 +209,8 @@ public class SoupBinTCPSessionTest {
         assertEquals(asList(message), clientMessages.collect());
     }
 
-    @Test
+    @Test(expected=SoupBinTCPException.class)
     public void maximumPacketLengthExceededForInboundSequencedData() throws Exception {
-        exception.expect(SoupBinTCPException.class);
-
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH + 1);
 
         server.send(wrap(message));
@@ -234,10 +224,8 @@ public class SoupBinTCPSessionTest {
         server.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH)));
     }
 
-    @Test
+    @Test(expected=SoupBinTCPException.class)
     public void maximumPacketLengthExceededForOutboundSequencedData() throws Exception {
-        exception.expect(SoupBinTCPException.class);
-
         server.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
     }
 

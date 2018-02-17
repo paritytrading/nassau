@@ -18,13 +18,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
 
 public class MoldUDP64SessionTest {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Rule
     public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
@@ -173,10 +169,8 @@ public class MoldUDP64SessionTest {
                 clientStatus.collect());
     }
 
-    @Test
+    @Test(expected=MoldUDP64Exception.class)
     public void maximumMessageLengthExceeded() throws Exception {
-        exception.expect(MoldUDP64Exception.class);
-
         packet.put(wrap(repeat('X', 1399)));
     }
 
