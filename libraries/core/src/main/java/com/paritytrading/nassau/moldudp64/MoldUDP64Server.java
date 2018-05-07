@@ -4,7 +4,6 @@ import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 
 import com.paritytrading.nassau.time.Clock;
-import com.paritytrading.nassau.time.SystemClock;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -37,7 +36,7 @@ public class MoldUDP64Server implements Closeable {
      * @param session the session name
      */
     public MoldUDP64Server(DatagramChannel channel, String session) {
-        this(SystemClock.INSTANCE, channel, session);
+        this(System::currentTimeMillis, channel, session);
     }
 
     /**

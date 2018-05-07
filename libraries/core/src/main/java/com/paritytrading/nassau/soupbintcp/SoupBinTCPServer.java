@@ -4,7 +4,6 @@ import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.time.Clock;
-import com.paritytrading.nassau.time.SystemClock;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -52,7 +51,7 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     public SoupBinTCPServer(SocketChannel channel, int maxPayloadLength,
             MessageListener listener, SoupBinTCPServerStatusListener statusListener) {
-        this(SystemClock.INSTANCE, channel, maxPayloadLength, listener, statusListener);
+        this(System::currentTimeMillis, channel, maxPayloadLength, listener, statusListener);
     }
 
     /**

@@ -6,7 +6,6 @@ import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientState.*;
 
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.time.Clock;
-import com.paritytrading.nassau.time.SystemClock;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.SocketAddress;
@@ -88,7 +87,7 @@ public class MoldUDP64Client implements Closeable {
      */
     public MoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
             MessageListener listener, MoldUDP64ClientStatusListener statusListener) {
-        this(SystemClock.INSTANCE, channel, channel, requestAddress, listener,
+        this(System::currentTimeMillis, channel, channel, requestAddress, listener,
                 statusListener, 1);
     }
 
@@ -109,7 +108,7 @@ public class MoldUDP64Client implements Closeable {
     public MoldUDP64Client(DatagramChannel channel, SocketAddress requestAddress,
             MessageListener listener, MoldUDP64ClientStatusListener statusListener,
             long requestedSequenceNumber) {
-        this(SystemClock.INSTANCE, channel, channel, requestAddress, listener,
+        this(System::currentTimeMillis, channel, channel, requestAddress, listener,
                 statusListener, requestedSequenceNumber);
     }
 
@@ -129,7 +128,7 @@ public class MoldUDP64Client implements Closeable {
     public MoldUDP64Client(DatagramChannel channel, DatagramChannel requestChannel,
             SocketAddress requestAddress, MessageListener listener,
             MoldUDP64ClientStatusListener statusListener) {
-        this(SystemClock.INSTANCE, channel, requestChannel, requestAddress,
+        this(System::currentTimeMillis, channel, requestChannel, requestAddress,
                 listener, statusListener, 1);
     }
 
@@ -154,7 +153,7 @@ public class MoldUDP64Client implements Closeable {
             SocketAddress requestAddress, MessageListener listener,
             MoldUDP64ClientStatusListener statusListener,
             long requestedSequenceNumber) {
-        this(SystemClock.INSTANCE, channel, requestChannel, requestAddress,
+        this(System::currentTimeMillis, channel, requestChannel, requestAddress,
                 listener, statusListener, requestedSequenceNumber);
     }
 
