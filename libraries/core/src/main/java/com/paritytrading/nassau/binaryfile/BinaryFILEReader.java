@@ -73,7 +73,7 @@ public class BinaryFILEReader implements Closeable {
     /**
      * Read messages. Invoke the message listener on each message.
      *
-     * @return The number of bytes read, possibly zero, or {@code -1} if the
+     * @return the number of bytes read, possibly zero, or {@code -1} if the
      *   channel has reached end-of-stream
      * @throws IOException if an I/O error occurs
      */
