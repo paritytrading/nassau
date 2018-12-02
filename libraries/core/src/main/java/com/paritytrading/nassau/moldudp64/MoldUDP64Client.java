@@ -178,17 +178,20 @@ public class MoldUDP64Client implements Closeable {
     /**
      * Receive data from the underlying datagram channel.
      *
+     * @return true if data was received, otherwise false
      * @throws IOException if an I/O error occurs
      */
-    public void receive() throws IOException {
+    public boolean receive() throws IOException {
         rxBuffer.clear();
 
         if (channel.receive(rxBuffer) == null)
-            return;
+            return false;
 
         rxBuffer.flip();
 
         handle();
+
+        return true;
     }
 
     /**
