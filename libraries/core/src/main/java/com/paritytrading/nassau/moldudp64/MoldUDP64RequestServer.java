@@ -16,12 +16,12 @@ public class MoldUDP64RequestServer implements Closeable {
 
     private static final int MESSAGE_COUNT_OFFSET = 18;
 
-    private DatagramChannel channel;
+    private final DatagramChannel channel;
 
-    private ByteBuffer rxBuffer;
-    private ByteBuffer txBuffer;
+    private final ByteBuffer rxBuffer;
+    private final ByteBuffer txBuffer;
 
-    private byte[] session;
+    private final byte[] session;
 
     /**
      * Create a request server. The underlying datagram channel must not be
