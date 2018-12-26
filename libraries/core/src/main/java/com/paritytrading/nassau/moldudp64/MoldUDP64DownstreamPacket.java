@@ -14,7 +14,7 @@ public class MoldUDP64DownstreamPacket {
 
     private int messageCount;
 
-    private ByteBuffer payload;
+    private final ByteBuffer payload;
 
     /**
      * Create a downstream packet.
