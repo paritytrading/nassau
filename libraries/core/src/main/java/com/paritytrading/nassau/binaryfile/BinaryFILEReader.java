@@ -23,11 +23,11 @@ public class BinaryFILEReader implements Closeable {
 
     private static final int GZIP_BUFFER_SIZE = 64 * 1024;
 
-    private ReadableByteChannel channel;
+    private final ReadableByteChannel channel;
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
-    private ByteBuffer buffer;
+    private final ByteBuffer buffer;
 
     /**
      * Create a BinaryFILE reader.
