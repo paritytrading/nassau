@@ -19,13 +19,13 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 46;
 
-    private LoginRequest loginRequest;
+    private final LoginRequest loginRequest;
 
-    private ByteBuffer txPayload;
+    private final ByteBuffer txPayload;
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
-    private SoupBinTCPServerStatusListener statusListener;
+    private final SoupBinTCPServerStatusListener statusListener;
 
     /**
      * Create a server. The underlying socket channel can be either blocking
