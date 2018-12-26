@@ -24,22 +24,22 @@ public class MoldUDP64Client implements Closeable {
 
     private static final long REQUEST_TIMEOUT_MILLIS = 1000;
 
-    private Clock clock;
+    private final Clock clock;
 
-    private DatagramChannel channel;
+    private final DatagramChannel channel;
 
-    private DatagramChannel requestChannel;
+    private final DatagramChannel requestChannel;
 
-    private SocketAddress requestAddress;
+    private final SocketAddress requestAddress;
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
-    private MoldUDP64ClientStatusListener statusListener;
+    private final MoldUDP64ClientStatusListener statusListener;
 
-    private ByteBuffer rxBuffer;
-    private ByteBuffer txBuffer;
+    private final ByteBuffer rxBuffer;
+    private final ByteBuffer txBuffer;
 
-    private byte[] session;
+    private final byte[] session;
 
     protected long nextExpectedSequenceNumber;
 
