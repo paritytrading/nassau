@@ -16,13 +16,13 @@ public class MoldUDP64Server implements Closeable {
 
     private static final long HEARTBEAT_INTERVAL_MILLIS = 1000;
 
-    private Clock clock;
+    private final Clock clock;
 
-    private DatagramChannel channel;
+    private final DatagramChannel channel;
 
-    private ByteBuffer[] txBuffers;
+    private final ByteBuffer[] txBuffers;
 
-    private byte[] session;
+    private final byte[] session;
 
     protected long nextSequenceNumber;
 
