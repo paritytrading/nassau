@@ -9,9 +9,9 @@ import com.paritytrading.nassau.MessageListener;
  */
 public class BinaryFILEStatusParser implements MessageListener {
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
-    private BinaryFILEStatusListener statusListener;
+    private final BinaryFILEStatusListener statusListener;
 
     /**
      * Create a parser for status events. The parser passes payloads that do
