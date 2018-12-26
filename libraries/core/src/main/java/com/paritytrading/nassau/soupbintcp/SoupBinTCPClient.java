@@ -19,14 +19,14 @@ public class SoupBinTCPClient extends SoupBinTCPSession {
      */
     private static final int MIN_MAX_PAYLOAD_LENGTH = 30;
 
-    private LoginAccepted loginAccepted;
-    private LoginRejected loginRejected;
+    private final LoginAccepted loginAccepted;
+    private final LoginRejected loginRejected;
 
-    private ByteBuffer txPayload;
+    private final ByteBuffer txPayload;
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
-    private SoupBinTCPClientStatusListener statusListener;
+    private final SoupBinTCPClientStatusListener statusListener;
 
     /**
      * Create a client. The underlying socket channel can be either blocking
