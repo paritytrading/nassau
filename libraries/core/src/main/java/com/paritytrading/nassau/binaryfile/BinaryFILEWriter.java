@@ -18,11 +18,11 @@ public class BinaryFILEWriter implements Closeable {
 
     private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocateDirect(0);
 
-    private RandomAccessFile file;
+    private final RandomAccessFile file;
 
-    private FileChannel channel;
+    private final FileChannel channel;
 
-    private long size;
+    private final long size;
 
     private long position;
 
