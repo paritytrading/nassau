@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class MoldUDP64DefaultMessageStore implements MoldUDP64MessageStore {
 
-    private List<byte[]> messages;
+    private final List<byte[]> messages;
 
-    private MessageListener listener;
+    private final MessageListener listener;
 
     /**
      * Create a message store.
