@@ -18,9 +18,9 @@ public abstract class SoupBinTCPSession implements Closeable {
     private static final long RX_HEARTBEAT_TIMEOUT_MILLIS  = 15000;
     private static final long TX_HEARTBEAT_INTERVAL_MILLIS =  1000;
 
-    private Clock clock;
+    private final Clock clock;
 
-    private SocketChannel channel;
+    private final SocketChannel channel;
 
     /*
      * This variable is written on data reception and read on session
@@ -36,13 +36,13 @@ public abstract class SoupBinTCPSession implements Closeable {
      */
     private long lastTxMillis;
 
-    private ByteBuffer rxBuffer;
+    private final ByteBuffer rxBuffer;
 
-    private ByteBuffer txHeader;
+    private final ByteBuffer txHeader;
 
-    private ByteBuffer[] txBuffers;
+    private final ByteBuffer[] txBuffers;
 
-    private byte heartbeatPacketType;
+    private final byte heartbeatPacketType;
 
     protected SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
             byte heartbeatPacketType) {
