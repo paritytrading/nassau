@@ -2,3 +2,9 @@
 pom.xml.*
 release.properties
 target/
+
+#Eclipse artifacts
+.settings
+.classpath
+.project
+
