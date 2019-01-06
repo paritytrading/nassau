@@ -3,7 +3,6 @@ package com.paritytrading.nassau.moldudp64;
 import static java.nio.charset.StandardCharsets.*;
 import static java.util.Arrays.*;
 
-import java.nio.charset.Charset;
 
 class MoldUDP64 {
 

@@ -4,8 +4,6 @@ import static org.jvirtanen.util.Applications.*;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
-import com.typesafe.config.ConfigFactory;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
