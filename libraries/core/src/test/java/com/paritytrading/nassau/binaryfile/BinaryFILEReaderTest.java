@@ -31,9 +31,9 @@ public class BinaryFILEReaderTest {
 
     @Test
     public void readStream() throws Exception {
-        BinaryFILEReader reader = new BinaryFILEReader(stream, messages);
-
-        while (reader.read() >= 0);
+        try (BinaryFILEReader reader = new BinaryFILEReader(stream, messages)) {
+            while (reader.read() >= 0);
+        }
 
         assertEquals(asList("foo", "bar", "baz", "quux", ""), messages.collect());
     }
@@ -44,9 +44,9 @@ public class BinaryFILEReaderTest {
 
         BinaryFILEStatusParser parser = new BinaryFILEStatusParser(messages, status);
 
-        BinaryFILEReader reader = new BinaryFILEReader(stream, parser);
-
-        while (reader.read() >= 0);
+        try (BinaryFILEReader reader = new BinaryFILEReader(stream, parser)) {
+            while (reader.read() >= 0);
+        }
 
         assertEquals(asList("foo", "bar", "baz", "quux"), messages.collect());
         assertEquals(asList(new EndOfSession()), status.collect());
