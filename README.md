@@ -88,6 +88,8 @@ For more information on Nassau:
 
 ## License
 
-Copyright 2014 Jussi Virtanen.
+Copyright 2014 Jussi Virtanen and [contributors][].
+
+  [contributors]: https://github.com/paritytrading/nassau/graphs/contributors
 
 Released under the Apache License, Version 2.0. See `LICENSE.txt` for details.
