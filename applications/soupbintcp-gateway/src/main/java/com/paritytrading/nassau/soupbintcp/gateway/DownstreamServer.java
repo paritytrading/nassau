@@ -1,13 +1,8 @@
 package com.paritytrading.nassau.soupbintcp.gateway;
 
-import com.paritytrading.nassau.MessageListener;
-import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
-import com.paritytrading.nassau.soupbintcp.SoupBinTCPServer;
-import com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatusListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
-import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
