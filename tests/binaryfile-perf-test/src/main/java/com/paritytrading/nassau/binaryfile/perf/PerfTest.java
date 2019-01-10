@@ -28,25 +28,24 @@ class PerfTest {
 
         BinaryFILEStatusParser parser = new BinaryFILEStatusParser(counter, statusListener);
 
-        BinaryFILEReader reader = BinaryFILEReader.open(new File(inputFilename), parser);
+        try (BinaryFILEReader reader = BinaryFILEReader.open(new File(inputFilename), parser)) {
+            long started = System.nanoTime();
 
-        long started = System.nanoTime();
+            while (reader.read() >= 0);
 
-        while (reader.read() >= 0);
+            long finished = System.nanoTime();
 
-        long finished = System.nanoTime();
+            double seconds  = (finished - started) / (1000.0 * 1000 * 1000);
 
-        reader.close();
-
-        double seconds  = (finished - started) / (1000.0 * 1000 * 1000);
-        long   messages = counter.getMessageCount();
-
-        System.out.printf("Results:\n");
-        System.out.printf("\n");
-        System.out.printf("    Messages: %10d\n", messages);
-        System.out.printf("        Time: %13.2f s\n", seconds);
-        System.out.printf("  Throughput: %13.2f messages/s\n", messages / seconds);
-        System.out.printf("\n");
+            long   messages = counter.getMessageCount();
+    
+            System.out.printf("Results:\n");
+            System.out.printf("\n");
+            System.out.printf("    Messages: %10d\n", messages);
+            System.out.printf("        Time: %13.2f s\n", seconds);
+            System.out.printf("  Throughput: %13.2f messages/s\n", messages / seconds);
+            System.out.printf("\n");
+        }
     }
 
 }
