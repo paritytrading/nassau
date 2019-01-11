@@ -16,14 +16,12 @@ public class BinaryFILEWriterTest {
     public void write() throws Exception {
         File file = File.createTempFile("binaryfile", ".dat");
 
-        BinaryFILEWriter writer = BinaryFILEWriter.open(file);
+        try (BinaryFILEWriter writer = BinaryFILEWriter.open(file)) {
+            List<String> messages = asList("foo", "bar", "baz", "quux", "");
 
-        List<String> messages = asList("foo", "bar", "baz", "quux", "");
-
-        for (String message : messages)
-            writer.write(wrap(message));
-
-        writer.close();
+            for (String message : messages)
+                writer.write(wrap(message));
+        }
 
         byte[] writtenBytes  = Files.readAllBytes(file.toPath());
         byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource("/binaryfile.dat").toURI()));

@@ -50,32 +50,27 @@ class Recorder {
     private static void main(Config config, File file) throws IOException {
         addShutdownHook();
 
-        final BinaryFILEWriter writer = BinaryFILEWriter.open(file);
+        try (final BinaryFILEWriter writer = BinaryFILEWriter.open(file)) {
 
-        MessageListener listener = new MessageListener() {
-
-            @Override
-            public void message(ByteBuffer buffer) throws IOException {
-                writer.write(buffer);
+            MessageListener listener = new MessageListener() {
+    
+                @Override
+                public void message(ByteBuffer buffer) throws IOException {
+                    writer.write(buffer);
+                }
+    
+            };
+    
+            if (config.hasPath("session.multicast-interface")) {
+                try (MoldUDP64Client client = join(config, listener)) {
+                    receive(client);
+                }
+            } else {
+                try (SoupBinTCPClient client = connect(config, listener)) {
+                    receive(client);
+                }
             }
-
-        };
-
-        if (config.hasPath("session.multicast-interface")) {
-            MoldUDP64Client client = join(config, listener);
-
-            receive(client);
-
-            client.close();
-        } else {
-            SoupBinTCPClient client = connect(config, listener);
-
-            receive(client);
-
-            client.close();
         }
-
-        writer.close();
     }
 
     private static SoupBinTCPClient connect(Config config, MessageListener listener) throws IOException {
@@ -170,46 +165,44 @@ class Recorder {
     }
 
     private static void receive(MoldUDP64Client client) throws IOException {
-        Selector selector = Selector.open();
+        try (Selector selector = Selector.open()) {
 
-        SelectionKey key = client.getChannel().register(selector, SelectionKey.OP_READ);
+            SelectionKey key = client.getChannel().register(selector, SelectionKey.OP_READ);
 
-        SelectionKey requestKey = client.getRequestChannel().register(selector, SelectionKey.OP_READ);
+            SelectionKey requestKey = client.getRequestChannel().register(selector, SelectionKey.OP_READ);
 
-        while (receive) {
-            int numKeys = selector.select();
-            if (numKeys > 0) {
-                if (selector.selectedKeys().contains(key))
-                    client.receive();
+            while (receive) {
+                int numKeys = selector.select();
+                if (numKeys > 0) {
+                    if (selector.selectedKeys().contains(key))
+                        client.receive();
 
-                if (selector.selectedKeys().contains(requestKey))
-                    client.receiveResponse();
+                    if (selector.selectedKeys().contains(requestKey))
+                        client.receiveResponse();
 
-                selector.selectedKeys().clear();
+                    selector.selectedKeys().clear();
+                }
             }
-        };
-
-        selector.close();
+        }
     }
 
     private static void receive(SoupBinTCPClient client) throws IOException {
-        Selector selector = Selector.open();
+        try (Selector selector = Selector.open()) {
 
-        SelectionKey key = client.getChannel().register(selector, SelectionKey.OP_READ);
+            client.getChannel().register(selector, SelectionKey.OP_READ);
 
-        while (receive) {
-            int numKeys = selector.select(TIMEOUT_MILLIS);
-            if (numKeys > 0) {
-                if (client.receive() < 0)
-                    break;
+            while (receive) {
+                int numKeys = selector.select(TIMEOUT_MILLIS);
+                if (numKeys > 0) {
+                    if (client.receive() < 0)
+                        break;
 
-                selector.selectedKeys().clear();
+                    selector.selectedKeys().clear();
+                }
+
+                client.keepAlive();
             }
-
-            client.keepAlive();
         }
-
-        selector.close();
     }
 
     private static void addShutdownHook() {
