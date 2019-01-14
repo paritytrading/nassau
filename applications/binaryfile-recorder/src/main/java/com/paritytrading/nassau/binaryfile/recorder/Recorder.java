@@ -53,14 +53,14 @@ class Recorder {
         try (final BinaryFILEWriter writer = BinaryFILEWriter.open(file)) {
 
             MessageListener listener = new MessageListener() {
-    
+
                 @Override
                 public void message(ByteBuffer buffer) throws IOException {
                     writer.write(buffer);
                 }
-    
+
             };
-    
+
             if (config.hasPath("session.multicast-interface")) {
                 try (MoldUDP64Client client = join(config, listener)) {
                     receive(client);
