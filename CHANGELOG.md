@@ -37,28 +37,20 @@
 - Add utility methods for MoldUDP64 protocol
 - Add utility methods for SoupBinTCP protocol
 
-
-0.9.0 (2016-03-28)
-------------------
+## 0.9.0 (2016-03-28)
 
 - Move to `com.paritytrading` namespace
 
-
-0.8.1 (2016-03-28)
-------------------
+## 0.8.1 (2016-03-28)
 
 - Improve API documentation
 
-
-0.8.0 (2016-03-28)
-------------------
+## 0.8.0 (2016-03-28)
 
 - Add session parameter to MoldUDP64 client status listener
 - Add session parameter to SoupBinTCP session status listeners
 
-
-0.7.0 (2015-12-26)
-------------------
+## 0.7.0 (2015-12-26)
 
 - Improve SoupBinTCP API
 - Improve SoupBinTCP performance
