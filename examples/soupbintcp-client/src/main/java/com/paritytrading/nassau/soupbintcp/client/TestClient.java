@@ -1,4 +1,4 @@
-package com.paritytrading.nassau.soupbintcp.perf;
+package com.paritytrading.nassau.soupbintcp.client;
 
 import static org.jvirtanen.util.Applications.*;
 
@@ -6,43 +6,27 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 
-class PerfTest {
+class TestClient {
 
-    private static final String USAGE = "nassau-soupbintcp-perf-test <packets>";
+    private static final String USAGE = "nassau-soupbintcp-client <host> <port> <packets>";
 
     public static void main(String[] args) throws IOException {
-        if (args.length != 1)
+        if (args.length != 3)
             usage(USAGE);
 
         try {
-            main(Integer.parseInt(args[0]));
+            String host   = args[0];
+            int    port   = Integer.parseInt(args[1]);
+            int    orders = Integer.parseInt(args[2]);
+
+            main(new InetSocketAddress(host, port), orders);
         } catch (NumberFormatException e) {
             usage(USAGE);
         }
     }
 
-    private static void main(int packets) throws IOException {
-        final Server server = Server.open(new InetSocketAddress(0));
-        final Client client = Client.connect(server.getLocalAddress());
-
-        new Thread(() -> {
-            Server.Session session = null;
-
-            try {
-                session = server.accept();
-
-                server.close();
-
-                while (session.receive() != -1);
-            } catch (IOException e) {
-            } finally {
-                try {
-                    if (session != null)
-                        session.close();
-                } catch (IOException e) {
-                }
-            }
-        }).start();
+    private static void main(InetSocketAddress address, int packets) throws IOException {
+        final Client client = Client.connect(address);
 
         ByteBuffer buffer = ByteBuffer.wrap(new byte[] { 'f', 'o', 'o' });
 
