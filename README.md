@@ -42,8 +42,7 @@ See the [latest release][] on GitHub.
   [latest release]: https://github.com/paritytrading/nassau/releases/latest
 
 
-Modules
--------
+## Modules
 
 Nassau contains the following libraries:
 
