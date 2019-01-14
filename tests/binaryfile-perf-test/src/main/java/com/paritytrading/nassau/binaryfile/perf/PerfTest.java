@@ -38,7 +38,7 @@ class PerfTest {
             double seconds  = (finished - started) / (1000.0 * 1000 * 1000);
 
             long   messages = counter.getMessageCount();
-    
+
             System.out.printf("Results:\n");
             System.out.printf("\n");
             System.out.printf("    Messages: %10d\n", messages);
