@@ -61,9 +61,11 @@ Nassau contains the following applications:
 
 Nassau contains the following example applications:
 
-- [**Test Server**](examples/soupbintcp-server) implements a simple SoupBinTCP server.
+- [**SoupBinTCP Test Server**](examples/soupbintcp-server) implements a simple
+  SoupBinTCP server.
 
-- [**Test Client**](examples/soupbintcp-client) implements a simple SoupBinTCP client.
+- [**SoupBinTCP Test Client**](examples/soupbintcp-client) implements a simple
+  SoupBinTCP client.
 
 Nassau contains the following test application:
 
