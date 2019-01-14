@@ -13,7 +13,7 @@ use it to provide your own services using these protocols.
 Nassau is designed to exhibit low and predictable latency. To achieve this, it
 supports non-blocking, zero-copy networking and does not allocate any memory
 on message reception or transmission. The SoupBinTCP implementation can
-achieve [4.8 µs round-trip time (RTT)](tests/soupbintcp-perf-test) over the
+achieve [4.8 µs round-trip time (RTT)](examples/soupbintcp-client) over the
 loopback interface.
 
 Nassau requires Java Runtime Environment (JRE) 8 or newer.
