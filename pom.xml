@@ -48,7 +48,8 @@
     <module>libraries/util</module>
     <module>applications/binaryfile-recorder</module>
     <module>applications/soupbintcp-gateway</module>
-    <module>tests/soupbintcp-perf-test</module>
+    <module>examples/soupbintcp-client</module>
+    <module>examples/soupbintcp-server</module>
     <module>tests/binaryfile-perf-test</module>
   </modules>
 

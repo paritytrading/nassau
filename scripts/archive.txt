@@ -8,9 +8,11 @@ applications/binaryfile-recorder/nassau-binaryfile-recorder.jar
 applications/soupbintcp-gateway/README.md
 applications/soupbintcp-gateway/etc/example.conf
 applications/soupbintcp-gateway/nassau-soupbintcp-gateway.jar
+examples/soupbintcp-client/README.md
+examples/soupbintcp-client/nassau-soupbintcp-client.jar
+examples/soupbintcp-server/README.md
+examples/soupbintcp-server/nassau-soupbintcp-server.jar
 libraries/core/README.md
 libraries/util/README.md
 tests/binaryfile-perf-test/README.md
 tests/binaryfile-perf-test/nassau-binaryfile-perf-test.jar
-tests/soupbintcp-perf-test/README.md
-tests/soupbintcp-perf-test/nassau-soupbintcp-perf-test.jar

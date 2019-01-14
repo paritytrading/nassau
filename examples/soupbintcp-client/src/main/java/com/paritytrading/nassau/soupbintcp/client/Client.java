@@ -1,4 +1,4 @@
-package com.paritytrading.nassau.soupbintcp.perf;
+package com.paritytrading.nassau.soupbintcp.client;
 
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;

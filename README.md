@@ -60,10 +60,13 @@ Nassau contains the following applications:
 - [**SoupBinTCP Gateway**](applications/soupbintcp-gateway) serves a MoldUDP64
   session over the SoupBinTCP protocol.
 
-Nassau contains the following test applications:
+Nassau contains the following example applications:
 
-- [**SoupBinTCP Performance Test**](tests/soupbintcp-perf-test) is a simple
-  benchmark for the SoupBinTCP implementation.
+- [**Test Server**](examples/soupbintcp-server) implements a simple SoupBinTCP server.
+
+- [**Test Client**](examples/soupbintcp-client) implements a simple SoupBinTCP client.
+
+Nassau contains the following test application:
 
 - [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
   benchmark for the BinaryFILE implementation.
