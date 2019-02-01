@@ -8,7 +8,7 @@ SoupBinTCP client.
 Run Nassau SoupBinTCP Test Client with Java:
 
 ```
-java -jar nassau-soupbintcp-client.jar <host> <port> <packets>
+java -jar nassau-soupbintcp-client.jar <host> <port> <packets> <packets-per-second>
 ```
 
 The application measures the round-trip time (RTT) between sending
