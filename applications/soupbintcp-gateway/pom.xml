@@ -20,10 +20,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.paritytrading.foundation</groupId>
-      <artifactId>foundation</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
     </dependency>

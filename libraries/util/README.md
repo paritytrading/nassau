@@ -15,10 +15,7 @@ Nassau Utilities contains the following utility methods:
 
 Nassau Utilities depends on the following libraries:
 
-- [Foundation][] 0.2.1
 - Nassau Core
-
-  [Foundation]: https://github.com/paritytrading/foundation
 
 ## Download
 

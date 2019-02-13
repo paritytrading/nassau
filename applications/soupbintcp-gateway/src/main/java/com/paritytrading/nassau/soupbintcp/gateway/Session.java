@@ -1,6 +1,5 @@
 package com.paritytrading.nassau.soupbintcp.gateway;
 
-import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.moldudp64.MoldUDP64Client;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
@@ -41,9 +40,8 @@ class Session implements Closeable, MessageListener, SoupBinTCPServerStatusListe
 
     @Override
     public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) throws IOException {
-        System.arraycopy(payload.requestedSession, 0, loginAccepted.session, 0,
-                payload.requestedSession.length);
-        ASCII.putLongRight(loginAccepted.sequenceNumber, 1);
+        loginAccepted.setSession(payload.requestedSession);
+        loginAccepted.setSequenceNumber(1);
 
         downstream.accept(loginAccepted);
     }

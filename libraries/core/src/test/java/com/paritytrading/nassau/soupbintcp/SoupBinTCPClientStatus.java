@@ -2,7 +2,6 @@ package com.paritytrading.nassau.soupbintcp;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
 
-import com.paritytrading.foundation.ASCII;
 import java.util.ArrayList;
 import java.util.List;
 import org.jvirtanen.value.Value;
@@ -21,8 +20,8 @@ class SoupBinTCPClientStatus implements SoupBinTCPClientStatusListener {
 
     @Override
     public void loginAccepted(SoupBinTCPClient client, SoupBinTCP.LoginAccepted payload) {
-        String session        = ASCII.get(payload.session);
-        long   sequenceNumber = ASCII.getLong(payload.sequenceNumber);
+        String session        = payload.getSession();
+        long   sequenceNumber = payload.getSequenceNumber();
 
         events.add(new LoginAccepted(session, sequenceNumber));
     }

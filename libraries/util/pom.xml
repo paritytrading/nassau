@@ -19,10 +19,6 @@
       <artifactId>nassau-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.paritytrading.foundation</groupId>
-      <artifactId>foundation</artifactId>
-    </dependency>
   </dependencies>
 
 </project>
