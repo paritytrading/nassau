@@ -2,7 +2,6 @@ package com.paritytrading.nassau.util;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
-import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
@@ -48,10 +47,10 @@ public class SoupBinTCP {
 
             LoginRequest message = new LoginRequest();
 
-            ASCII.putLeft(message.username, username);
-            ASCII.putLeft(message.password, password);
-            ASCII.putRight(message.requestedSession, "");
-            ASCII.putLongRight(message.requestedSequenceNumber, 1);
+            message.setUsername(username);
+            message.setPassword(password);
+            message.setRequestedSession("");
+            message.setRequestedSequenceNumber(1);
 
             client.login(message);
 

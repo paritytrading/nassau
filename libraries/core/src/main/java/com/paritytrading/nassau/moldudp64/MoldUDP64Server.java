@@ -1,6 +1,5 @@
 package com.paritytrading.nassau.moldudp64;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 
 import com.paritytrading.nassau.time.Clock;
@@ -83,7 +82,7 @@ public class MoldUDP64Server implements Closeable {
         txBuffers[0].clear();
         txBuffers[0].put(session);
         txBuffers[0].putLong(nextSequenceNumber);
-        putUnsignedShort(txBuffers[0], packet.messageCount());
+        txBuffers[0].putShort((short)packet.messageCount());
         txBuffers[0].flip();
 
         txBuffers[1] = packet.payload();
@@ -116,7 +115,7 @@ public class MoldUDP64Server implements Closeable {
         txBuffers[0].clear();
         txBuffers[0].put(session);
         txBuffers[0].putLong(nextSequenceNumber);
-        putUnsignedShort(txBuffers[0], messageCount);
+        txBuffers[0].putShort((short)messageCount);
         txBuffers[0].flip();
 
         while (channel.write(txBuffers[0]) == 0);

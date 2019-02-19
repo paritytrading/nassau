@@ -1,7 +1,5 @@
 package com.paritytrading.nassau.moldudp64;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
-
 import com.paritytrading.nassau.MessageListener;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -76,7 +74,7 @@ public class MoldUDP64DefaultMessageStore implements MoldUDP64MessageStore {
             if (buffer.remaining() < 2 + message.length)
                 break;
 
-            putUnsignedShort(buffer, message.length);
+            buffer.putShort((short)message.length);
             buffer.put(message);
 
             messageCount++;

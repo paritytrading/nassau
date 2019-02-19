@@ -62,6 +62,60 @@ public class SoupBinTCP {
             buffer.put(session);
             buffer.put(sequenceNumber);
         }
+
+        /**
+         * Get the session.
+         * 
+         * @return the session
+         */
+        public String getSession() {
+            return ASCII.get(session);
+        }
+
+        /**
+         * Set the session.
+         * 
+         * @param session the session
+         */
+        public void setSession(String session) {
+            ASCII.putRight(this.session, session);
+        }
+
+        /**
+         * Set the session.
+         * 
+         * @param session the session
+         */
+        public void setSession(byte[] session) {
+            System.arraycopy(session, 0, this.session, 0, session.length);
+        }
+
+        /**
+         * Get the sequence number.
+         * 
+         * @return the sequence number
+         */
+        public long getSequenceNumber() {
+            return ASCII.getLong(sequenceNumber);
+        }
+
+        /**
+         * Set the sequence number.
+         *  
+         * @param sequenceNumber the sequence number
+         */
+        public void setSequenceNumber(long sequenceNumber) {
+            ASCII.putLongRight(this.sequenceNumber, sequenceNumber);
+        }
+
+        /**
+         * Set the sequence number.
+         *  
+         * @param sequenceNumber the sequence number
+         */
+        public void setSequenceNumber(byte[] sequenceNumber) {
+            System.arraycopy(sequenceNumber, 0, this.sequenceNumber, 0, sequenceNumber.length);
+        }
     }
 
     /**
@@ -116,6 +170,78 @@ public class SoupBinTCP {
             buffer.put(password);
             buffer.put(requestedSession);
             buffer.put(requestedSequenceNumber);
+        }
+
+        /**
+         * Get the user name.
+         * 
+         * @return the user name
+         */
+        public String getUsername() {
+            return ASCII.get(username);
+        }
+
+        /**
+         * Set the user name.
+         * 
+         * @param username the user name
+         */
+        public void setUsername(String username) {
+            ASCII.putLeft(this.username, username);
+        }
+
+        /**
+         * Get the password.
+         * 
+         * @return the password
+         */
+        public String getPassword() {
+            return ASCII.get(password);
+        }
+
+        /**
+         * Set the password.
+         * 
+         * @param password the password
+         */
+        public void setPassword(String password) {
+            ASCII.putLeft(this.password, password);
+        }
+
+        /**
+         * Get the requested session.
+         * 
+         * @return the requested session
+         */
+        public String getRequestedSession() {
+            return ASCII.get(requestedSession);
+        }
+
+        /**
+         * Set the requested session.
+         * 
+         * @param requestedSession the requested session
+         */
+        public void setRequestedSession(String requestedSession) {
+            ASCII.putRight(this.requestedSession, requestedSession);
+        }
+
+        /**
+         * Get the requested sequence number.
+         * 
+         * @return the requested sequence number
+         */
+        public long getRequestedSequenceNumber() {
+            return ASCII.getLong(requestedSequenceNumber);
+        }
+
+        /**
+         * Set the requested sequence number.
+         * 
+         * @param requestedSequenceNumber the requested sequence number
+         */
+        public void setRequestedSequenceNumber(long requestedSequenceNumber) {
+            ASCII.putLongRight(this.requestedSequenceNumber, requestedSequenceNumber);
         }
     }
 

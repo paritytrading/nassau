@@ -1,7 +1,5 @@
 package com.paritytrading.nassau.binaryfile;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +71,7 @@ public class BinaryFILEWriter implements Closeable {
         if (buffer.remaining() < 2 + payload.remaining())
             map();
 
-        putUnsignedShort(buffer, payload.remaining());
+        buffer.putShort((short)payload.remaining());
         buffer.put(payload);
     }
 

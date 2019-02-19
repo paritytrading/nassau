@@ -2,7 +2,6 @@ package com.paritytrading.nassau.binaryfile.recorder;
 
 import static org.jvirtanen.util.Applications.*;
 
-import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.binaryfile.BinaryFILEWriter;
 import com.paritytrading.nassau.moldudp64.MoldUDP64Client;
@@ -111,10 +110,10 @@ class Recorder {
 
         SoupBinTCP.LoginRequest message = new SoupBinTCP.LoginRequest();
 
-        ASCII.putLeft(message.username, username);
-        ASCII.putLeft(message.password, password);
-        ASCII.putRight(message.requestedSession, "");
-        ASCII.putLongRight(message.requestedSequenceNumber, 1);
+        message.setUsername(username);
+        message.setPassword(password);
+        message.setRequestedSession("");
+        message.setRequestedSequenceNumber(1L);
 
         client.login(message);
 

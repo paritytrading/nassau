@@ -1,7 +1,5 @@
 package com.paritytrading.nassau.binaryfile;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
-
 import com.paritytrading.nassau.MessageListener;
 import java.io.Closeable;
 import java.io.File;
@@ -100,7 +98,7 @@ public class BinaryFILEReader implements Closeable {
 
         buffer.order(ByteOrder.BIG_ENDIAN);
 
-        int payloadLength = getUnsignedShort(buffer);
+        int payloadLength = buffer.getShort() & 0xffff;
 
         if (buffer.remaining() < payloadLength) {
             buffer.reset();
