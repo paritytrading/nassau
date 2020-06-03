@@ -22,18 +22,20 @@ Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
 Nassau implements the following protocols:
 
-- **NASDAQ SoupBinTCP 3.00**: a reliable transport protocol for applications
-  requiring delivery of delimited, sequenced messages between two endpoints.
+- [**NASDAQ SoupBinTCP 3.00**][soupbintcp]: a reliable transport protocol for
+  applications requiring delivery of delimited, sequenced messages between two
+  endpoints.
 
-- **NASDAQ MoldUDP64 1.00**: a reliable transport protocol for applications
-  requiring delivery of delimited, sequenced messages from one sender to many
-  receivers.
+- [**NASDAQ MoldUDP64 1.00**][moldudp64]: a reliable transport protocol for
+  applications requiring delivery of delimited, sequenced messages from one
+  sender to many receivers.
 
-- **NASDAQ BinaryFILE 1.00**: a file format for storing delimited messages.
+- [**NASDAQ BinaryFILE 1.00**][binaryfile]: a file format for storing
+  delimited messages.
 
-See the [Wiki][] for links to the protocol specifications.
-
-  [Wiki]: https://github.com/paritytrading/nassau/wiki/
+  [soupbintcp]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/soupbintcp.pdf
+  [moldudp64]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf
+  [binaryfile]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/binaryfile.pdf
 
 ## Download
 
