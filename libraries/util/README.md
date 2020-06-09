@@ -3,14 +3,6 @@
 Nassau Utilities contains utility methods for working with NASDAQ transport
 protocols.
 
-## Features
-
-Nassau Utilities contains the following utility methods:
-
-- `SoupBinTCP.receive()` for receiving all messages in a SoupBinTCP session
-- `MoldUDP64.receive()` for receiving all messages in a MoldUDP64 session
-- `BinaryFILE.read()` for reading all messages in a BinaryFILE file
-
 ## Dependencies
 
 Nassau Utilities depends on the following libraries:
