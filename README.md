@@ -2,13 +2,11 @@
 
 Nassau implements NASDAQ transport protocols on the JVM.
 
-You can use Nassau to connect to [Nasdaq][], [EBS][], [SIX Swiss Exchange][],
-and other network endpoints that use NASDAQ transport protocols. You can also
-use it to provide your own services using these protocols.
+You can use Nassau to connect to [Nasdaq][] and other network endpoints that
+use NASDAQ transport protocols. You can also use it to provide your own
+services using these protocols.
 
   [Nasdaq]: http://nasdaq.com
-  [EBS]: http://ebs.com
-  [SIX Swiss Exchange]: http://six-swiss-exchange.com
 
 Nassau is designed to exhibit low and predictable latency. To achieve this, it
 supports non-blocking, zero-copy networking and does not allocate any memory
