@@ -2,14 +2,6 @@
 
 Nassau Core implements the NASDAQ transport protocols.
 
-## Features
-
-Nassau Core has the following features:
-
-- SoupBinTCP client and server implementation
-- MoldUDP64 client, server, and request server implementation
-- BinaryFILE reader and writer implementation
-
 ## Download
 
 Add a Maven dependency to Nassau Core:
