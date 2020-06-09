@@ -71,15 +71,6 @@ Nassau contains the following test application:
 - [**BinaryFILE Performance Test**](tests/binaryfile-perf-test) is a simple
   benchmark for the BinaryFILE implementation.
 
-
-## Build
-
-Build Nassau with Maven:
-
-```
-mvn package
-```
-
 ## Links
 
 For more information on Nassau:
