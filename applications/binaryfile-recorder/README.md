@@ -3,12 +3,6 @@
 Nassau BinaryFILE Recorder records a MoldUDP64 or SoupBinTCP session to a
 BinaryFILE file.
 
-## Download
-
-Download the [latest release][] from GitHub.
-
-  [latest release]: https://github.com/paritytrading/nassau/releases/latest
-
 ## Usage
 
 Run Nassau BinaryFILE Recorder with Java:
