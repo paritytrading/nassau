@@ -17,7 +17,6 @@ package com.paritytrading.nassau;
 
 import static java.nio.charset.StandardCharsets.*;
 
-import com.paritytrading.nassau.MessageParser;
 import java.nio.ByteBuffer;
 
 public class Strings {
