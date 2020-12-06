@@ -20,7 +20,7 @@ import static com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatus.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.Strings;
@@ -29,19 +29,16 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-public class SoupBinTCPSessionTest {
+@Timeout(value=1, unit=TimeUnit.SECONDS)
+class SoupBinTCPSessionTest {
 
     private static final int MAX_RX_PAYLOAD_LENGTH = 4000;
     private static final int MAX_TX_PAYLOAD_LENGTH = 65534;
-
-    @Rule
-    public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
 
     private SoupBinTCP.LoginAccepted loginAccepted;
     private SoupBinTCP.LoginRejected loginRejected;
@@ -58,8 +55,8 @@ public class SoupBinTCPSessionTest {
     private SoupBinTCPClient client;
     private SoupBinTCPServer server;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         loginAccepted = new SoupBinTCP.LoginAccepted();
         loginRejected = new SoupBinTCP.LoginRejected();
         loginRequest  = new SoupBinTCP.LoginRequest();
@@ -84,14 +81,14 @@ public class SoupBinTCPSessionTest {
         server = new SoupBinTCPServer(clock, serverChannel, MAX_RX_PAYLOAD_LENGTH, serverMessages, serverStatus);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() throws Exception {
         client.close();
         server.close();
     }
 
     @Test
-    public void loginAccepted() throws Exception {
+    void loginAccepted() throws Exception {
         loginAccepted.setSession("foo");
         loginAccepted.setSequenceNumber(123);
         server.accept(loginAccepted);
@@ -104,7 +101,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void loginRejected() throws Exception {
+    void loginRejected() throws Exception {
         loginRejected.rejectReasonCode = SoupBinTCP.LOGIN_REJECT_CODE_NOT_AUTHORIZED;
 
         server.reject(loginRejected);
@@ -117,7 +114,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void endOfSession() throws Exception {
+    void endOfSession() throws Exception {
         server.endSession();
 
         while (clientStatus.collect().size() != 1)
@@ -127,7 +124,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void loginRequest() throws Exception {
+    void loginRequest() throws Exception {
         loginRequest.setUsername("foo");
         loginRequest.setPassword("bar");
         loginRequest.setRequestedSession("baz");
@@ -143,7 +140,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void logoutRequest() throws Exception {
+    void logoutRequest() throws Exception {
         client.logout();
 
         while (serverStatus.collect().size() != 1)
@@ -153,7 +150,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void unsequencedData() throws Exception {
+    void unsequencedData() throws Exception {
         List<String> messages = asList("foo", "bar", "baz", "quux");
 
         for (String message : messages)
@@ -166,7 +163,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void maximumPacketLengthForInboundUnsequencedData() throws Exception {
+    void maximumPacketLengthForInboundUnsequencedData() throws Exception {
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH);
 
         client.send(wrap(message));
@@ -177,28 +174,32 @@ public class SoupBinTCPSessionTest {
         assertEquals(asList(message), serverMessages.collect());
     }
 
-    @Test(expected=SoupBinTCPException.class)
-    public void maximumPacketLengthExceededForInboundUnsequencedData() throws Exception {
+    @Test
+    void maximumPacketLengthExceededForInboundUnsequencedData() throws Exception {
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH + 1);
 
         client.send(wrap(message));
 
-        while (serverMessages.collect().size() != 1)
-            server.receive();
+        assertThrows(SoupBinTCPException.class, () -> {
+            while (serverMessages.collect().size() != 1)
+                server.receive();
+        });
     }
 
     @Test
-    public void maximumPacketLengthForOutboundUnsequencedData() throws Exception {
+    void maximumPacketLengthForOutboundUnsequencedData() throws Exception {
         client.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH)));
     }
 
-    @Test(expected=SoupBinTCPException.class)
-    public void maximumPacketLengthExceededForOutboundUnsequencedData() throws Exception {
-        client.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
+    @Test
+    void maximumPacketLengthExceededForOutboundUnsequencedData() throws Exception {
+        assertThrows(SoupBinTCPException.class, () -> {
+            client.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
+        });
     }
 
     @Test
-    public void sequencedData() throws Exception {
+    void sequencedData() throws Exception {
         List<String> messages = asList("foo", "bar", "baz", "quux");
 
         for (String message : messages)
@@ -211,7 +212,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void maximumPacketLengthForInboundSequencedData() throws Exception {
+    void maximumPacketLengthForInboundSequencedData() throws Exception {
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH);
 
         server.send(wrap(message));
@@ -222,28 +223,32 @@ public class SoupBinTCPSessionTest {
         assertEquals(asList(message), clientMessages.collect());
     }
 
-    @Test(expected=SoupBinTCPException.class)
-    public void maximumPacketLengthExceededForInboundSequencedData() throws Exception {
+    @Test
+    void maximumPacketLengthExceededForInboundSequencedData() throws Exception {
         String message = repeat('X', MAX_RX_PAYLOAD_LENGTH + 1);
 
         server.send(wrap(message));
 
-        while (clientMessages.collect().size() != 1)
-            client.receive();
+        assertThrows(SoupBinTCPException.class, () -> {
+            while (clientMessages.collect().size() != 1)
+                client.receive();
+        });
     }
 
     @Test
-    public void maximumPacketLengthForOutboundSequencedData() throws Exception {
+    void maximumPacketLengthForOutboundSequencedData() throws Exception {
         server.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH)));
     }
 
-    @Test(expected=SoupBinTCPException.class)
-    public void maximumPacketLengthExceededForOutboundSequencedData() throws Exception {
-        server.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
+    @Test
+    void maximumPacketLengthExceededForOutboundSequencedData() throws Exception {
+        assertThrows(SoupBinTCPException.class, () -> {
+            server.send(wrap(repeat('X', MAX_TX_PAYLOAD_LENGTH + 1)));
+        });
     }
 
     @Test
-    public void serverKeepAlive() throws Exception {
+    void serverKeepAlive() throws Exception {
         clock.setCurrentTimeMillis(1500);
 
         client.keepAlive();
@@ -263,7 +268,7 @@ public class SoupBinTCPSessionTest {
     }
 
     @Test
-    public void clientKeepAlive() throws Exception {
+    void clientKeepAlive() throws Exception {
         clock.setCurrentTimeMillis(1500);
 
         client.keepAlive();

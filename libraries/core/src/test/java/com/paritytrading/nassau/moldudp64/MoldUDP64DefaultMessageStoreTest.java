@@ -17,28 +17,28 @@ package com.paritytrading.nassau.moldudp64;
 
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.ByteBuffer;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class MoldUDP64DefaultMessageStoreTest {
+class MoldUDP64DefaultMessageStoreTest {
 
     private MoldUDP64DefaultMessageStore store;
 
     private ByteBuffer buffer;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         store = new MoldUDP64DefaultMessageStore();
 
         buffer = ByteBuffer.allocateDirect(1024);
     }
 
     @Test
-    public void downstreamPacket() throws Exception {
+    void downstreamPacket() throws Exception {
         List<String> messages = asList("foo", "bar", "baz", "quux");
 
         MoldUDP64DownstreamPacket packet = new MoldUDP64DownstreamPacket();

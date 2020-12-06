@@ -17,18 +17,18 @@ package com.paritytrading.nassau.binaryfile;
 
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BinaryFILEWriterTest {
+class BinaryFILEWriterTest {
 
     @Test
-    public void write() throws Exception {
+    void write() throws Exception {
         File file = File.createTempFile("binaryfile", ".dat");
 
         try (BinaryFILEWriter writer = BinaryFILEWriter.open(file)) {

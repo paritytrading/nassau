@@ -17,35 +17,35 @@ package com.paritytrading.nassau.binaryfile;
 
 import static com.paritytrading.nassau.binaryfile.BinaryFILEStatus.*;
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.Strings;
 import java.io.InputStream;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class BinaryFILEReaderTest {
+class BinaryFILEReaderTest {
 
     private InputStream stream;
 
     private Messages<String> messages;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         stream = getClass().getResourceAsStream("/binaryfile.dat");
 
         messages = new Messages<>(Strings.MESSAGE_PARSER);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() throws Exception {
         stream.close();
     }
 
     @Test
-    public void readStream() throws Exception {
+    void readStream() throws Exception {
         try (BinaryFILEReader reader = new BinaryFILEReader(stream, messages)) {
             while (reader.read() >= 0);
         }
@@ -54,7 +54,7 @@ public class BinaryFILEReaderTest {
     }
 
     @Test
-    public void readStreamWithStatusListener() throws Exception {
+    void readStreamWithStatusListener() throws Exception {
         BinaryFILEStatus status = new BinaryFILEStatus();
 
         BinaryFILEStatusParser parser = new BinaryFILEStatusParser(messages, status);

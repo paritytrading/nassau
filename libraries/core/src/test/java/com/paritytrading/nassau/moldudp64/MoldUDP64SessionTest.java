@@ -20,7 +20,7 @@ import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientStatus.*;
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.Strings;
@@ -29,16 +29,13 @@ import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-public class MoldUDP64SessionTest {
-
-    @Rule
-    public Timeout timeout = new Timeout(1000, TimeUnit.MILLISECONDS);
+@Timeout(value=1, unit=TimeUnit.SECONDS)
+class MoldUDP64SessionTest {
 
     private FixedClock clock;
 
@@ -56,8 +53,8 @@ public class MoldUDP64SessionTest {
 
     private MoldUDP64DefaultMessageStore store;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         DatagramChannel clientChannel = DatagramChannels.openClientChannel();
         DatagramChannel clientRequestChannel = DatagramChannels.openClientRequestChannel();
 
@@ -84,8 +81,8 @@ public class MoldUDP64SessionTest {
         store = new MoldUDP64DefaultMessageStore();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() throws Exception {
         requestServer.close();
 
         server.close();
@@ -93,7 +90,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void packetWithSingleMessage() throws Exception {
+    void packetWithSingleMessage() throws Exception {
         packet.clear();
         packet.put(wrap("foo"));
 
@@ -107,7 +104,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void packetWithMultipleMessages() throws Exception {
+    void packetWithMultipleMessages() throws Exception {
         packet.clear();
         packet.put(wrap("foo"));
         packet.put(wrap("bar"));
@@ -122,7 +119,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void heartbeat() throws Exception {
+    void heartbeat() throws Exception {
         server.sendHeartbeat();
 
         client.receive();
@@ -133,7 +130,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void endOfSession() throws Exception {
+    void endOfSession() throws Exception {
         server.sendEndOfSession();
 
         client.receive();
@@ -144,7 +141,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void keepAlive() throws Exception {
+    void keepAlive() throws Exception {
         clock.setCurrentTimeMillis(500);
 
         server.keepAlive();
@@ -170,7 +167,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void maximumMessageLength() throws Exception {
+    void maximumMessageLength() throws Exception {
         String message = repeat('X', 1398);
 
         packet.put(wrap(message));
@@ -184,13 +181,15 @@ public class MoldUDP64SessionTest {
                 clientStatus.collect());
     }
 
-    @Test(expected=MoldUDP64Exception.class)
-    public void maximumMessageLengthExceeded() throws Exception {
-        packet.put(wrap(repeat('X', 1399)));
+    @Test
+    void maximumMessageLengthExceeded() throws Exception {
+        assertThrows(MoldUDP64Exception.class, () -> {
+            packet.put(wrap(repeat('X', 1399)));
+        });
     }
 
     @Test
-    public void backfill() throws Exception {
+    void backfill() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         for (String message : messages)
@@ -212,7 +211,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void gapFill() throws Exception {
+    void gapFill() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         for (String message : messages)
@@ -240,7 +239,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void gapFillWithMultipleRequests() throws Exception {
+    void gapFillWithMultipleRequests() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         for (String message : messages)
@@ -282,7 +281,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void gapFillAfterEndOfSession() throws Exception {
+    void gapFillAfterEndOfSession() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         for (String message : messages)
@@ -310,7 +309,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void gapFillTimeout() throws Exception {
+    void gapFillTimeout() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         server.nextSequenceNumber = 1;
@@ -353,7 +352,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void partiallyObsoletePacket() throws Exception {
+    void partiallyObsoletePacket() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         packet.clear();
@@ -388,7 +387,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void fullyObsoletePacket() throws Exception {
+    void fullyObsoletePacket() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
         packet.clear();
@@ -423,7 +422,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void requestedSequenceNumber() throws Exception {
+    void requestedSequenceNumber() throws Exception {
         List<String> messages = asList("bar");
 
         client.nextExpectedSequenceNumber = 4;
@@ -450,7 +449,7 @@ public class MoldUDP64SessionTest {
     }
 
     @Test
-    public void firstReceivedMessage() throws Exception {
+    void firstReceivedMessage() throws Exception {
         List<String> messages = asList("foo", "bar");
 
         client.nextExpectedSequenceNumber = 0;
