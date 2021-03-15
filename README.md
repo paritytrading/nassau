@@ -77,8 +77,6 @@ For more information on Nassau:
 
 - Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
   news and announcements
-- Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
-  for discussions
 
 ## License
 
