@@ -15,10 +15,10 @@
  */
 package com.paritytrading.nassau.soupbintcp.gateway;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,7 +30,7 @@ class Gateway {
 
     public static void main(String[] args) {
         if (args.length != 1)
-            usage("nassau-soupbintcp-gateway <configuration-file>");
+            usage();
 
         try {
             main(config(args[0]));
@@ -64,6 +64,32 @@ class Gateway {
         int         port    = Configs.getPort(config, "downstream.port");
 
         return DownstreamServer.open(upstream, new InetSocketAddress(address, port));
+    }
+
+    private static Config config(String filename) throws FileNotFoundException {
+        File file = new File(filename);
+        if (!file.exists() || !file.isFile())
+            throw new FileNotFoundException(filename + ": No such file");
+
+        return ConfigFactory.parseFile(file);
+    }
+
+    private static void usage() {
+        System.err.println("Usage: nassau-soupbintcp-gateway <configuration-file>");
+        System.exit(2);
+    }
+
+    private static void error(Throwable throwable) {
+        System.err.println("error: " + throwable.getMessage());
+        System.exit(1);
+    }
+
+    private static void fatal(Throwable throwable) {
+        System.err.println("fatal: " + throwable.getMessage());
+        System.err.println();
+        throwable.printStackTrace(System.err);
+        System.err.println();
+        System.exit(1);
     }
 
 }
