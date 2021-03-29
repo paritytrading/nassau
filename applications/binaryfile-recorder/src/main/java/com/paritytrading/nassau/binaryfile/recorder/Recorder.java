@@ -15,8 +15,6 @@
  */
 package com.paritytrading.nassau.binaryfile.recorder;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.binaryfile.BinaryFILEWriter;
 import com.paritytrading.nassau.moldudp64.MoldUDP64Client;
@@ -27,6 +25,7 @@ import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,7 +49,7 @@ class Recorder {
 
     public static void main(String[] args) {
         if (args.length != 2)
-            usage("nassau-binaryfile-recorder <configuration-file> <output-file>");
+            usage();
 
         try {
             main(config(args[0]), new File(args[1]));
@@ -235,6 +234,32 @@ class Recorder {
             }
 
         });
+    }
+
+    private static Config config(String filename) throws FileNotFoundException {
+        File file = new File(filename);
+        if (!file.exists() || !file.isFile())
+            throw new FileNotFoundException(filename + ": No such file");
+
+        return ConfigFactory.parseFile(file);
+    }
+
+    private static void usage() {
+        System.err.println("Usage: nassau-binaryfile-recorder <configuration-file> <output-file>");
+        System.exit(2);
+    }
+
+    private static void error(Throwable throwable) {
+        System.err.println("error: " + throwable.getMessage());
+        System.exit(1);
+    }
+
+    private static void fatal(Throwable throwable) {
+        System.err.println("fatal: " + throwable.getMessage());
+        System.err.println();
+        throwable.printStackTrace(System.err);
+        System.err.println();
+        System.exit(1);
     }
 
 }
