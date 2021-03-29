@@ -15,8 +15,6 @@
  */
 package com.paritytrading.nassau.soupbintcp.client;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
@@ -32,8 +30,6 @@ import org.HdrHistogram.Histogram;
 
 class TestClient implements Closeable, MessageListener {
 
-    private static final String USAGE = "nassau-soupbintcp-client <host> <port> <packets> <packets-per-second>";
-
     private SoupBinTCPClient transport;
 
     private Histogram histogram;
@@ -42,7 +38,7 @@ class TestClient implements Closeable, MessageListener {
 
     public static void main(String[] args) throws IOException {
         if (args.length != 4)
-            usage(USAGE);
+            usage();
 
         try {
             String host             = args[0];
@@ -52,7 +48,7 @@ class TestClient implements Closeable, MessageListener {
 
             main(new InetSocketAddress(host, port), packets, packetsPerSecond);
         } catch (NumberFormatException e) {
-            usage(USAGE);
+            usage();
         }
     }
 
@@ -151,6 +147,11 @@ class TestClient implements Closeable, MessageListener {
         histogram.reset();
 
         receiveCount = 0;
+    }
+
+    private static void usage() {
+        System.err.println("Usage: nassau-soupbintcp-client <host> <port> <packets> <packets-per-second>");
+        System.exit(2);
     }
 
 }

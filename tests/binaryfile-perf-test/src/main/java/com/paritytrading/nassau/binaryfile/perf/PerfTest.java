@@ -15,8 +15,6 @@
  */
 package com.paritytrading.nassau.binaryfile.perf;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.nassau.binaryfile.BinaryFILEReader;
 import com.paritytrading.nassau.binaryfile.BinaryFILEStatusListener;
 import com.paritytrading.nassau.binaryfile.BinaryFILEStatusParser;
@@ -27,7 +25,7 @@ class PerfTest {
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage("nassau-binaryfile-perf-test <input-file>");
+            usage();
 
         String inputFilename = args[0];
 
@@ -61,6 +59,11 @@ class PerfTest {
             System.out.printf("  Throughput: %13.2f messages/s\n", messages / seconds);
             System.out.printf("\n");
         }
+    }
+
+    private static void usage() {
+        System.err.println("Usage: nassau-binaryfile-perf-test <input-file>");
+        System.exit(2);
     }
 
 }
