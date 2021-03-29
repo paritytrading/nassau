@@ -17,9 +17,9 @@ package com.paritytrading.nassau.soupbintcp;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
 
+import com.paritytrading.nassau.Value;
 import java.util.ArrayList;
 import java.util.List;
-import org.jvirtanen.value.Value;
 
 class SoupBinTCPServerStatus implements SoupBinTCPServerStatusListener {
 
