@@ -15,9 +15,9 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import com.paritytrading.nassau.Value;
 import java.util.ArrayList;
 import java.util.List;
-import org.jvirtanen.value.Value;
 
 class MoldUDP64ClientStatus implements MoldUDP64ClientStatusListener {
 

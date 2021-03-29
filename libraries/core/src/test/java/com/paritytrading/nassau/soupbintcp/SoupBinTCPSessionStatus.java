@@ -15,7 +15,7 @@
  */
 package com.paritytrading.nassau.soupbintcp;
 
-import org.jvirtanen.value.Value;
+import com.paritytrading.nassau.Value;
 
 class SoupBinTCPSessionStatus {
 
