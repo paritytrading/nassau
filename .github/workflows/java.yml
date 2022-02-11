@@ -1,4 +1,4 @@
-name: Test
+name: Java
 
 on:
   - push
@@ -6,7 +6,7 @@ on:
 
 jobs:
   java:
-    name: Java ${{ matrix.java-version }}
+    name: ${{ matrix.java-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
