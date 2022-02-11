@@ -38,7 +38,7 @@ class SoupBinTCPServerStatus implements SoupBinTCPServerStatusListener {
         String username                = payload.getUsername();
         String password                = payload.getPassword();
         String requestedSession        = payload.getRequestedSession();
-        long   requestedSequenceNumber = payload.getRequestedSequenceNumber(); 
+        long   requestedSequenceNumber = payload.getRequestedSequenceNumber();
 
         events.add(new LoginRequest(username, password, requestedSession, requestedSequenceNumber));
     }

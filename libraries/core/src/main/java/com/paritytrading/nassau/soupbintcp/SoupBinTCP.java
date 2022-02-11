@@ -80,7 +80,7 @@ public class SoupBinTCP {
 
         /**
          * Get the session.
-         * 
+         *
          * @return the session
          */
         public String getSession() {
@@ -89,7 +89,7 @@ public class SoupBinTCP {
 
         /**
          * Set the session.
-         * 
+         *
          * @param session the session
          */
         public void setSession(String session) {
@@ -98,7 +98,7 @@ public class SoupBinTCP {
 
         /**
          * Set the session.
-         * 
+         *
          * @param session the session
          */
         public void setSession(byte[] session) {
@@ -107,7 +107,7 @@ public class SoupBinTCP {
 
         /**
          * Get the sequence number.
-         * 
+         *
          * @return the sequence number
          */
         public long getSequenceNumber() {
@@ -116,7 +116,7 @@ public class SoupBinTCP {
 
         /**
          * Set the sequence number.
-         *  
+         *
          * @param sequenceNumber the sequence number
          */
         public void setSequenceNumber(long sequenceNumber) {
@@ -125,7 +125,7 @@ public class SoupBinTCP {
 
         /**
          * Set the sequence number.
-         *  
+         *
          * @param sequenceNumber the sequence number
          */
         public void setSequenceNumber(byte[] sequenceNumber) {
@@ -189,7 +189,7 @@ public class SoupBinTCP {
 
         /**
          * Get the user name.
-         * 
+         *
          * @return the user name
          */
         public String getUsername() {
@@ -198,7 +198,7 @@ public class SoupBinTCP {
 
         /**
          * Set the user name.
-         * 
+         *
          * @param username the user name
          */
         public void setUsername(String username) {
@@ -207,7 +207,7 @@ public class SoupBinTCP {
 
         /**
          * Get the password.
-         * 
+         *
          * @return the password
          */
         public String getPassword() {
@@ -216,7 +216,7 @@ public class SoupBinTCP {
 
         /**
          * Set the password.
-         * 
+         *
          * @param password the password
          */
         public void setPassword(String password) {
@@ -225,7 +225,7 @@ public class SoupBinTCP {
 
         /**
          * Get the requested session.
-         * 
+         *
          * @return the requested session
          */
         public String getRequestedSession() {
@@ -234,7 +234,7 @@ public class SoupBinTCP {
 
         /**
          * Set the requested session.
-         * 
+         *
          * @param requestedSession the requested session
          */
         public void setRequestedSession(String requestedSession) {
@@ -243,7 +243,7 @@ public class SoupBinTCP {
 
         /**
          * Get the requested sequence number.
-         * 
+         *
          * @return the requested sequence number
          */
         public long getRequestedSequenceNumber() {
@@ -252,7 +252,7 @@ public class SoupBinTCP {
 
         /**
          * Set the requested sequence number.
-         * 
+         *
          * @param requestedSequenceNumber the requested sequence number
          */
         public void setRequestedSequenceNumber(long requestedSequenceNumber) {

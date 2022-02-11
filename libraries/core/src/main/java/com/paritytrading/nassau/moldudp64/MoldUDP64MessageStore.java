@@ -45,7 +45,7 @@ public interface MoldUDP64MessageStore {
      * </ol>
      *
      * <p>Return the message count.</p>
-     * 
+     *
      * @param buffer a buffer
      * @param sequenceNumber the sequence number
      * @param requestedMessageCount the requested message count
