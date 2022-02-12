@@ -15,7 +15,7 @@
  */
 
 /**
- * An implementation of the NASDAQ BinaryFILE 1.00 file format.
+ * An implementation of the BinaryFILE 1.00 file format.
  *
  * <p>The implementation is based on the Java NIO API.</p>
  */

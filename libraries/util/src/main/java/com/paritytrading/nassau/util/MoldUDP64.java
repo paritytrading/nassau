@@ -30,7 +30,7 @@ import java.nio.channels.Selector;
 import java.util.Set;
 
 /**
- * Utility methods for working with the NASDAQ MoldUDP64 1.00 protocol.
+ * Utility methods for working with the MoldUDP64 1.00 protocol.
  */
 public class MoldUDP64 {
 
