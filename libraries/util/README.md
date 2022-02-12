@@ -1,6 +1,6 @@
 # Nassau Utilities
 
-Nassau Utilities contains utility methods for working with NASDAQ transport
+Nassau Utilities contains utility methods for working with Nasdaq transport
 protocols.
 
 ## Dependencies

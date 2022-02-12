@@ -29,7 +29,7 @@
   <packaging>pom</packaging>
 
   <name>Nassau (Parent)</name>
-  <description>NASDAQ transport protocols on the JVM.</description>
+  <description>A fast Nasdaq transport protocol library.</description>
   <url>https://github.com/paritytrading/nassau</url>
 
   <licenses>

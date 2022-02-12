@@ -15,6 +15,6 @@
  */
 
 /**
- * Utility methods for working with NASDAQ transport protocols.
+ * Utility methods for working with Nasdaq transport protocols.
  */
 package com.paritytrading.nassau.util;

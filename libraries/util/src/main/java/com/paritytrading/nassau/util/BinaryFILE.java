@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Utility methods for working with the NASDAQ BinaryFILE 1.00 file format.
+ * Utility methods for working with the BinaryFILE 1.00 file format.
  */
 public class BinaryFILE {
 

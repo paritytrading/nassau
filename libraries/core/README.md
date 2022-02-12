@@ -1,6 +1,6 @@
 # Nassau Core
 
-Nassau Core implements the NASDAQ transport protocols.
+Nassau Core implements the Nasdaq transport protocols.
 
 ## Download
 

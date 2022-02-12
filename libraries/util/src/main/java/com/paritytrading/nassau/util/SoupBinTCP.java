@@ -27,7 +27,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
 /**
- * Utility methods for working with the NASDAQ SoupBinTCP 3.00 protocol.
+ * Utility methods for working with the SoupBinTCP 3.00 protocol.
  */
 public class SoupBinTCP {
 

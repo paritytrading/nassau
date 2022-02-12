@@ -1,18 +1,16 @@
 # Nassau
 
-Nassau implements NASDAQ transport protocols on the JVM.
+Nassau is a fast Nasdaq transport protocol library for the JVM.
 
 You can use Nassau to connect to [Nasdaq][] and other network endpoints that
-use NASDAQ transport protocols. You can also use it to provide your own
+use Nasdaq transport protocols. You can also use it to provide your own
 services using these protocols.
 
-  [Nasdaq]: http://nasdaq.com
+  [Nasdaq]: https://www.nasdaq.com
 
 Nassau is designed to exhibit low and predictable latency. To achieve this, it
-supports non-blocking, zero-copy networking and does not allocate any memory
-on message reception or transmission. The SoupBinTCP implementation can
-achieve [4.8 µs round-trip time (RTT)](examples/soupbintcp-client) over the
-loopback interface.
+supports non-blocking, zero-copy networking and does not allocate memory on
+message reception or transmission.
 
 Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
@@ -20,20 +18,20 @@ Nassau requires Java Runtime Environment (JRE) 8 or newer.
 
 Nassau implements the following protocols:
 
-- [**NASDAQ SoupBinTCP 3.00**][soupbintcp]: a reliable transport protocol for
+- [**SoupBinTCP 3.00**][soupbintcp]: a reliable transport protocol for
   applications requiring delivery of delimited, sequenced messages between two
   endpoints.
 
-- [**NASDAQ MoldUDP64 1.00**][moldudp64]: a reliable transport protocol for
+- [**MoldUDP64 1.00**][moldudp64]: a reliable transport protocol for
   applications requiring delivery of delimited, sequenced messages from one
   sender to many receivers.
 
-- [**NASDAQ BinaryFILE 1.00**][binaryfile]: a file format for storing
-  delimited messages.
+- [**BinaryFILE 1.00**][binaryfile]: a file format for storing delimited
+  messages.
 
-  [soupbintcp]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/soupbintcp.pdf
-  [moldudp64]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf
-  [binaryfile]: http://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/binaryfile.pdf
+  [soupbintcp]: https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/soupbintcp.pdf
+  [moldudp64]: https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf
+  [binaryfile]: https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/binaryfile.pdf
 
 ## Download
 
@@ -45,10 +43,10 @@ See the [latest release][] on GitHub.
 
 Nassau contains the following libraries:
 
-- [**Core**](libraries/core) implements the NASDAQ transport protocols.
+- [**Core**](libraries/core) implements the Nasdaq transport protocols.
 
 - [**Utilities**](libraries/util) contains utility methods for working with
-  NASDAQ transport protocols.
+  Nasdaq transport protocols.
 
 Nassau contains the following applications:
 
