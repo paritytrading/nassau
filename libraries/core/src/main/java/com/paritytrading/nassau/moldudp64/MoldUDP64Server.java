@@ -38,7 +38,7 @@ public class MoldUDP64Server implements Closeable {
 
     private final byte[] session;
 
-    protected long nextSequenceNumber;
+    private long nextSequenceNumber;
 
     private long lastHeartbeatMillis;
 
@@ -153,6 +153,15 @@ public class MoldUDP64Server implements Closeable {
 
             lastHeartbeatMillis = currentTimeMillis;
         }
+    }
+
+    /**
+     * Set the next sequence number.
+     *
+     * @param nextSequenceNumber the next sequence number
+     */
+    public void setNextSequenceNumber(int nextSequenceNumber) {
+        this.nextSequenceNumber = nextSequenceNumber;
     }
 
     /**

@@ -195,7 +195,7 @@ class MoldUDP64SessionTest {
         for (String message : messages)
             store.put(wrap(message));
 
-        server.nextSequenceNumber = 4;
+        server.setNextSequenceNumber(4);
         server.sendHeartbeat();
 
         client.receive();
@@ -217,12 +217,12 @@ class MoldUDP64SessionTest {
         for (String message : messages)
             store.put(wrap(message));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.sendHeartbeat();
 
         client.receive();
 
-        server.nextSequenceNumber = 4;
+        server.setNextSequenceNumber(4);
         server.sendHeartbeat();
 
         client.receive();
@@ -245,12 +245,12 @@ class MoldUDP64SessionTest {
         for (String message : messages)
             store.put(wrap(message));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.sendHeartbeat();
 
         client.receive();
 
-        server.nextSequenceNumber = 2;
+        server.setNextSequenceNumber(2);
         server.sendHeartbeat();
 
         client.receive();
@@ -259,7 +259,7 @@ class MoldUDP64SessionTest {
         packet.put(wrap("bar"));
         packet.put(wrap("baz"));
 
-        server.nextSequenceNumber = 2;
+        server.setNextSequenceNumber(2);
         server.send(packet);
 
         client.receive();
@@ -287,12 +287,12 @@ class MoldUDP64SessionTest {
         for (String message : messages)
             store.put(wrap(message));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.sendHeartbeat();
 
         client.receive();
 
-        server.nextSequenceNumber = 4;
+        server.setNextSequenceNumber(4);
         server.sendEndOfSession();
 
         client.receive();
@@ -312,7 +312,7 @@ class MoldUDP64SessionTest {
     void gapFillTimeout() throws Exception {
         List<String> messages = asList("foo", "bar", "baz");
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.sendHeartbeat();
 
         client.receive();
@@ -320,7 +320,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("bar"));
 
-        server.nextSequenceNumber = 2;
+        server.setNextSequenceNumber(2);
         server.send(packet);
 
         client.receive();
@@ -332,7 +332,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("baz"));
 
-        server.nextSequenceNumber = 3;
+        server.setNextSequenceNumber(3);
         server.send(packet);
 
         client.receive();
@@ -358,7 +358,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("foo"));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.send(packet);
 
         client.receive();
@@ -367,7 +367,7 @@ class MoldUDP64SessionTest {
         packet.put(wrap("foo"));
         packet.put(wrap("bar"));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.send(packet);
 
         client.receive();
@@ -375,7 +375,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("baz"));
 
-        server.nextSequenceNumber = 3;
+        server.setNextSequenceNumber(3);
         server.send(packet);
 
         client.receive();
@@ -393,7 +393,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("foo"));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.send(packet);
 
         client.receive();
@@ -401,7 +401,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("foo"));
 
-        server.nextSequenceNumber = 1;
+        server.setNextSequenceNumber(1);
         server.send(packet);
 
         client.receive();
@@ -410,7 +410,7 @@ class MoldUDP64SessionTest {
         packet.put(wrap("bar"));
         packet.put(wrap("baz"));
 
-        server.nextSequenceNumber = 2;
+        server.setNextSequenceNumber(2);
         server.send(packet);
 
         client.receive();
@@ -430,7 +430,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("foo"));
 
-        server.nextSequenceNumber = 3;
+        server.setNextSequenceNumber(3);
         server.send(packet);
 
         client.receive();
@@ -438,7 +438,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("bar"));
 
-        server.nextSequenceNumber = 4;
+        server.setNextSequenceNumber(4);
         server.send(packet);
 
         client.receive();
@@ -457,7 +457,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("foo"));
 
-        server.nextSequenceNumber = 3;
+        server.setNextSequenceNumber(3);
         server.send(packet);
 
         client.receive();
@@ -465,7 +465,7 @@ class MoldUDP64SessionTest {
         packet.clear();
         packet.put(wrap("bar"));
 
-        server.nextSequenceNumber = 4;
+        server.setNextSequenceNumber(4);
         server.send(packet);
 
         client.receive();
