@@ -55,7 +55,7 @@ public class MoldUDP64Client implements Closeable {
 
     private final byte[] session;
 
-    protected long nextExpectedSequenceNumber;
+    private long nextExpectedSequenceNumber;
 
     private long requestUntilSequenceNumber;
 
@@ -225,6 +225,15 @@ public class MoldUDP64Client implements Closeable {
         handle();
 
         return true;
+    }
+
+    /**
+     * Set the next expected sequence number.
+     *
+     * @param nextExpectedSequenceNumber the next expected sequence number
+     */
+    public void setNextExpectedSequenceNumber(long nextExpectedSequenceNumber) {
+        this.nextExpectedSequenceNumber = nextExpectedSequenceNumber;
     }
 
     /**
