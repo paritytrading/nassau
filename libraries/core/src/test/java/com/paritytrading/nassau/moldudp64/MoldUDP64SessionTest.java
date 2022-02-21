@@ -425,7 +425,7 @@ class MoldUDP64SessionTest {
     void requestedSequenceNumber() throws Exception {
         List<String> messages = asList("bar");
 
-        client.nextExpectedSequenceNumber = 4;
+        client.setNextExpectedSequenceNumber(4);
 
         packet.clear();
         packet.put(wrap("foo"));
@@ -452,7 +452,7 @@ class MoldUDP64SessionTest {
     void firstReceivedMessage() throws Exception {
         List<String> messages = asList("foo", "bar");
 
-        client.nextExpectedSequenceNumber = 0;
+        client.setNextExpectedSequenceNumber(0);
 
         packet.clear();
         packet.put(wrap("foo"));
