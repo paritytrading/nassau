@@ -58,7 +58,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     private final byte heartbeatPacketType;
 
-    protected SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
+    SoupBinTCPSession(Clock clock, SocketChannel channel, int maxPayloadLength,
             byte heartbeatPacketType) {
         this.clock   = clock;
         this.channel = channel;
@@ -174,11 +174,11 @@ public abstract class SoupBinTCPSession implements Closeable {
         channel.close();
     }
 
-    protected abstract void heartbeatTimeout() throws IOException;
+    abstract void heartbeatTimeout() throws IOException;
 
-    protected abstract void packet(byte packetType, ByteBuffer payload) throws IOException;
+    abstract void packet(byte packetType, ByteBuffer payload) throws IOException;
 
-    protected void send(byte packetType) throws IOException {
+    void send(byte packetType) throws IOException {
         txHeader.clear();
         txHeader.putShort((short)1);
         txHeader.put(packetType);
@@ -191,7 +191,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         sentData();
     }
 
-    protected void send(byte packetType, ByteBuffer payload) throws IOException {
+    void send(byte packetType, ByteBuffer payload) throws IOException {
         int packetLength = payload.remaining() + 1;
 
         if (packetLength > MAX_PACKET_LENGTH)
@@ -213,7 +213,7 @@ public abstract class SoupBinTCPSession implements Closeable {
         sentData();
     }
 
-    protected void unexpectedPacketType(byte packetType) throws SoupBinTCPException {
+    void unexpectedPacketType(byte packetType) throws SoupBinTCPException {
         throw new SoupBinTCPException("Unexpected packet type: " + (char)packetType);
     }
 

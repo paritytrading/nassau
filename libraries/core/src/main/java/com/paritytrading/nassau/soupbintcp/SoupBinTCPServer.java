@@ -145,12 +145,12 @@ public class SoupBinTCPServer extends SoupBinTCPSession {
     }
 
     @Override
-    protected void heartbeatTimeout() throws IOException {
+    void heartbeatTimeout() throws IOException {
         statusListener.heartbeatTimeout(this);
     }
 
     @Override
-    protected void packet(byte packetType, ByteBuffer payload) throws IOException {
+    void packet(byte packetType, ByteBuffer payload) throws IOException {
         switch (packetType) {
         case PACKET_TYPE_DEBUG:
             break;
