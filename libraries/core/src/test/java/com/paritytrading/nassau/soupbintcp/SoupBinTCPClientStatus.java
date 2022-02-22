@@ -43,7 +43,7 @@ class SoupBinTCPClientStatus implements SoupBinTCPClientStatusListener {
 
     @Override
     public void loginRejected(SoupBinTCPClient client, SoupBinTCP.LoginRejected payload) {
-        events.add(new LoginRejected(payload.rejectReasonCode));
+        events.add(new LoginRejected(payload.getRejectReasonCode()));
     }
 
     @Override

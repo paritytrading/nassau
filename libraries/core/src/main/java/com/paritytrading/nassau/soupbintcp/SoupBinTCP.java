@@ -57,8 +57,8 @@ public class SoupBinTCP {
      * Payload for the Login Accepted packet.
      */
     public static class LoginAccepted {
-        public byte[] session;
-        public byte[] sequenceNumber;
+        private byte[] session;
+        private byte[] sequenceNumber;
 
         /**
          * Construct an instance.
@@ -97,15 +97,6 @@ public class SoupBinTCP {
         }
 
         /**
-         * Set the session.
-         *
-         * @param session the session
-         */
-        public void setSession(byte[] session) {
-            System.arraycopy(session, 0, this.session, 0, session.length);
-        }
-
-        /**
          * Get the sequence number.
          *
          * @return the sequence number
@@ -122,22 +113,13 @@ public class SoupBinTCP {
         public void setSequenceNumber(long sequenceNumber) {
             ASCII.putLongRight(this.sequenceNumber, sequenceNumber);
         }
-
-        /**
-         * Set the sequence number.
-         *
-         * @param sequenceNumber the sequence number
-         */
-        public void setSequenceNumber(byte[] sequenceNumber) {
-            System.arraycopy(sequenceNumber, 0, this.sequenceNumber, 0, sequenceNumber.length);
-        }
     }
 
     /**
      * Payload for the Login Rejected packet.
      */
     public static class LoginRejected {
-        public byte rejectReasonCode;
+        private byte rejectReasonCode;
 
         /**
          * Construct an instance.
@@ -152,16 +134,34 @@ public class SoupBinTCP {
         void put(ByteBuffer buffer) {
             buffer.put(rejectReasonCode);
         }
+
+        /**
+         * Get the reject reason code.
+         *
+         * @return the reject reason code
+         */
+        public byte getRejectReasonCode() {
+            return rejectReasonCode;
+        }
+
+        /**
+         * Set the reject reason code.
+         *
+         * @param rejectReasonCode the reject reason code
+         */
+        public void setRejectReasonCode(byte rejectReasonCode) {
+            this.rejectReasonCode = rejectReasonCode;
+        }
     }
 
     /**
      * Payload for the Login Request packet.
      */
     public static class LoginRequest {
-        public byte[] username;
-        public byte[] password;
-        public byte[] requestedSession;
-        public byte[] requestedSequenceNumber;
+        private byte[] username;
+        private byte[] password;
+        private byte[] requestedSession;
+        private byte[] requestedSequenceNumber;
 
         /**
          * Construct an instance.
