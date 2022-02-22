@@ -190,7 +190,6 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <excludePackageNames>com.paritytrading.nassau.binaryfile.recorder:com.paritytrading.nassau.soupbintcp.client:com.paritytrading.nassau.soupbintcp.gateway:com.paritytrading.nassau.soupbintcp.server:*.perf</excludePackageNames>
-          <show>public</show>
         </configuration>
       </plugin>
       <plugin>

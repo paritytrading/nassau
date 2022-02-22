@@ -47,7 +47,14 @@ public class SoupBinTCP {
 
     static final int MAX_PACKET_LENGTH = 65535;
 
+    /**
+     * The login reject code Not Authorized.
+     */
     public static final byte LOGIN_REJECT_CODE_NOT_AUTHORIZED        = 'A';
+
+    /**
+     * The login reject code Session Not Available.
+     */
     public static final byte LOGIN_REJECT_CODE_SESSION_NOT_AVAILABLE = 'S';
 
     private SoupBinTCP() {
