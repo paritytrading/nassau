@@ -102,7 +102,7 @@ class SoupBinTCPSessionTest {
 
     @Test
     void loginRejected() throws Exception {
-        loginRejected.rejectReasonCode = SoupBinTCP.LOGIN_REJECT_CODE_NOT_AUTHORIZED;
+        loginRejected.setRejectReasonCode(SoupBinTCP.LOGIN_REJECT_CODE_NOT_AUTHORIZED);
 
         server.reject(loginRejected);
 
