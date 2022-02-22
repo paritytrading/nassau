@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.soupbintcp;
 
+import com.paritytrading.foundation.ASCII;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 

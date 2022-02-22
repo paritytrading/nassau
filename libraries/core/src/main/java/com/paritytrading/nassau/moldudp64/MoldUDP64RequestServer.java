@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 
 import java.io.Closeable;
@@ -88,19 +89,19 @@ public class MoldUDP64RequestServer implements Closeable {
         if (sequenceNumber < 1)
             return;
 
-        int requestedMessageCount = rxBuffer.getShort() & 0xffff;
+        int requestedMessageCount = getUnsignedShort(rxBuffer);
 
         txBuffer.clear();
 
         txBuffer.put(session);
         txBuffer.putLong(sequenceNumber);
-        txBuffer.putShort((short)0);
+        putUnsignedShort(txBuffer, 0);
 
         int messageCount = store.get(txBuffer, sequenceNumber, requestedMessageCount);
         if (messageCount == 0)
             return;
 
-        txBuffer.putShort(MESSAGE_COUNT_OFFSET, (short)messageCount);
+        putUnsignedShort(txBuffer, MESSAGE_COUNT_OFFSET, messageCount);
 
         txBuffer.flip();
 
