@@ -2,6 +2,14 @@
 
 Nassau Core implements the Nasdaq transport protocols.
 
+## Dependencies
+
+Nassau Core depends on the following libraries:
+
+- [Foundation][] 0.3.0
+
+  [Foundation]: https://github.com/paritytrading/foundation
+
 ## Download
 
 Add a Maven dependency to Nassau Core:

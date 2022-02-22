@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.soupbintcp;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
 import com.paritytrading.nassau.time.Clock;
@@ -121,7 +122,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         rxBuffer.order(ByteOrder.BIG_ENDIAN);
 
-        int packetLength = rxBuffer.getShort() & 0xffff;
+        int packetLength = getUnsignedShort(rxBuffer);
         if (packetLength > rxBuffer.capacity() - 2)
             throw new SoupBinTCPException("Packet length exceeds buffer capacity");
 
@@ -180,7 +181,7 @@ public abstract class SoupBinTCPSession implements Closeable {
 
     void send(byte packetType) throws IOException {
         txHeader.clear();
-        txHeader.putShort((short)1);
+        putUnsignedShort(txHeader, 1);
         txHeader.put(packetType);
         txHeader.flip();
 
@@ -198,7 +199,7 @@ public abstract class SoupBinTCPSession implements Closeable {
             throw new SoupBinTCPException("Packet length exceeds maximum packet length");
 
         txHeader.clear();
-        txHeader.putShort((short)packetLength);
+        putUnsignedShort(txHeader, packetLength);
         txHeader.put(packetType);
         txHeader.flip();
 

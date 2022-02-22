@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientState.*;
 
@@ -258,7 +259,7 @@ public class MoldUDP64Client implements Closeable {
         rxBuffer.get(session);
 
         long sequenceNumber = rxBuffer.getLong();
-        int  messageCount   = rxBuffer.getShort() & 0xffff;
+        int  messageCount   = getUnsignedShort(rxBuffer);
 
         boolean endOfSession = messageCount == MESSAGE_COUNT_END_OF_SESSION;
 
@@ -327,7 +328,7 @@ public class MoldUDP64Client implements Closeable {
         txBuffer.clear();
         txBuffer.put(session);
         txBuffer.putLong(requestFromSequenceNumber);
-        txBuffer.putShort((short)requestedMessageCount);
+        putUnsignedShort(txBuffer, requestedMessageCount);
         txBuffer.flip();
 
         while (requestChannel.send(txBuffer, requestAddress) == 0);
@@ -368,7 +369,7 @@ public class MoldUDP64Client implements Closeable {
 
         rxBuffer.order(ByteOrder.BIG_ENDIAN);
 
-        return rxBuffer.getShort() & 0xffff;
+        return getUnsignedShort(rxBuffer);
     }
 
     private void truncatedPacket() throws MoldUDP64Exception {

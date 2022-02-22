@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 
 import com.paritytrading.nassau.MessageListener;
@@ -49,7 +50,7 @@ public class MoldUDP64DownstreamPacket {
         if (remaining() < buffer.remaining())
             throw new MoldUDP64Exception("Buffer overflow");
 
-        payload.putShort((short)buffer.remaining());
+        putUnsignedShort(payload, buffer.remaining());
         payload.put(buffer);
 
         messageCount++;
@@ -66,7 +67,7 @@ public class MoldUDP64DownstreamPacket {
             if (payload.remaining() < 2)
                 break;
 
-            int messageLength = payload.getShort() & 0xffff;
+            int messageLength = getUnsignedShort(payload);
 
             int limit = payload.limit();
 

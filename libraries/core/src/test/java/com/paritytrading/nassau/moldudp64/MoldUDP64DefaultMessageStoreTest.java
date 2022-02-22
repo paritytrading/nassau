@@ -15,6 +15,7 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +59,7 @@ class MoldUDP64DefaultMessageStoreTest {
         for (int i = 0; i < messages.size(); i++) {
             String message = messages.get(i);
 
-            assertEquals(message.length(), buffer.getShort() & 0xffff);
+            assertEquals(message.length(), getUnsignedShort(buffer));
             assertEquals(message, get(buffer, message.length()));
         }
 
