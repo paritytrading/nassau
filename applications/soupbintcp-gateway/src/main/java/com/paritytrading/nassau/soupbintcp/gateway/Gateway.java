@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
-import org.jvirtanen.config.Configs;
 
 class Gateway {
 
@@ -48,22 +47,31 @@ class Gateway {
         Events.process(downstream);
     }
 
-    private static UpstreamFactory upstream(Config config) {
-        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "upstream.multicast-interface");
-        InetAddress      multicastGroup     = Configs.getInetAddress(config, "upstream.multicast-group");
-        int              multicastPort      = Configs.getPort(config, "upstream.multicast-port");
-        InetAddress      requestAddress     = Configs.getInetAddress(config, "upstream.request-address");
-        int              requestPort        = Configs.getPort(config, "upstream.request-port");
+    private static UpstreamFactory upstream(Config config) throws IOException {
+        String multicastInterface = config.getString("upstream.multicast-interface");
+        String multicastGroup     = config.getString("upstream.multicast-group");
+        int    multicastPort      = config.getInt("upstream.multicast-port");
+        String requestAddress     = config.getString("upstream.request-address");
+        int    requestPort        = config.getInt("upstream.request-port");
 
-        return new UpstreamFactory(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
+        return new UpstreamFactory(getNetworkInterface(multicastInterface),
+                new InetSocketAddress(multicastGroup, multicastPort),
                 new InetSocketAddress(requestAddress, requestPort));
     }
 
     private static DownstreamServer downstream(Config config, UpstreamFactory upstream) throws IOException {
-        InetAddress address = Configs.getInetAddress(config, "downstream.address");
-        int         port    = Configs.getPort(config, "downstream.port");
+        String address = config.getString("downstream.address");
+        int    port    = config.getInt("downstream.port");
 
         return DownstreamServer.open(upstream, new InetSocketAddress(address, port));
+    }
+
+    private static NetworkInterface getNetworkInterface(String nameOrInetAddress) throws IOException {
+        NetworkInterface networkInterface = NetworkInterface.getByName(nameOrInetAddress);
+        if (networkInterface != null)
+            return networkInterface;
+
+        return NetworkInterface.getByInetAddress(InetAddress.getByName(nameOrInetAddress));
     }
 
     private static Config config(String filename) throws FileNotFoundException {

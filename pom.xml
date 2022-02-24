@@ -97,11 +97,6 @@
         <artifactId>HdrHistogram</artifactId>
         <version>2.1.12</version>
       </dependency>
-      <dependency>
-        <groupId>org.jvirtanen.config</groupId>
-        <artifactId>config-extras</artifactId>
-        <version>0.2.0</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
