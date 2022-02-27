@@ -39,7 +39,6 @@ import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import org.jvirtanen.config.Configs;
 
 class Recorder {
 
@@ -87,10 +86,10 @@ class Recorder {
     }
 
     private static SoupBinTCPClient connect(Config config, MessageListener listener) throws IOException {
-        InetAddress address  = Configs.getInetAddress(config, "session.address");
-        int         port     = Configs.getPort(config, "session.port");
-        String      username = config.getString("session.username");
-        String      password = config.getString("session.password");
+        String address  = config.getString("session.address");
+        int    port     = config.getInt("session.port");
+        String username = config.getString("session.username");
+        String password = config.getString("session.password");
 
         SocketChannel channel = SocketChannel.open();
 
@@ -135,17 +134,17 @@ class Recorder {
     }
 
     private static MoldUDP64Client join(Config config, MessageListener listener) throws IOException {
-        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "session.multicast-interface");
-        InetAddress      multicastGroup     = Configs.getInetAddress(config, "session.multicast-group");
-        int              multicastPort      = Configs.getPort(config, "session.multicast-port");
-        InetAddress      requestAddress     = Configs.getInetAddress(config, "session.request-address");
-        int              requestPort        = Configs.getPort(config, "session.request-port");
+        String multicastInterface = config.getString("session.multicast-interface");
+        String multicastGroup     = config.getString("session.multicast-group");
+        int    multicastPort      = config.getInt("session.multicast-port");
+        String requestAddress     = config.getString("session.request-address");
+        int    requestPort        = config.getInt("session.request-port");
 
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
         channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
         channel.bind(new InetSocketAddress(multicastPort));
-        channel.join(multicastGroup, multicastInterface);
+        channel.join(InetAddress.getByName(multicastGroup), getNetworkInterface(multicastInterface));
         channel.configureBlocking(false);
 
         DatagramChannel requestChannel = DatagramChannel.open(StandardProtocolFamily.INET);
@@ -216,6 +215,14 @@ class Recorder {
                 client.keepAlive();
             }
         }
+    }
+
+    private static NetworkInterface getNetworkInterface(String nameOrInetAddress) throws IOException {
+        NetworkInterface networkInterface = NetworkInterface.getByName(nameOrInetAddress);
+        if (networkInterface != null)
+            return networkInterface;
+
+        return NetworkInterface.getByInetAddress(InetAddress.getByName(nameOrInetAddress));
     }
 
     private static void addShutdownHook() {
