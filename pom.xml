@@ -73,7 +73,7 @@
       <dependency>
         <groupId>com.paritytrading.foundation</groupId>
         <artifactId>foundation</artifactId>
-        <version>0.3.0</version> <!-- (mentioned in documentation) -->
+        <version>1.0.0</version> <!-- (mentioned in documentation) -->
       </dependency>
       <dependency>
         <groupId>com.typesafe</groupId>
