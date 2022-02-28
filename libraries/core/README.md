@@ -6,7 +6,7 @@ Nassau Core implements the Nasdaq transport protocols.
 
 Nassau Core depends on the following libraries:
 
-- [Foundation][] 0.3.0
+- [Foundation][] 1.0.0
 
   [Foundation]: https://github.com/paritytrading/foundation
 
