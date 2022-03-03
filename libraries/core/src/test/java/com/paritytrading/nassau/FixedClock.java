@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.paritytrading.nassau.time;
+package com.paritytrading.nassau;
 
 public class FixedClock implements Clock {
 

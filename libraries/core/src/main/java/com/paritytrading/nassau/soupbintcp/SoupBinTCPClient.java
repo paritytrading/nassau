@@ -17,8 +17,8 @@ package com.paritytrading.nassau.soupbintcp;
 
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
+import com.paritytrading.nassau.Clock;
 import com.paritytrading.nassau.MessageListener;
-import com.paritytrading.nassau.time.Clock;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
