@@ -19,8 +19,8 @@ import static com.paritytrading.foundation.ByteBuffers.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientState.*;
 
+import com.paritytrading.nassau.Clock;
 import com.paritytrading.nassau.MessageListener;
-import com.paritytrading.nassau.time.Clock;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.SocketAddress;

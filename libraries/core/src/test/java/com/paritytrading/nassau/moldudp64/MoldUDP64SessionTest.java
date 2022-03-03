@@ -22,9 +22,9 @@ import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.paritytrading.nassau.FixedClock;
 import com.paritytrading.nassau.Messages;
 import com.paritytrading.nassau.Strings;
-import com.paritytrading.nassau.time.FixedClock;
 import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
