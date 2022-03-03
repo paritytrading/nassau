@@ -1,6 +1,7 @@
 CHANGELOG.md
 LICENSE.txt
 README.md
+UPGRADE-1.0.0.md
 applications/binaryfile-recorder/README.md
 applications/binaryfile-recorder/etc/example-tcp.conf
 applications/binaryfile-recorder/etc/example-udp.conf
