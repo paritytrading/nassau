@@ -1,5 +1,54 @@
 # Release Notes
 
+## 1.0.0 (2022-03-03)
+
+See the [upgrade instructions](UPGRADE-1.0.0.md).
+
+- Use direct byte buffers (Jussi Virtanen)
+
+  Switch from non-direct byte buffers, which incur performance overhead, to
+  direct byte buffers.
+
+- Clean up documentation (Jussi Virtanen)
+
+- Improve code quality (Jan Nielsen, Jussi Virtanen)
+
+- Clean up MoldUDP64 implementation (Jussi Virtanen)
+
+- Remove `SystemClock` (Jussi Virtanen)
+
+  Use the `System::currentTimeMillis` method reference instead.
+
+- Improve I/O resource management (Jan Nielsen)
+
+- Split Nassau SoupBinTCP Performance Test (Jan Nielsen)
+
+  Split the SoupBinTCP performance test into a SoupBinTCP test client and
+  a SoupBinTCP test server. This makes it possible to run them on different
+  network hosts.
+
+- Add `MoldUDP64Client#receive` and `MoldUDP64Client#receiveResponse` return
+  value (Jussi Virtanen)
+
+- Improve Nassau SoupBinTCP Test Client (Jan Nielsen)
+
+  Fix coordinated omission: instead of sending the next message right after
+  receiving the previous message, send messages at regular intervals.
+
+- Improve `SoupBinTCP.LoginRequest`, `SoupBinTCP.LoginAccepted`, and
+  `SoupBinTCP.LoginRejected` (Jan Nielsen, Jussi Virtanen)
+
+  Replace direct access to message fields with getters and setters. This means
+  that Nassau applications no longer need to directly use the Foundation
+  library or custom means to read and write these message fields.
+
+- Upgrade to Foundation 1.0.0 (Jussi Virtanen)
+
+- Move `Clock` (Jussi Virtanen)
+
+  Move it from the `com.paritytrading.nassau.time` package to the
+  `com.paritytrading.nassau` package.
+
 ## 0.13.0 (2017-01-20)
 
 - Upgrade to Java 8
