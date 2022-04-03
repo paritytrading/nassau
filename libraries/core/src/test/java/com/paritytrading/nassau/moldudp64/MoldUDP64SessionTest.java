@@ -15,9 +15,9 @@
  */
 package com.paritytrading.nassau.moldudp64;
 
+import static com.paritytrading.nassau.Strings.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientState.*;
 import static com.paritytrading.nassau.moldudp64.MoldUDP64ClientStatus.*;
-import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.jupiter.api.Assertions.*;

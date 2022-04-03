@@ -15,9 +15,9 @@
  */
 package com.paritytrading.nassau.binaryfile;
 
+import com.paritytrading.nassau.MessageListener;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import com.paritytrading.nassau.MessageListener;
 
 /**
  * A parser for status events.
