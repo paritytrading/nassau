@@ -15,10 +15,10 @@
  */
 package com.paritytrading.nassau.soupbintcp;
 
+import static com.paritytrading.nassau.Strings.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatus.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatus.*;
 import static com.paritytrading.nassau.soupbintcp.SoupBinTCPSessionStatus.*;
-import static com.paritytrading.nassau.Strings.*;
 import static java.util.Arrays.*;
 import static org.junit.jupiter.api.Assertions.*;
 
