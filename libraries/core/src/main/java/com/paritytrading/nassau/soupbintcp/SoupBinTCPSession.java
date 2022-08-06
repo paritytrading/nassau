@@ -33,6 +33,8 @@ public abstract class SoupBinTCPSession implements Closeable {
     private static final long RX_HEARTBEAT_TIMEOUT_MILLIS  = 15000;
     private static final long TX_HEARTBEAT_INTERVAL_MILLIS =  1000;
 
+    private static final int PACKET_HEADER_LENGTH = 3;
+
     private final Clock clock;
 
     private final SocketChannel channel;
@@ -67,9 +69,9 @@ public abstract class SoupBinTCPSession implements Closeable {
         this.lastRxMillis = clock.currentTimeMillis();
         this.lastTxMillis = clock.currentTimeMillis();
 
-        this.rxBuffer = ByteBuffer.allocateDirect(3 + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
+        this.rxBuffer = ByteBuffer.allocateDirect(PACKET_HEADER_LENGTH + Math.min(maxPayloadLength, MAX_PACKET_LENGTH - 1));
 
-        this.txHeader = ByteBuffer.allocateDirect(3);
+        this.txHeader = ByteBuffer.allocateDirect(PACKET_HEADER_LENGTH);
 
         this.txBuffers = new ByteBuffer[2];
 
@@ -205,10 +207,10 @@ public abstract class SoupBinTCPSession implements Closeable {
 
         txBuffers[1] = payload;
 
-        int remaining = txHeader.remaining() + payload.remaining();
+        int remaining = PACKET_HEADER_LENGTH + payload.remaining();
 
         do {
-            remaining -= channel.write(txBuffers);
+            remaining -= channel.write(txBuffers, 0, 2);
         } while (remaining > 0);
 
         sentData();
