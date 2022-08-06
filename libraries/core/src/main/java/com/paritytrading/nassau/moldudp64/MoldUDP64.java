@@ -18,7 +18,6 @@ package com.paritytrading.nassau.moldudp64;
 import static java.nio.charset.StandardCharsets.*;
 import static java.util.Arrays.*;
 
-
 class MoldUDP64 {
 
     static final int MESSAGE_COUNT_HEARTBEAT = 0x0;
