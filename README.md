@@ -73,8 +73,6 @@ Nassau contains the following test application:
 
 For more information on Nassau:
 
-- Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
-  news and announcements
 - Join [the community][GitHub Discussions] on GitHub for discussions
 
   [GitHub Discussions]: https://github.com/paritytrading/nassau/discussions
