@@ -52,6 +52,9 @@
       <property name="processJavadoc" value="true" />
     </module>
 
+    <!-- No unused local variables. -->
+    <module name="UnusedLocalVariable" />
+
   </module>
 
 </module>
