@@ -12,7 +12,7 @@ Nassau is designed to exhibit low and predictable latency. To achieve this, it
 supports non-blocking, zero-copy networking and does not allocate memory on
 message reception or transmission.
 
-Nassau requires Java Runtime Environment (JRE) 8 or newer.
+Nassau requires Java Runtime Environment (JRE) 11 or newer.
 
 ## Protocols
 
